@@ -2,8 +2,11 @@ import NextAuth from "next-auth";
 import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
+import { MongoDBAdapter } from "@auth/mongodb-adapter";
+import client from "@/lib/db";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
+  adapter: MongoDBAdapter(client),
   providers: [
     GitHub,
     Google,
@@ -24,6 +27,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   ],
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: "/auth/signin",
+    signIn: "/signin",
   },
 });

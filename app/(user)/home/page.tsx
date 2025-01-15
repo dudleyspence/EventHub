@@ -6,7 +6,7 @@ export default function page() {
   return (
     <div>
       <p>Homepage</p>
-      <button onClick={() => signOut({ redirectTo: "/auth/signin" })}>
+      <button onClick={() => signOut({ redirectTo: "/signin" })}>
         Sign Out
       </button>
     </div>
