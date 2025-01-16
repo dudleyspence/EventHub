@@ -1,16 +1,8 @@
 "use client";
 import React from "react";
 import { Icon } from "@iconify/react";
-import { signIn } from "next-auth/react";
 
-import {
-  Form,
-  Input,
-  Link,
-  Checkbox,
-  Button,
-  Divider,
-} from "@nextui-org/react";
+import { Form, Input, Checkbox, Button } from "@nextui-org/react";
 
 export default function SignupForm() {
   const [password, setPassword] = React.useState("");
@@ -23,6 +15,7 @@ export default function SignupForm() {
   const toggleConfirmVisibility = () => setIsConfirmVisible(!isConfirmVisible);
 
   const getPasswordError = (value: string) => {
+    if (!isPasswordTouched) return null;
     if (value.length < 4) {
       return "Password must be 4 characters or more";
     }
@@ -32,12 +25,22 @@ export default function SignupForm() {
     if ((value.match(/[^a-z]/gi) || []).length < 1) {
       return "Password needs at least 1 symbol";
     }
-
+    if (errors.password) {
+      return errors.password;
+    }
     return null;
   };
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!password) {
+      // set message 'no password entererd'
+    }
+
+    const data = Object.fromEntries(new FormData(e.currentTarget));
+
+    // Submit data to the backend API.
   };
 
   return (
@@ -45,7 +48,6 @@ export default function SignupForm() {
       className="flex flex-col gap-3"
       validationBehavior="native"
       validationErrors={errors}
-      onReset={() => setSubmitted(null)}
       onSubmit={onSubmit}
     >
       <Input
@@ -54,8 +56,6 @@ export default function SignupForm() {
           if (validationDetails.valueMissing) {
             return "Please enter your name";
           }
-
-          return errors.name;
         }}
         label="Name"
         name="name"
@@ -96,8 +96,8 @@ export default function SignupForm() {
             )}
           </button>
         }
-        errorMessage={isPasswordTouched ? getPasswordError(password) : null}
-        isInvalid={isPasswordTouched && getPasswordError(password) !== null}
+        errorMessage={getPasswordError(password)}
+        isInvalid={getPasswordError(password) !== null}
         label="Password"
         name="password"
         placeholder="Enter your password"
@@ -125,7 +125,13 @@ export default function SignupForm() {
             )}
           </button>
         }
-        errorMessage={getPasswordError(password)}
+        validate={(value) => {
+          if (value !== password) {
+            return "Your passwords do not match";
+          }
+
+          return null;
+        }}
         label="Confirm Password"
         name="confirmPassword"
         placeholder="Confirm Password"

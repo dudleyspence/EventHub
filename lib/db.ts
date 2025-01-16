@@ -1,33 +1,13 @@
-import { MongoClient, ServerApiVersion } from "mongodb";
+import { PrismaClient } from "@prisma/client";
 
-if (!process.env.MONGODB_URI) {
-  throw new Error("Missing environment variable MONGODB_URI");
+declare global {
+  var prisma: PrismaClient | undefined;
 }
 
-const uri = process.env.MONGODB_URI;
+export const db = globalThis.prisma || new PrismaClient();
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  },
-});
+if (process.env.NODE_ENV !== "production") globalThis.prisma = db;
 
-async function run() {
-  try {
-    await client.connect();
-
-    await client.db("admin").command({ ping: 1 });
-    console.log(
-      "Pinged your deployment. You successfully connected to MongoDB!"
-    );
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
-}
-run().catch(console.dir);
-
-export default client;
+// if we save in dev environment it hot reloads so creates a new PrismaClient() each time
+//
+// therefore we store the client in globalThis which isnt effected by hot reload and then use the same client
