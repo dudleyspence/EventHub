@@ -14,13 +14,13 @@ export default function AuthLayout({
         alt="graphic"
         src={yellowGraphic}
         height={450}
-        className="hidden mb-4 sm:block fixed top-[-250] right-[-250]"
+        className="hidden mb-4 xs:block fixed top-[-250] right-[-250]"
       />
       <Image
         alt="graphic"
         src={orangeGraphic}
         height={700}
-        className="hidden mb-4 sm:block fixed bottom-[-250] left-[-250]"
+        className="hidden mb-4 xs:block fixed bottom-[-250] left-[-250]"
       />
       <Image alt="website logo" src={logo} height={45} className="mb-4" />
       {children}

@@ -20,7 +20,7 @@ export function CardWrapper({
   backButtonHref,
 }: CardWrapperProps) {
   return (
-    <div className="w-full max-w-md sm:p-8 z-10 sm:bg-white rounded-xl sm:shadow-xl mx-5">
+    <div className="w-full max-w-md p-5 xs:p-8 z-10 bg-white rounded-xl xs:shadow-xl">
       <p className="text-xl font-medium">{headerLabel}</p>
       <p className="text-small text-default-500 mb-6">{instruction}</p>
       {children}
