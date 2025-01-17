@@ -1,32 +1,28 @@
 import NextAuth from "next-auth";
-import GitHub from "next-auth/providers/github";
-import Google from "next-auth/providers/google";
-import Credentials from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@auth/prisma-adapter";
+import authConfig from "./auth.config";
 import { db } from "./lib/db";
+import { UserRole } from "@prisma/client";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
-  adapter: PrismaAdapter(db),
-  providers: [
-    GitHub,
-    Google,
-    Credentials({
-      name: "Credentials",
-      credentials: {
-        email: {
-          label: "email",
-          type: "email",
-          placeholder: "demo@example.com",
-        },
-        password: {
-          label: "password",
-          type: "password",
-        },
-      },
-    }),
-  ],
-  secret: process.env.NEXTAUTH_SECRET,
-  pages: {
-    signIn: "/signin",
+  callbacks: {
+    jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.role = user.role;
+      }
+      return token;
+    },
+
+    session({ session, token }) {
+      if (session.user && token.id) {
+        session.user.id = token.id as string;
+        session.user.role = token.role as UserRole;
+      }
+      return session;
+    },
   },
+  adapter: PrismaAdapter(db),
+  session: { strategy: "jwt" },
+  ...authConfig,
 });
