@@ -11,11 +11,12 @@ export function AuthButtons() {
       <Button
         startContent={<Icon icon="flat-color-icons:google" width={24} />}
         variant="bordered"
+        onPress={() => signIn("google", { redirectTo: "/" })}
       >
         Continue with Google
       </Button>
       <Button
-        onPress={() => signIn("github", { redirectTo: "/home" })}
+        onPress={() => signIn("github", { redirectTo: "/" })}
         startContent={
           <Icon className="text-default-500" icon="fe:github" width={24} />
         }

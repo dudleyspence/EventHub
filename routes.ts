@@ -10,7 +10,7 @@ An array of routes used for authenticatio
 @type {string[]}
 */
 
-export const authRoutes = ["/signin", "/signup"];
+export const authRoutes = ["/signin", "/signup", "/error"];
 
 /*
 - The prefix for api authentication routes
