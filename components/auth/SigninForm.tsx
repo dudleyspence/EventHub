@@ -8,8 +8,15 @@ import React, { useState, useTransition } from "react";
 import { Button, Input, Checkbox, Link, Form } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { signin } from "@/actions/signin";
+import { useSearchParams } from "next/navigation";
 
 export default function SigninForm() {
+  const searchParams = useSearchParams();
+  const urlError =
+    searchParams.get("error") === "OAuthAccountNotLinked"
+      ? "Email already in use with a different provider!"
+      : "";
+
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
@@ -28,8 +35,8 @@ export default function SigninForm() {
     // Handle form submission (e.g., send to an API)
     startTransition(() => {
       signin(data).then((data) => {
-        setError(data.error);
-        setSuccess(data.success);
+        setError(data?.error);
+        setSuccess(data?.success);
       });
     });
   };
@@ -95,7 +102,7 @@ export default function SigninForm() {
         </Link>
       </div>
 
-      <span className="text-danger text-small">{error}</span>
+      <span className="text-danger text-small">{error || urlError}</span>
       <span className="text-success text-small">{success}</span>
 
       <Button
