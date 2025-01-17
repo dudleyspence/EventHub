@@ -1,57 +1,91 @@
 "use client";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { SigninSchema } from "@/schemas";
 
-import React from "react";
+import React, { useState, useTransition } from "react";
 import { Button, Input, Checkbox, Link, Form } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
+import { signin } from "@/actions/signin";
 
 export default function SigninForm() {
-  const [isVisible, setIsVisible] = React.useState(false);
+  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
 
-  const toggleVisibility = () => setIsVisible(!isVisible);
+  const { handleSubmit, control } = useForm<z.infer<typeof SigninSchema>>({
+    resolver: zodResolver(SigninSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
+  const onSubmit = (data: z.infer<typeof SigninSchema>) => {
+    setError("");
+    setSuccess("");
+    // Handle form submission (e.g., send to an API)
+    startTransition(() => {
+      signin(data).then((data) => {
+        setError(data.error);
+        setSuccess(data.success);
+      });
+    });
   };
 
+  const [isVisible, setIsVisible] = React.useState(false);
+  const toggleVisibility = () => setIsVisible(!isVisible);
+
   return (
-    <Form
-      className="flex flex-col gap-3"
-      validationBehavior="native"
-      onSubmit={handleSubmit}
-    >
-      <Input
-        isRequired
-        label="Email Address"
+    <Form className="flex flex-col gap-3" onSubmit={handleSubmit(onSubmit)}>
+      <Controller
+        control={control}
         name="email"
-        placeholder="Enter your email"
-        type="email"
-        variant="bordered"
+        render={({ field, fieldState }) => (
+          <Input
+            isRequired
+            isDisabled={isPending}
+            {...field}
+            label="Email"
+            variant="bordered"
+            type="email"
+            isInvalid={fieldState.invalid}
+            errorMessage={fieldState.error?.message}
+          />
+        )}
       />
-
-      <Input
-        isRequired
-        endContent={
-          <button type="button" onClick={toggleVisibility}>
-            {isVisible ? (
-              <Icon
-                className="pointer-events-none text-2xl text-default-400"
-                icon="solar:eye-closed-linear"
-              />
-            ) : (
-              <Icon
-                className="pointer-events-none text-2xl text-default-400"
-                icon="solar:eye-bold"
-              />
-            )}
-          </button>
-        }
-        label="Password"
+      <Controller
+        control={control}
         name="password"
-        placeholder="Enter your password"
-        type={isVisible ? "text" : "password"}
-        variant="bordered"
+        render={({ field, fieldState }) => (
+          <Input
+            {...field}
+            isRequired
+            isDisabled={isPending}
+            label="Password"
+            isInvalid={fieldState.invalid}
+            variant="bordered"
+            errorMessage={fieldState.error?.message}
+            type={isVisible ? "text" : "password"}
+            endContent={
+              <button type="button" onClick={toggleVisibility}>
+                {isVisible ? (
+                  <Icon
+                    className="pointer-events-none text-2xl text-default-400"
+                    icon="solar:eye-closed-linear"
+                  />
+                ) : (
+                  <Icon
+                    className="pointer-events-none text-2xl text-default-400"
+                    icon="solar:eye-bold"
+                  />
+                )}
+              </button>
+            }
+          />
+        )}
       />
-
       <div className="flex w-full items-center justify-between px-1 py-2">
         <Checkbox name="remember" size="sm">
           Remember me
@@ -60,7 +94,17 @@ export default function SigninForm() {
           Forgot password?
         </Link>
       </div>
-      <Button className="w-full" color="primary" type="submit">
+
+      <span className="text-danger text-small">{error}</span>
+      <span className="text-success text-small">{success}</span>
+
+      <Button
+        isDisabled={isPending}
+        isLoading={isPending}
+        className="w-full"
+        color="primary"
+        type="submit"
+      >
         Sign In
       </Button>
     </Form>
