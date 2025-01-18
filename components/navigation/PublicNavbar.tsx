@@ -45,7 +45,9 @@ export default function PublicNavbar() {
         <Link href="/signin">
           <Button>Sign In</Button>
         </Link>
-        <SignoutButton />
+        <Link href="/signup">
+          <Button>Sign Up</Button>
+        </Link>
       </NavbarContent>
 
       <Dropdown placement="bottom-end">
