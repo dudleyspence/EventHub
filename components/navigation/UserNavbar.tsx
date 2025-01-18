@@ -1,0 +1,73 @@
+"use client";
+import React from "react";
+import {
+  Navbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
+  NavbarMenuToggle,
+  Link,
+  Button,
+  Dropdown,
+  DropdownMenu,
+  DropdownItem,
+  DropdownTrigger,
+} from "@nextui-org/react";
+import Image from "next/image";
+import logo from "@/public/brand/Logo.png";
+import { signOut } from "next-auth/react";
+
+export default function AdminNavbar() {
+  const userNavOptions = [
+    { name: "Events", path: "/events" },
+    { name: "Dashboard", path: "/dashboard" },
+  ];
+
+  return (
+    <Navbar maxWidth="xl" className="pt-5">
+      <NavbarContent>
+        <NavbarBrand>
+          <Image alt="website logo" src={logo} height={45} />
+        </NavbarBrand>
+      </NavbarContent>
+
+      <NavbarContent className="hidden sm:flex gap-6" justify="center">
+        {menuItems.map((item) => (
+          <NavbarItem key={item.name}>
+            <Link size="lg" color="foreground" href={item.path}>
+              {item.name}
+            </Link>
+          </NavbarItem>
+        ))}
+        <Button>Sign Out</Button>
+      </NavbarContent>
+
+      <Dropdown placement="bottom-end">
+        <DropdownTrigger>
+          <NavbarMenuToggle
+            aria-label="Open mobile menu"
+            className="sm:hidden"
+          />
+        </DropdownTrigger>
+        <DropdownMenu aria-label="Mobile Navigation" variant="flat">
+          {menuItems.map((item, index) => (
+            <DropdownItem key={`${item.name}-${index}`}>
+              <Link color="foreground" href={item.path}>
+                {item.name}
+              </Link>
+            </DropdownItem>
+          ))}
+          <DropdownItem key="logout" color="danger">
+            <Button
+              size="sm"
+              color="danger"
+              onPress={() => signOut({ callbackUrl: "/signin" })}
+            >
+              Sign Out
+            </Button>
+          </DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
+    </Navbar>
+  );
+}

@@ -6,7 +6,6 @@ import { db } from "@/lib/db";
 
 import { SignupSchema } from "@/schemas";
 import { getUserByEmail } from "@/data/user";
-import { generateVerificationToken } from "@/data/tokens";
 
 export async function signup(values: z.infer<typeof SignupSchema>) {
   const validatedFields = SignupSchema.safeParse(values);
@@ -33,7 +32,5 @@ export async function signup(values: z.infer<typeof SignupSchema>) {
     },
   });
 
-  const verificationToken = await generateVerificationToken(email);
-
-  return { success: "Confirmation email has been sent!" };
+  return { success: "Signup Complete" };
 }
