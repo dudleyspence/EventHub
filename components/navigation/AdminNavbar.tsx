@@ -40,7 +40,13 @@ export default function AdminNavbar() {
             </Link>
           </NavbarItem>
         ))}
-        <Button>Sign Out</Button>
+        <Button
+          size="sm"
+          color="danger"
+          onPress={() => signOut({ callbackUrl: "/signin" })}
+        >
+          Sign Out
+        </Button>
       </NavbarContent>
 
       <Dropdown placement="bottom-end">
