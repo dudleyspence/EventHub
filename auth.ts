@@ -11,23 +11,9 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     signIn: "/signin",
     error: "/error",
   },
-  events: {
-    async linkAccount({ user }) {
-      await db.user.update({
-        where: { id: user.id },
-        data: { emailVerified: new Date() },
-      });
-    },
-  },
+  events: {},
   callbacks: {
-    async signIn({ user, account }) {
-      // allow the OAuth without email verification
-      if (account?.provider !== "credentials") return true;
-
-      const existingUser = await getUserById(user.id);
-
-      if (!existingUser?.emailVerified) return false;
-
+    async signIn() {
       return true;
     },
     async session({ session, token }) {

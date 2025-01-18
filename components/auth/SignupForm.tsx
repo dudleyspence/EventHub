@@ -49,6 +49,7 @@ export default function SignupForm() {
         render={({ field, fieldState }) => (
           <Input
             isRequired
+            isDisabled={isPending}
             {...field}
             label="Name"
             variant="bordered"
@@ -64,6 +65,7 @@ export default function SignupForm() {
         render={({ field, fieldState }) => (
           <Input
             isRequired
+            isDisabled={isPending}
             {...field}
             label="Email"
             variant="bordered"
@@ -80,6 +82,7 @@ export default function SignupForm() {
           <Input
             {...field}
             isRequired
+            isDisabled={isPending}
             label="Password"
             isInvalid={fieldState.invalid}
             variant="bordered"
@@ -110,6 +113,7 @@ export default function SignupForm() {
           <Input
             {...field}
             isRequired
+            isDisabled={isPending}
             label="Confirm Password"
             isInvalid={fieldState.invalid}
             variant="bordered"
@@ -151,7 +155,13 @@ export default function SignupForm() {
       <span className="text-danger text-small">{error}</span>
       <span className="text-success text-small">{success}</span>
 
-      <Button className="w-full" color="primary" type="submit">
+      <Button
+        isDisabled={isPending}
+        isLoading={isPending}
+        className="w-full"
+        color="primary"
+        type="submit"
+      >
         Submit
       </Button>
     </Form>
