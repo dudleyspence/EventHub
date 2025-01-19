@@ -17,8 +17,8 @@ import Image from "next/image";
 import logo from "@/public/brand/Logo.png";
 import { signOut } from "next-auth/react";
 
-export default function AdminNavbar() {
-  const userNavOptions = [
+export default function UserNavbar() {
+  const menuItems = [
     { name: "Events", path: "/events" },
     { name: "Dashboard", path: "/dashboard" },
   ];
@@ -39,7 +39,13 @@ export default function AdminNavbar() {
             </Link>
           </NavbarItem>
         ))}
-        <Button>Sign Out</Button>
+        <Button
+          size="sm"
+          color="danger"
+          onPress={() => signOut({ callbackUrl: "/signin" })}
+        >
+          Sign Out
+        </Button>
       </NavbarContent>
 
       <Dropdown placement="bottom-end">

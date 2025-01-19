@@ -5,6 +5,17 @@ An array of routes accessible to the public that dont require auth
 
 export const publicRoutes = ["/", "/events", "/events/:id"];
 
+export const adminRoutePrefix = "/admin";
+
+export const adminLandingPage = "/admin/events";
+
+export const adminRoutes = [
+  "/events",
+  "/events/:id",
+  "/dashboard",
+  "/events/create",
+];
+
 /*
 An array of routes used for authenticatio
 @type {string[]}

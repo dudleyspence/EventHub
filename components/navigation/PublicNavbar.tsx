@@ -11,12 +11,10 @@ import {
   DropdownMenu,
   DropdownItem,
   DropdownTrigger,
-  Link,
 } from "@nextui-org/react";
 import Image from "next/image";
 import logo from "@/public/brand/Logo.png";
 import { signOut } from "next-auth/react";
-import SignoutButton from "./SignoutButton";
 
 type MenuItem = {
   name: string;
@@ -37,15 +35,17 @@ export default function PublicNavbar() {
       <NavbarContent className="hidden sm:flex gap-6" justify="center">
         {menuItems.map((item) => (
           <NavbarItem key={item.name}>
-            <Link size="lg" color="foreground" href={item.path}>
+            <Button as="a" href={item.path} size="lg" color="foreground">
               {item.name}
-            </Link>
+            </Button>
           </NavbarItem>
         ))}
-        <Link href="/signin">
-          <Button>Sign In</Button>
-        </Link>
-        <SignoutButton />
+        <Button as="a" href="/signin">
+          Sign In
+        </Button>
+        <Button as="a" href="/signup">
+          Sign Up
+        </Button>
       </NavbarContent>
 
       <Dropdown placement="bottom-end">
@@ -57,13 +57,9 @@ export default function PublicNavbar() {
         </DropdownTrigger>
         <DropdownMenu aria-label="Mobile Navigation" variant="flat">
           {menuItems.map((item, index) => (
-            <Link
-              key={`${item.name}-${index}`}
-              color="foreground"
-              href={item.path}
-            >
-              <DropdownItem>{item.name}</DropdownItem>
-            </Link>
+            <DropdownItem key={index} href={item.path}>
+              {item.name}
+            </DropdownItem>
           ))}
           <DropdownItem key="logout" color="danger">
             <Button
