@@ -1,6 +1,9 @@
 {
   "name": "eventhub",
   "version": "0.1.0",
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
