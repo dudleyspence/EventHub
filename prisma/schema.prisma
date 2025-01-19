@@ -63,6 +63,8 @@ model Event {
   id          String   @id @default(cuid())
   title       String
   description String?
+  maxCapacity Int?
+  image       String?
   date        DateTime
   userId      String
   user        User     @relation("UserEvents", fields: [userId], references: [id])

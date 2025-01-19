@@ -8,6 +8,7 @@ import {
   authRoutes,
   adminRoutePrefix,
   adminRoutes,
+  adminLandingPage,
 } from "@/routes";
 import { currentRole } from "./lib/auth";
 
@@ -36,12 +37,14 @@ export default auth(async (req) => {
 
   // admin doesnt need the landing page - redirects to events
   if (userIsAdmin && nextUrl.pathname === "/") {
-    return Response.redirect(new URL("/admin/events", nextUrl));
+    return Response.redirect(new URL(adminLandingPage, nextUrl));
   }
 
   // if user is admin but going to a non-admin route, redirect to the admin version of the page
   if (userIsAdmin && isAdminRoute) {
-    return Response.redirect(new URL("/admin" + nextUrl.pathname, nextUrl));
+    return Response.redirect(
+      new URL(adminRoutePrefix + nextUrl.pathname, nextUrl)
+    );
   }
 
   if (isAuthRoute) {

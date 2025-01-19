@@ -7,6 +7,8 @@ export const publicRoutes = ["/", "/events", "/events/:id"];
 
 export const adminRoutePrefix = "/admin";
 
+export const adminLandingPage = "/admin/events";
+
 export const adminRoutes = [
   "/events",
   "/events/:id",

@@ -6,9 +6,9 @@ export default function NonAuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="justify-items-center">
+    <div className="justify-items-center min-h-screen">
       <DynamicNavbar />
-      <div className="w-full p-6 max-w-[1280px]">{children}</div>
+      {children}
     </div>
   );
 }
