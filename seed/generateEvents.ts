@@ -1,7 +1,7 @@
 import { UserRole } from "@prisma/client";
 import { faker } from "@faker-js/faker";
 
-export function generateEvents(admin_id) {
+export function generateEvents(admin_id: string) {
   const EventsData = Array.from({ length: 40 }, (_, i) => ({
     title: `Test Event ${i + 1}`,
     description: faker.lorem.sentences(2),
