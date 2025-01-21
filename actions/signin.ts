@@ -19,7 +19,7 @@ export async function signin(values: z.infer<typeof SigninSchema>) {
 
   const existingUser = await getUserByEmail(email);
 
-  if (!existingUser || !existingUser.email || !existingUser.email) {
+  if (!existingUser || !existingUser.email) {
     return { error: "Email not registered" };
   }
 

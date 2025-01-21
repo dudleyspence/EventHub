@@ -2,16 +2,21 @@
   "name": "eventhub",
   "version": "0.1.0",
   "type": "module",
-  "prisma": {
-    "seed": "ts-node prisma/seedsetup.ts"
-  },
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "vitest"
+    "test": "vitest",
+    "setup:dev": "npm run generate:dev && npm run db:push:dev",
+    "seed:dev": "NODE_ENV=development tsx seed/run-seed.ts",
+    "setup:test": "npm run generate:test && npm run db:push:test",
+    "seed:test": "NODE_ENV=test tsx seed/run-seed.ts",
+    "generate:test": "dotenv -e .env.test -- npx prisma generate",
+    "db:push:test": "dotenv -e .env.test -- npx prisma db push",
+    "generate:dev": "dotenv -e .env.development -- npx prisma generate",
+    "db:push:dev": "dotenv -e .env.development -- npx prisma db push"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.7.4",
@@ -44,6 +49,8 @@
     "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^8.21.0",
     "@vitejs/plugin-react": "^4.3.4",
+    "dotenv": "^16.4.7",
+    "dotenv-cli": "^8.0.0",
     "eslint": "^9.18.0",
     "eslint-config-next": "^15.1.5",
     "eslint-config-prettier": "^10.0.1",
@@ -59,7 +66,7 @@
     "tailwindcss": "^3.4.1",
     "ts-node": "^10.9.2",
     "tsx": "^4.19.2",
-    "typescript": "^5",
+    "typescript": "^5.7.3",
     "typescript-eslint": "^8.20.0",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.0.2"

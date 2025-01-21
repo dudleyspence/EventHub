@@ -4,14 +4,20 @@ import { PrismaClient, UserRole } from "@prisma/client";
 import { faker } from "@faker-js/faker";
 import { generateUsers } from "@/seed/generateUsers";
 import { generateEvents } from "@/seed/generateEvents";
+import * as dotenv from "dotenv";
+
+const envFile =
+  process.env.NODE_ENV === "test" ? ".env.test" : ".env.development";
+dotenv.config({ path: envFile });
 
 const db = new PrismaClient();
 
-async function seed() {
+export async function seed() {
   // before seeding clear database
   await db.eventAttendee.deleteMany();
   await db.event.deleteMany();
   await db.user.deleteMany();
+  await db.account.deleteMany();
 
   const seedAdmin = {
     email: process.env.ADMINEMAIL as string,
@@ -21,14 +27,13 @@ async function seed() {
     role: UserRole.ADMIN,
   };
 
-  const UserData = generateUsers();
+  await db.user.create({ data: seedAdmin });
 
-  UserData.push(seedAdmin);
+  const UserData = await generateUsers();
 
   await db.user.createMany({ data: UserData });
-
   const admin = await db.user.findUnique({
-    where: { email: "admin@admin.com" },
+    where: { email: process.env.ADMINEMAIL as string },
   });
   if (!admin) throw new Error("Admin user not found");
 
@@ -65,14 +70,6 @@ async function seed() {
     include: { attendees: true },
   });
 
-  //   eventsWithAttendees.forEach(
-  //     async (event) =>
-  //       await db.event.update({
-  //         where: { id: event.id },
-  //         data: { totalAttendees: event.attendees.length },
-  //       })
-  //   );
-
   const updatePromises = eventsWithAttendees.map((event) =>
     db.event.update({
       where: { id: event.id },
@@ -82,13 +79,3 @@ async function seed() {
 
   await Promise.all(updatePromises);
 }
-
-seed()
-  .then(async () => {
-    await db.$disconnect();
-  })
-  .catch(async (e) => {
-    console.error(e);
-    await db.$disconnect();
-    process.exit(1);
-  });
