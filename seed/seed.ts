@@ -14,10 +14,10 @@ async function seed() {
   await db.user.deleteMany();
 
   const seedAdmin = {
-    email: "admin@admin.com",
+    email: process.env.ADMINEMAIL as string,
     name: "ADMIN USER",
     image: faker.image.avatar(),
-    password: "Password1!",
+    password: process.env.ADMINPASSWORD as string,
     role: UserRole.ADMIN,
   };
 
@@ -25,7 +25,7 @@ async function seed() {
 
   UserData.push(seedAdmin);
 
-  const users = await db.user.createMany({ data: UserData });
+  await db.user.createMany({ data: UserData });
 
   const admin = await db.user.findUnique({
     where: { email: "admin@admin.com" },
@@ -35,7 +35,7 @@ async function seed() {
   const EventsData = generateEvents(admin.id);
 
   // logically there shouldnt be duplicates possible but its there just incase
-  const createdEvents = await db.event.createMany({
+  await db.event.createMany({
     data: EventsData,
     skipDuplicates: true,
   });
@@ -81,8 +81,6 @@ async function seed() {
   );
 
   await Promise.all(updatePromises);
-
-  console.log("database successfully seeded");
 }
 
 seed()
