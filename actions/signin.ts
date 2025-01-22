@@ -2,7 +2,7 @@
 
 import * as z from "zod";
 
-import { SigninSchema } from "@/schemas";
+import { SigninSchema } from "@/schemas/auth";
 import { signIn } from "@/auth";
 
 import { DEFAULT_SIGNIN_REDIRECT } from "@/routes";

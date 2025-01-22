@@ -1,14 +1,19 @@
 "use server";
 
-// how can we query the events
-// by date
-// by category
-// search by name??
+import { getEvents } from "@/data/events";
+import { GetEventsSchema } from "@/schemas/events";
+import * as z from "zod";
 
-// order by date
-// order by event size (maxCapacity)
+export async function fetchEventsAction(
+  values: z.infer<typeof GetEventsSchema>
+) {
+  const validatedFields = GetEventsSchema.safeParse(values);
 
-export async function getEvents(queries, order) {
-    
-    const events = db.
+  if (!validatedFields.success) {
+    return { error: "Invalid data request" };
+  }
+
+  const results = await getEvents(validatedFields.data);
+
+  return results;
 }

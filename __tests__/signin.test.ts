@@ -1,7 +1,7 @@
 import { describe, it, expect, afterEach, vi } from "vitest";
 import { signin } from "@/actions/signin";
 
-import { SigninSchema } from "@/schemas";
+import { SigninSchema } from "@/schemas/auth";
 import { z } from "zod";
 
 // https://www.prisma.io/blog/testing-series-1-8eRB5p0Y8o

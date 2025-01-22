@@ -1,14 +1,71 @@
-import { PrismaClient, Event } from "@prisma/client";
+import { GetEventsSchema } from "@/schemas/events";
+import { PrismaClient } from "@prisma/client";
+import { z } from "zod";
 
 const db = new PrismaClient();
 
-interface getEventsQuery {
-  orderBy?: "date" | "maxCapacity";
-  sort?: "asc" | "desc";
-  category?: Event["category"];
-  startDate?: Date;
-  endDate?: Date;
-  page?: number;
+export async function getEvents({
+  orderBy,
+  sort,
+  category,
+  startDate,
+  endDate,
+  page,
+  limit,
+}: z.infer<typeof GetEventsSchema>) {
+  const whereFilter: any = {};
+
+  if (category) {
+    whereFilter.category = category;
+  }
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // if no date specified, finds all furture events
+  if (!startDate && !endDate) {
+    whereFilter.date = { gte: today };
+  } else if (startDate && !endDate) {
+    // start date given means find only that day
+    const startDateBegining = new Date(startDate).setHours(0, 0, 0, 0);
+    const startDateEnding = new Date(startDate).setHours(23, 59, 59, 999);
+
+    whereFilter.date = {
+      gte: startDateBegining,
+      lte: startDateEnding,
+    };
+  } else if (startDate && endDate) {
+    // both dates given means find events between them
+    const startDateBegining = new Date(startDate).setHours(0, 0, 0, 0);
+    const endDateEnding = new Date(endDate).setHours(23, 59, 59, 999);
+
+    whereFilter.date = {
+      gte: startDateBegining,
+      lte: endDateEnding,
+    };
+  }
+
+  const orderByClause = { [orderBy]: sort };
+
+  const skip = (page - 1) * limit;
+
+  const events = await db.event.findMany({
+    where: whereFilter,
+    orderBy: orderByClause,
+    take: limit,
+    skip,
+  });
+
+  return events;
+}
+
+export async function getUpcomingEvents() {
+  const events = await db.event.findMany({
+    take: 10,
+    orderBy: { date: "asc" },
+  });
+
+  return events;
 }
 
 // desired behaviour:
@@ -26,13 +83,3 @@ interface getEventsQuery {
 // later will include a search term
 // PostgreSQL/Prisma provides _relevance field for seach
 // https://www.prisma.io/docs/orm/prisma-client/queries/filtering-and-sorting#sorting
-
-export async function getEvents({
-  orderBy,
-  sort,
-  category,
-  startDate,
-  endDate,
-}: getEventsQuery) {
-  return db.event.findMany({});
-}
