@@ -1,3 +1,36 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
+import { SignupSchema } from "@/schemas";
+import { describe, it, expect, afterEach, vi } from "vitest";
+import { signup } from "@/actions/signup";
+import { z } from "zod";
 
-describe("", () => {});
+vi.mock("@/auth", () => ({
+  signUp: vi.fn(),
+}));
+
+vi.mock("@/lib/user", () => ({
+  getUserByEmail: vi.fn(),
+}));
+
+type SignupData = z.infer<typeof SignupSchema>;
+
+describe("signup", () => {
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
+  describe("Schema validation tests", () => {
+    it("returns an error if validation fails", async () => {
+      const invalidValues: SignupData = {
+        email: "",
+        password: "",
+        confirmPassword: "",
+        name: "",
+        tc: false,
+      };
+      const result = await signup(invalidValues);
+      expect(result).toEqual({
+        error: "Something went wrong please try again",
+      });
+    });
+  });
+});

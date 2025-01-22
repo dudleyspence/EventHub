@@ -1,8 +1,6 @@
 import { describe, it, expect, afterEach, vi } from "vitest";
 import { signin } from "@/actions/signin";
-import { getUserByEmail } from "@/data/user";
-import { signIn } from "@/auth";
-import { AuthError } from "next-auth";
+
 import { SigninSchema } from "@/schemas";
 import { z } from "zod";
 
@@ -19,7 +17,7 @@ vi.mock("@/lib/user", () => ({
 
 type SigninData = z.infer<typeof SigninSchema>;
 
-describe("signin server action", () => {
+describe("signin", () => {
   afterEach(() => {
     vi.clearAllMocks();
   });

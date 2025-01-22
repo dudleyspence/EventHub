@@ -60,12 +60,19 @@ model Account {
   updatedAt        DateTime  @updatedAt
 }
 
+enum EventCategories {
+  LiveMusic
+  Comedy
+  Art
+}
+
 model Event {
   id                String          @id @default(cuid())
   title             String
   description       String?
   maxCapacity       Int?
-  totalAttendees    Int?             
+  totalAttendees    Int?  
+  category          EventCategories?     
   image             String
   date              DateTime
   userId            String
