@@ -1,14 +1,3 @@
-import { seed } from "@/seed/seed";
-import { PrismaClient } from "@prisma/client";
-import { beforeAll, afterAll } from "vitest";
+import * as dotenv from "dotenv";
 
-const prisma = new PrismaClient();
-
-beforeAll(async () => {
-  console.log("Seeding test database...");
-  await seed(); // clears then seeds the test database
-});
-
-afterAll(async () => {
-  await prisma.$disconnect();
-});
+dotenv.config({ path: ".env.test" });
