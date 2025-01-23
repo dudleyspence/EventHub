@@ -22,20 +22,17 @@ export async function getEvents({
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  // if no date specified, finds all furture events
-  if (!startDate && !endDate) {
-    whereFilter.date = { gte: today };
-  } else if (startDate && !endDate) {
+  if (startDate && !endDate) {
     // start date given means find only that day
-    const startDateBegining = new Date(startDate).setHours(0, 0, 0, 0);
-    const startDateEnding = new Date(startDate).setHours(23, 59, 59, 999);
+    const startDateBegining = new Date(startDate);
+    startDateBegining.setHours(0, 0, 0, 0);
 
     whereFilter.date = {
       gte: startDateBegining,
-      lte: startDateEnding,
     };
   } else if (startDate && endDate) {
     // both dates given means find events between them
+    // when someone chooses a single day this will be the start and end of the same day
     const startDateBegining = new Date(startDate).setHours(0, 0, 0, 0);
     const endDateEnding = new Date(endDate).setHours(23, 59, 59, 999);
 
@@ -54,15 +51,6 @@ export async function getEvents({
     orderBy: orderByClause,
     take: limit,
     skip,
-  });
-
-  return events;
-}
-
-export async function getUpcomingEvents() {
-  const events = await db.event.findMany({
-    take: 10,
-    orderBy: { date: "desc" },
   });
 
   return events;

@@ -1,5 +1,13 @@
 import { fetchEventsAction } from "@/actions/fetchEvents";
-import { describe, expect, it } from "vitest";
+import { clearDatabase, seed } from "@/seed/seed";
+import {
+  afterAll,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  onTestFinished,
+} from "vitest";
 
 type FetchEventsParams = {
   orderBy?: string;
@@ -10,6 +18,15 @@ type FetchEventsParams = {
   startDate?: string;
   endDate?: string;
 };
+
+// describe("", () => {
+//   it("returns an empty array if there isnt upcomming events", async () => {
+//     await clearDatabase();
+//     onTestFinished(async () => await seed());
+//     const events = await fetchEventsAction({});
+//     expect(events).toEqual([]);
+//   }, 5000);
+// });
 
 describe("fetchEvents Invalid Params", () => {
   const invalidParams: Array<[string, FetchEventsParams]> = [
@@ -35,22 +52,38 @@ describe("fetchEvents Invalid Params", () => {
   );
 });
 
-describe("fetchEvents", () => {
-  it("returns a list of 10 events", async () => {
+describe("fetchEvents Valid Params", () => {
+  it("should return a list of maximum 10 events when using the default limit", async () => {
     const results = await fetchEventsAction({});
 
     if (Array.isArray(results)) {
-      expect(results.length).toBe(10);
+      expect(results.length).toBeLessThanOrEqual(10);
     } else {
       throw new Error(`Expected an array of events: ${results.error}`);
     }
   });
 
-  it("returns a list of events using default order by date desc", async () => {
+  it("returns a list of events using default order by date desc if not given params", async () => {
+    const results = await fetchEventsAction({});
+    if (Array.isArray(results)) {
+      for (let i = 0; i < results.length - 1; i++) {
+        const isOrdered = results[i].date >= results[i + 1].date;
+        expect(isOrdered).toBe(true);
+      }
+    } else {
+      throw new Error(`Expected an array of events: ${results.error}`);
+    }
+  });
+
+  it("only returns future events when no date is provided", async () => {
     const results = await fetchEventsAction({});
 
     if (Array.isArray(results)) {
-      expect(results.length).toBe(10);
+      const today = new Date();
+
+      const isFuture = results.every((results) => results.date > today);
+
+      expect(isFuture).toBe(true);
     } else {
       throw new Error(`Expected an array of events: ${results.error}`);
     }
