@@ -62,7 +62,7 @@ export async function getEvents({
 export async function getUpcomingEvents() {
   const events = await db.event.findMany({
     take: 10,
-    orderBy: { date: "asc" },
+    orderBy: { date: "desc" },
   });
 
   return events;
