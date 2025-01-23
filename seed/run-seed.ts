@@ -1,4 +1,4 @@
-import { seed } from "@/seed/seed";
+import { clearDatabase, seed } from "@/seed/seed";
 import { PrismaClient } from "@prisma/client";
 import * as dotenv from "dotenv";
 
@@ -8,7 +8,12 @@ dotenv.config({ path: envFile });
 
 const db = new PrismaClient();
 
-seed()
+clearDatabase()
+  .then(async () => {
+    console.log("Database cleared.");
+    // Seeding the database
+    await seed();
+  })
   .then(async () => {
     console.log("Database seeding completed.");
     await db.$disconnect();
@@ -19,3 +24,9 @@ seed()
     await db.$disconnect();
     process.exit(1);
   });
+
+// seed().then(async () => {
+//   console.log("Database seeding completed.");
+//   await db.$disconnect();
+//   process.exit(0);
+// });

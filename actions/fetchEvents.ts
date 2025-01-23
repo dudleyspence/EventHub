@@ -1,13 +1,18 @@
 "use server";
 
 import { getEvents } from "@/data/events";
-import { GetEventsSchema } from "@/schemas/events";
-import * as z from "zod";
+import { FetchEventsSchema } from "@/schemas/events";
+import { Event } from "@prisma/client";
+
+// using values: unknown as we could pass values={} which would be
+// accepted by the schema and parsed to include the default values
+
+type FetchEventsOutputType = Event[] | { error: string };
 
 export async function fetchEventsAction(
-  values: z.infer<typeof GetEventsSchema>
-) {
-  const validatedFields = GetEventsSchema.safeParse(values);
+  values: unknown
+): Promise<FetchEventsOutputType> {
+  const validatedFields = FetchEventsSchema.safeParse(values);
 
   if (!validatedFields.success) {
     return { error: "Invalid data request" };

@@ -1,5 +1,6 @@
 import { fetchUpcomingEvents } from "@/actions/fetchUpcomingEvents";
-import { describe, it, expect } from "vitest";
+import { clearDatabase, seed } from "@/seed/seed";
+import { describe, it, expect, afterAll, beforeEach } from "vitest";
 
 describe("FetchUpcomingEvents", () => {
   it("should return a list of maximum 10 events", async () => {
@@ -20,5 +21,20 @@ describe("FetchUpcomingEvents", () => {
       const isOrdered = events[i].date >= events[i + 1].date;
       expect(isOrdered).toBe(true);
     }
+  });
+});
+
+describe("fetchUpcomingEvents with no upcoming events", () => {
+  beforeEach(async () => {
+    await clearDatabase();
+  });
+
+  it("returns an empty array if there isnt upcomming events", async () => {
+    const events = await fetchUpcomingEvents();
+    expect(events).toEqual([]);
+  });
+
+  afterAll(async () => {
+    await seed();
   });
 });

@@ -14,10 +14,8 @@ const db = new PrismaClient();
 
 export async function seed() {
   // before seeding clear database
-  await db.eventAttendee.deleteMany();
-  await db.event.deleteMany();
-  await db.user.deleteMany();
-  await db.account.deleteMany();
+
+  clearDatabase();
 
   const seedAdmin = {
     email: process.env.ADMINEMAIL as string,
@@ -78,4 +76,11 @@ export async function seed() {
   );
 
   await Promise.all(updatePromises);
+}
+
+export async function clearDatabase() {
+  await db.eventAttendee.deleteMany();
+  await db.event.deleteMany();
+  await db.user.deleteMany();
+  await db.account.deleteMany();
 }

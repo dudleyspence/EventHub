@@ -1,4 +1,4 @@
-import { GetEventsSchema } from "@/schemas/events";
+import { FetchEventsSchema } from "@/schemas/events";
 import { PrismaClient } from "@prisma/client";
 import { z } from "zod";
 
@@ -12,7 +12,7 @@ export async function getEvents({
   endDate,
   page,
   limit,
-}: z.infer<typeof GetEventsSchema>) {
+}: z.infer<typeof FetchEventsSchema>) {
   const whereFilter: any = {};
 
   if (category) {
