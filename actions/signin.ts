@@ -8,8 +8,9 @@ import { signIn } from "@/auth";
 import { DEFAULT_SIGNIN_REDIRECT } from "@/routes";
 import { AuthError } from "next-auth";
 import { getUserByEmail } from "@/data/user";
+import { SigninInput } from "@/types/auth";
 
-export async function signin(values: z.infer<typeof SigninSchema>) {
+export async function signin(values: SigninInput) {
   const validatedFields = SigninSchema.safeParse(values);
 
   if (!validatedFields.success) {

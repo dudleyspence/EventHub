@@ -1,23 +1,5 @@
 import { fetchEventsAction } from "@/actions/fetchEvents";
-import { clearDatabase, seed } from "@/seed/seed";
-import {
-  afterAll,
-  beforeEach,
-  describe,
-  expect,
-  it,
-  onTestFinished,
-} from "vitest";
-
-type FetchEventsParams = {
-  orderBy?: string;
-  category?: string;
-  sort?: string;
-  page?: number;
-  limit?: number;
-  startDate?: string;
-  endDate?: string;
-};
+import { describe, expect, it } from "vitest";
 
 // describe("", () => {
 //   it("returns an empty array if there isnt upcomming events", async () => {
@@ -29,7 +11,7 @@ type FetchEventsParams = {
 // });
 
 describe("fetchEvents Invalid Params", () => {
-  const invalidParams: Array<[string, FetchEventsParams]> = [
+  const invalidParams: Array<[string, any]> = [
     ["invalid orderBy value", { orderBy: "speed" }],
     ["invalid category value", { category: "plastic" }],
     ["invalid sort value", { sort: "upsideDown" }],
@@ -46,8 +28,9 @@ describe("fetchEvents Invalid Params", () => {
   it.each(invalidParams)(
     "returns an error when failing schema validation: %s",
     async (description, params) => {
-      const results = await fetchEventsAction(params);
-      expect(results).toEqual({ error: "Invalid data request" });
+      await expect(fetchEventsAction(params)).rejects.toThrow(
+        "Invalid data request"
+      );
     }
   );
 });
@@ -59,7 +42,7 @@ describe("fetchEvents Valid Params", () => {
     if (Array.isArray(results)) {
       expect(results.length).toBeLessThanOrEqual(10);
     } else {
-      throw new Error(`Expected an array of events: ${results.error}`);
+      throw new Error(`Expected an array of events`);
     }
   });
 
@@ -71,7 +54,7 @@ describe("fetchEvents Valid Params", () => {
         expect(isOrdered).toBe(true);
       }
     } else {
-      throw new Error(`Expected an array of events: ${results.error}`);
+      throw new Error(`Expected an array of events`);
     }
   });
 
@@ -85,7 +68,7 @@ describe("fetchEvents Valid Params", () => {
 
       expect(isFuture).toBe(true);
     } else {
-      throw new Error(`Expected an array of events: ${results.error}`);
+      throw new Error(`Expected an array of events`);
     }
   });
 });

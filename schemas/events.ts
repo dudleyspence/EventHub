@@ -14,6 +14,6 @@ export const FetchEventsSchema = z.object({
       return todayAtMidnight;
     }),
   endDate: z.date().optional(),
-  page: z.number().int().gt(0).optional().default(1),
-  limit: z.number().int().gt(0).optional().default(10),
+  page: z.number().int().gt(0).default(1),
+  limit: z.number().int().gt(0).default(10),
 });

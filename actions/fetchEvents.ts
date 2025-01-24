@@ -2,20 +2,16 @@
 
 import { getEvents } from "@/data/events";
 import { FetchEventsSchema } from "@/schemas/events";
-import { Event } from "@prisma/client";
+import { FetchEventsInput, FetchEventsOutput } from "@/types/events";
 
-// using values: unknown as we could pass values={} which would be
-// accepted by the schema and parsed to include the default values
-
-export type FetchEventsOutputType = Event[] | { error: string };
-
+// using partial as there are fields that are require but may be missing as the default values will be used when safeParsing
 export async function fetchEventsAction(
-  values: unknown
-): Promise<FetchEventsOutputType> {
+  values: Partial<FetchEventsInput>
+): Promise<FetchEventsOutput> {
   const validatedFields = FetchEventsSchema.safeParse(values);
 
   if (!validatedFields.success) {
-    return { error: "Invalid data request" };
+    throw new Error("Invalid data request");
   }
 
   const results = await getEvents(validatedFields.data);

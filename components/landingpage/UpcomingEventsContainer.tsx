@@ -4,6 +4,7 @@ import UpcomingEvents from "./UpcomingEvents";
 
 export default async function UpcomingEventsContainer() {
   const events = await fetchEventsAction({});
+  console.log(events);
 
   if (!Array.isArray(events)) {
     return null;

@@ -2,7 +2,6 @@
 
 import React from "react";
 import EventCard from "../events/EventCard";
-import { Event } from "@prisma/client";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -10,12 +9,13 @@ import "swiper/css/keyboard";
 import "swiper/css/scrollbar";
 import "swiper/css/mousewheel";
 import { Pagination, Navigation } from "swiper/modules";
+import { FetchEventsOutput } from "@/types/events";
 
-interface UpcomingEventsProps {
-  events: Event[];
-}
-
-export default function UpcomingEvents({ events }: UpcomingEventsProps) {
+export default function UpcomingEvents({
+  events,
+}: {
+  events: FetchEventsOutput;
+}) {
   if (!events || events.length === 0) {
     return <div>Loading events...</div>;
   }
