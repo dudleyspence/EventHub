@@ -7,17 +7,18 @@ import HeroText from "./HeroText";
 
 export default function Hero() {
   return (
-    <div className="hero flex flex-col md:flex-row-reverse items-end px-8 py-10 sm:py-20">
-      <div className="relative md:w-1/2 md:h-full w-full h-2/5 overflow-hidden rounded-xl shadow-2xl">
+    <div className="hero flex flex-col items-end py-10 sm:py-10">
+      <div className="relative w-full h-1/2 overflow-hidden lg:rounded-xl shadow-2xl">
         <Image
           className="object-cover overflow-hidden"
           fill
           priority
           alt="party"
-          src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y29uY2VydHxlbnwwfHwwfHx8MA%3D%3D"
+          src="https://c0.wallpaperflare.com/path/857/866/439/person-candid-livemusic-festival-e5d1f147d41c46e564eb9920bb3faf03.jpg
+"
         />
       </div>
-      <div className="md:w-1/2 md:h-full w-full h-3/5 md:pr-8 pb-5">
+      <div className="w-full h-1/2 p-8">
         <HeroText />
       </div>
     </div>

@@ -7,7 +7,7 @@ import { Event } from "@prisma/client";
 // using values: unknown as we could pass values={} which would be
 // accepted by the schema and parsed to include the default values
 
-type FetchEventsOutputType = Event[] | { error: string };
+export type FetchEventsOutputType = Event[] | { error: string };
 
 export async function fetchEventsAction(
   values: unknown

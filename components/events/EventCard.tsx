@@ -1,10 +1,11 @@
+import React from "react";
 import { Card, CardHeader, CardBody, Image } from "@nextui-org/react";
 
 interface EventCardProps {
   name: string;
-  date: string;
-  maxCapacity: number;
-  remainingCapacity: number;
+  date: Date;
+  maxCapacity: number | null;
+  totalAttendees: number | null;
   image: string;
 }
 
@@ -12,15 +13,16 @@ export default function EventCard({
   name,
   date,
   maxCapacity,
-  remainingCapacity,
+  totalAttendees,
   image,
 }: EventCardProps) {
+  console.log(date);
   return (
-    <Card className="py-4">
+    <Card className="py-4 w-[350px] h-[400px] m-5">
       <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-        <p className="text-tiny uppercase font-bold">{date}</p>
+        <p className="text-tiny uppercase font-bold">{}</p>
         <small className="text-default-500">
-          {remainingCapacity}
+          {totalAttendees}
           {"/"}
           {maxCapacity}
         </small>

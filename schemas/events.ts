@@ -11,7 +11,6 @@ export const FetchEventsSchema = z.object({
     .default(() => {
       const todayAtMidnight = new Date();
       todayAtMidnight.setHours(0, 0, 0, 0);
-      console.log(todayAtMidnight);
       return todayAtMidnight;
     }),
   endDate: z.date().optional(),
