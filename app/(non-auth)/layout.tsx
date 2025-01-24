@@ -1,3 +1,4 @@
+import React from "react";
 import DynamicNavbar from "@/components/navigation/DynamicNavbar";
 
 export default function NonAuthLayout({

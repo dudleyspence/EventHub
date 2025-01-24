@@ -1,5 +1,6 @@
 import React from "react";
-import { Card, CardHeader, CardBody, Image } from "@nextui-org/react";
+import { Card, CardHeader, CardBody } from "@nextui-org/react";
+import Image from "next/image";
 
 interface EventCardProps {
   name: string;
@@ -18,8 +19,8 @@ export default function EventCard({
 }: EventCardProps) {
   console.log(date);
   return (
-    <Card className="py-4 w-[350px] h-[400px] m-5">
-      <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
+    <Card className="w-[350px] h-[400px] p-4">
+      <CardHeader className="flex-col items-start h-1/3">
         <p className="text-tiny uppercase font-bold">{}</p>
         <small className="text-default-500">
           {totalAttendees}
@@ -28,12 +29,12 @@ export default function EventCard({
         </small>
         <h4 className="font-bold text-large">{name}</h4>
       </CardHeader>
-      <CardBody className="overflow-visible py-2">
+      <CardBody className="overflow-visible w-full h-2/3">
         <Image
           alt="Card background"
           className="object-cover rounded-xl"
           src={image}
-          width={270}
+          fill
         />
       </CardBody>
     </Card>

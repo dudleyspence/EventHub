@@ -27,7 +27,7 @@ export async function seed() {
 
   await db.user.create({ data: seedAdmin });
 
-  const UserData = await generateUsers();
+  const UserData = await generateUsers(15);
 
   await db.user.createMany({ data: UserData });
   const admin = await db.user.findUnique({
@@ -35,7 +35,7 @@ export async function seed() {
   });
   if (!admin) throw new Error("Admin user not found");
 
-  const EventsData = generateEvents(admin.id);
+  const EventsData = await generateEvents(admin.id, 50);
 
   // logically there shouldnt be duplicates possible but its there just incase
   await db.event.createMany({
@@ -50,7 +50,7 @@ export async function seed() {
 
   // flattens the result into a single array of eventAttendees
   const eventAttendeesData = allUsers.flatMap((user) => {
-    const attendedEvents = faker.helpers.shuffle(allEvents).slice(0, 5);
+    const attendedEvents = faker.helpers.shuffle(allEvents).slice(0, 10);
     return attendedEvents.map((event) => ({
       eventId: event.id,
       userId: user.id,
