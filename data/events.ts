@@ -16,7 +16,7 @@ export async function getEvents({
   const whereFilter: any = {};
 
   if (category) {
-    whereFilter.category = category;
+    whereFilter.categoryId = category;
   }
 
   const today = new Date();

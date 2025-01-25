@@ -60,27 +60,11 @@ model Account {
   updatedAt        DateTime  @updatedAt
 }
 
-enum EventCategories {
-  LiveMusic @map("Live Music")
-  Comedy @map("Comedy")
-  Art @map("Art")
-  Sports @map("Sports")
-  Technology @map("Technology")
-  Education @map("Education")
-  FoodAndDrink @map("Food and Drink")
-  Networking @map("Networking")
-  HealthAndWellness @map("Health and Wellness")
-  Fashion @map("Fashion")
-  MusicFestival @map("Music Festival")
-  Conference @map("Conference")
-  Workshop @map("Workshop")
-  Theater @map("Theater")
-  Dance @map("Dance")
-  Film @map("Film")
-  Literature @map("Literature")
-  OutdoorActivities @map("Outdoor Activities")
-  Gaming @map("Gaming")
-  Charity @map("Charity")
+
+
+model Category {
+  name             String    @id @unique
+  events           Event[]   @relation("EventCategory")
 }
 
 model Event {
@@ -88,8 +72,9 @@ model Event {
   title             String
   description       String?
   maxCapacity       Int?
-  totalAttendees    Int?  
-  category          EventCategories?     
+  totalAttendees    Int?
+  categoryRel       Category?       @relation("EventCategory", fields: [category], references: [name])
+  category          String?
   image             String
   date              DateTime
   userId            String

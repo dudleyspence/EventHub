@@ -1,10 +1,12 @@
-import { getEventPhotos } from "@/lib/eventPhotos";
+import { getEventPhotos } from "@/seed/eventPhotos";
 import { faker } from "@faker-js/faker";
-import { EventCategories } from "@prisma/client";
 
-export async function generateEvents(admin_id: string, n: number) {
+export async function generateEvents(
+  admin_id: string,
+  allCategories: string[],
+  n: number
+) {
   const images = await getEventPhotos(n);
-  const eventCategoriesArray = Object.values(EventCategories);
 
   const EventsData = Array.from({ length: n }, (_, i) => ({
     title: `Test Event ${i + 1}`,
@@ -14,7 +16,7 @@ export async function generateEvents(admin_id: string, n: number) {
     image: images[i] || faker.image.urlLoremFlickr({ category: "nightlife" }),
     date: faker.date.future(),
     userId: admin_id,
-    category: faker.helpers.arrayElement(eventCategoriesArray),
+    category: faker.helpers.arrayElement(allCategories),
   }));
 
   return EventsData;

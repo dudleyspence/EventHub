@@ -13,7 +13,7 @@ import { describe, expect, it } from "vitest";
 describe("fetchEvents Invalid Params", () => {
   const invalidParams: Array<[string, any]> = [
     ["invalid orderBy value", { orderBy: "speed" }],
-    ["invalid category value", { category: "plastic" }],
+    ["invalid category value", { category: 10 }],
     ["invalid sort value", { sort: "upsideDown" }],
     ["negative page number", { page: -1 }],
     ["zero limit", { limit: 0 }],

@@ -5,6 +5,7 @@ import { faker } from "@faker-js/faker";
 import { generateUsers } from "@/seed/generateUsers";
 import { generateEvents } from "@/seed/generateEvents";
 import * as dotenv from "dotenv";
+import { generateCategories } from "./generateCategories";
 
 const envFile =
   process.env.NODE_ENV === "test" ? ".env.test" : ".env.development";
@@ -35,7 +36,13 @@ export async function seed() {
   });
   if (!admin) throw new Error("Admin user not found");
 
-  const EventsData = await generateEvents(admin.id, 50);
+  const categories = generateCategories();
+  await db.category.createMany({ data: categories, skipDuplicates: true });
+  const allCategories = (await db.category.findMany()).map(
+    (category) => category.name
+  );
+
+  const EventsData = await generateEvents(admin.id, allCategories, 50);
 
   // logically there shouldnt be duplicates possible but its there just incase
   await db.event.createMany({

@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, CardHeader, CardBody, Chip } from "@nextui-org/react";
 import Image from "next/image";
+import { Event } from "@prisma/client";
 
 interface EventCardProps {
   name: string;
@@ -8,7 +9,7 @@ interface EventCardProps {
   maxCapacity: number | null;
   totalAttendees: number | null;
   image: string;
-  category: string;
+  category: string | null;
 }
 
 export default function EventCard({
@@ -19,7 +20,6 @@ export default function EventCard({
   image,
   category,
 }: EventCardProps) {
-  console.log(date);
   return (
     <Card className="w-[350px] h-[400px] p-4">
       <CardHeader className="flex-col gap-2 items-start h-1/3">
@@ -30,7 +30,7 @@ export default function EventCard({
             {"/"}
             {maxCapacity}
           </small>
-          <Chip>{category}</Chip>
+          {category && <Chip>{category}</Chip>}
         </div>
       </CardHeader>
       <CardBody className="overflow-visible w-full h-2/3">

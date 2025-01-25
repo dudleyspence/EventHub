@@ -10,14 +10,16 @@
     "lint": "next lint",
     "test": "npm run seed:test && vitest",
     "coverage": "vitest run --coverage",
-    "setup:dev": "npm run generate:dev && npm run db:push:dev",
+    "setup:dev": "npm run reset:dev && npm run generate:dev && npm run db:push:dev",
     "seed:dev": "NODE_ENV=development tsx seed/run-seed.ts",
-    "setup:test": "npm run generate:test && npm run db:push:test",
+    "setup:test": "npm run reset:test && npm run generate:test && npm run db:push:test",
     "seed:test": "NODE_ENV=test tsx seed/run-seed.ts",
     "generate:test": "dotenv -e .env.test -- npx prisma generate",
     "db:push:test": "dotenv -e .env.test -- npx prisma db push",
     "generate:dev": "dotenv -e .env.development -- npx prisma generate",
-    "db:push:dev": "dotenv -e .env.development -- npx prisma db push"
+    "db:push:dev": "dotenv -e .env.development -- npx prisma db push",
+    "reset:dev": "dotenv -e .env.development -- npx prisma migrate reset",
+    "reset:test": "dotenv -e .env.test -- npx prisma migrate reset"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.7.4",

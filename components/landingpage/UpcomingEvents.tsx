@@ -8,7 +8,7 @@ import "swiper/css/navigation";
 import "swiper/css/keyboard";
 import "swiper/css/scrollbar";
 import "swiper/css/mousewheel";
-import { Pagination, Navigation, Mousewheel } from "swiper/modules";
+import { Pagination, Navigation, Mousewheel, A11y } from "swiper/modules";
 import { FetchEventsOutput } from "@/types/events";
 import Link from "next/link";
 
@@ -20,21 +20,26 @@ export default function UpcomingEvents({
   if (!events || events.length === 0) {
     return <div>Loading events...</div>;
   }
+
   return (
     <Swiper
-      className="w-full bg-rose-200 rounded-xl"
-      spaceBetween={30}
+      className="w-screen max-w-[1280px] "
       slidesPerView={"auto"}
       centeredSlides={true}
       loop={true}
       pagination={{
         clickable: true,
       }}
-      modules={[Pagination, Navigation, Mousewheel]}
-      mousewheel={true}
+      modules={[Pagination, Navigation, Mousewheel, A11y]}
+      mousewheel={{
+        forceToAxis: true,
+      }}
     >
       {events.map((event) => (
-        <SwiperSlide key={event.id} className="max-w-fit my-10 cursor-pointer">
+        <SwiperSlide
+          key={event.id}
+          className="mx-3 max-w-fit my-10 cursor-pointer"
+        >
           <Link href={`/events/${event.id}`}>
             <EventCard
               name={event.title}
