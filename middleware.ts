@@ -23,6 +23,7 @@ export default auth(async (req) => {
 
   const isAPIAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
+  // need to change this as it doesnt notice dynamic routes like events/:id
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
   const isAdminRoute = adminRoutes.includes(nextUrl.pathname);
 

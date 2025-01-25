@@ -10,6 +10,7 @@ import "swiper/css/scrollbar";
 import "swiper/css/mousewheel";
 import { Pagination, Navigation, Mousewheel } from "swiper/modules";
 import { FetchEventsOutput } from "@/types/events";
+import Link from "next/link";
 
 export default function UpcomingEvents({
   events,
@@ -21,7 +22,7 @@ export default function UpcomingEvents({
   }
   return (
     <Swiper
-      className="w-full bg-blue-200"
+      className="w-full bg-rose-200 rounded-xl"
       spaceBetween={30}
       slidesPerView={"auto"}
       centeredSlides={true}
@@ -33,14 +34,17 @@ export default function UpcomingEvents({
       mousewheel={true}
     >
       {events.map((event) => (
-        <SwiperSlide key={event.id} className="max-w-fit my-10">
-          <EventCard
-            name={event.title}
-            date={event.date}
-            maxCapacity={event.maxCapacity}
-            totalAttendees={event.totalAttendees}
-            image={event.image}
-          />
+        <SwiperSlide key={event.id} className="max-w-fit my-10 cursor-pointer">
+          <Link href={`/events/${event.id}`}>
+            <EventCard
+              name={event.title}
+              date={event.date}
+              maxCapacity={event.maxCapacity}
+              totalAttendees={event.totalAttendees}
+              image={event.image}
+              category={event.category}
+            />
+          </Link>
         </SwiperSlide>
       ))}
     </Swiper>
