@@ -13,10 +13,10 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.hero {
+/* .hero {
   width: 100%;
   height: calc(100vh - 84px);
-}
+} */
 
 .swiper-slide {
   /* Center slide text vertically */

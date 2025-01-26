@@ -30,7 +30,9 @@ export default function EventCard({
             {"/"}
             {maxCapacity}
           </small>
-          {category && <Chip>{category}</Chip>}
+          {category && (
+            <Chip className="text-white bg-slate-700">{category}</Chip>
+          )}
         </div>
       </CardHeader>
       <CardBody className="overflow-visible w-full h-2/3">

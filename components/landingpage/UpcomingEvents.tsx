@@ -23,7 +23,7 @@ export default function UpcomingEvents({
 
   return (
     <Swiper
-      className="w-screen max-w-[1280px] "
+      className="w-screen max-w-[1280px] mt-8"
       slidesPerView={"auto"}
       centeredSlides={true}
       loop={true}
@@ -38,7 +38,7 @@ export default function UpcomingEvents({
       {events.map((event) => (
         <SwiperSlide
           key={event.id}
-          className="mx-3 max-w-fit my-10 cursor-pointer"
+          className="mx-3 max-w-fit my-5 cursor-pointer"
         >
           <Link href={`/events/${event.id}`}>
             <EventCard

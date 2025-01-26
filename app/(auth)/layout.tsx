@@ -1,7 +1,9 @@
+import React from "react";
 import Image from "next/image";
 import logo from "@/public/brand/Logo.png";
 import yellowGraphic from "@/public/graphics/EventHubGraphicYellow.png";
 import orangeGraphic from "@/public/graphics/EventHubGraphicOrange.png";
+import Link from "next/link";
 
 export default function AuthLayout({
   children,
@@ -22,7 +24,10 @@ export default function AuthLayout({
         height={700}
         className="hidden mb-4 xs:block fixed bottom-[-250] left-[-250]"
       />
-      <Image alt="website logo" src={logo} height={45} className="mb-4" />
+
+      <Link href="/">
+        <Image alt="website logo" src={logo} height={45} className="mb-4" />
+      </Link>
       {children}
     </div>
   );
