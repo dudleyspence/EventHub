@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [tsconfigPaths(), react()],
   mode: "test",
   test: {
-    setupFiles: ["./vitest.setup.ts", "dotenv/config"],
+    setupFiles: ["dotenv/config", "./vitest.setup.ts"],
     environment: "node",
     deps: {
       // Force Vitest to process ESM code in next-auth, next, oauth4webapi, etc.

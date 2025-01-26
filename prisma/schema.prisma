@@ -60,12 +60,21 @@ model Account {
   updatedAt        DateTime  @updatedAt
 }
 
+
+
+model Category {
+  name             String    @id @unique
+  events           Event[]   @relation("EventCategory")
+}
+
 model Event {
   id                String          @id @default(cuid())
   title             String
   description       String?
   maxCapacity       Int?
-  totalAttendees    Int?             
+  totalAttendees    Int?
+  categoryRel       Category?       @relation("EventCategory", fields: [category], references: [name])
+  category          String?
   image             String
   date              DateTime
   userId            String

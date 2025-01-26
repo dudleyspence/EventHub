@@ -31,3 +31,5 @@ export const SignupSchema = z
     message: "You must accept the terms and conditions",
     path: ["tc"],
   });
+
+export const EventSchema = z.object({});

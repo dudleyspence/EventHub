@@ -1,37 +1,46 @@
-import { Card, CardHeader, CardBody, Image } from "@nextui-org/react";
+import React from "react";
+import { Card, CardHeader, CardBody, Chip } from "@nextui-org/react";
+import Image from "next/image";
+import { Event } from "@prisma/client";
 
 interface EventCardProps {
   name: string;
-  date: string;
-  maxCapacity: number;
-  remainingCapacity: number;
+  date: Date;
+  maxCapacity: number | null;
+  totalAttendees: number | null;
   image: string;
+  category: string | null;
 }
 
 export default function EventCard({
   name,
   date,
   maxCapacity,
-  remainingCapacity,
+  totalAttendees,
   image,
+  category,
 }: EventCardProps) {
   return (
-    <Card className="py-4">
-      <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-        <p className="text-tiny uppercase font-bold">{date}</p>
-        <small className="text-default-500">
-          {remainingCapacity}
-          {"/"}
-          {maxCapacity}
-        </small>
-        <h4 className="font-bold text-large">{name}</h4>
+    <Card className="w-[350px] h-[400px] p-4">
+      <CardHeader className="flex-col gap-2 items-start h-1/3">
+        <h3 className="font-bold text-large">{name}</h3>
+        <div className="flex flex-row items-center gap-3">
+          <small className="text-default-500">
+            {totalAttendees}
+            {"/"}
+            {maxCapacity}
+          </small>
+          {category && (
+            <Chip className="text-white bg-slate-700">{category}</Chip>
+          )}
+        </div>
       </CardHeader>
-      <CardBody className="overflow-visible py-2">
+      <CardBody className="overflow-visible w-full h-2/3">
         <Image
           alt="Card background"
           className="object-cover rounded-xl"
           src={image}
-          width={270}
+          fill
         />
       </CardBody>
     </Card>

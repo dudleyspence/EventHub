@@ -5,6 +5,7 @@ import { faker } from "@faker-js/faker";
 import { generateUsers } from "@/seed/generateUsers";
 import { generateEvents } from "@/seed/generateEvents";
 import * as dotenv from "dotenv";
+import { generateCategories } from "./generateCategories";
 
 const envFile =
   process.env.NODE_ENV === "test" ? ".env.test" : ".env.development";
@@ -14,10 +15,8 @@ const db = new PrismaClient();
 
 export async function seed() {
   // before seeding clear database
-  await db.eventAttendee.deleteMany();
-  await db.event.deleteMany();
-  await db.user.deleteMany();
-  await db.account.deleteMany();
+
+  clearDatabase();
 
   const seedAdmin = {
     email: process.env.ADMINEMAIL as string,
@@ -29,7 +28,7 @@ export async function seed() {
 
   await db.user.create({ data: seedAdmin });
 
-  const UserData = await generateUsers();
+  const UserData = await generateUsers(15);
 
   await db.user.createMany({ data: UserData });
   const admin = await db.user.findUnique({
@@ -37,7 +36,13 @@ export async function seed() {
   });
   if (!admin) throw new Error("Admin user not found");
 
-  const EventsData = generateEvents(admin.id);
+  const categories = generateCategories();
+  await db.category.createMany({ data: categories, skipDuplicates: true });
+  const allCategories = (await db.category.findMany()).map(
+    (category) => category.name
+  );
+
+  const EventsData = await generateEvents(admin.id, allCategories, 50);
 
   // logically there shouldnt be duplicates possible but its there just incase
   await db.event.createMany({
@@ -52,7 +57,7 @@ export async function seed() {
 
   // flattens the result into a single array of eventAttendees
   const eventAttendeesData = allUsers.flatMap((user) => {
-    const attendedEvents = faker.helpers.shuffle(allEvents).slice(0, 5);
+    const attendedEvents = faker.helpers.shuffle(allEvents).slice(0, 10);
     return attendedEvents.map((event) => ({
       eventId: event.id,
       userId: user.id,
@@ -78,4 +83,11 @@ export async function seed() {
   );
 
   await Promise.all(updatePromises);
+}
+
+export async function clearDatabase() {
+  await db.eventAttendee.deleteMany();
+  await db.event.deleteMany();
+  await db.user.deleteMany();
+  await db.account.deleteMany();
 }

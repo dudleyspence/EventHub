@@ -4,10 +4,11 @@ import * as z from "zod";
 import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
 
-import { SignupSchema } from "@/schemas";
+import { SignupSchema } from "@/schemas/auth";
 import { getUserByEmail } from "@/data/user";
+import { SignupInput } from "@/types/auth";
 
-export async function signup(values: z.infer<typeof SignupSchema>) {
+export async function signup(values: SignupInput) {
   const validatedFields = SignupSchema.safeParse(values);
 
   if (!validatedFields.success) {

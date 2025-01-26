@@ -1,9 +1,7 @@
 import { describe, it, expect, afterEach, vi } from "vitest";
 import { signin } from "@/actions/signin";
-import { getUserByEmail } from "@/data/user";
-import { signIn } from "@/auth";
-import { AuthError } from "next-auth";
-import { SigninSchema } from "@/schemas";
+
+import { SigninSchema } from "@/schemas/auth";
 import { z } from "zod";
 
 // https://www.prisma.io/blog/testing-series-1-8eRB5p0Y8o
@@ -19,7 +17,7 @@ vi.mock("@/lib/user", () => ({
 
 type SigninData = z.infer<typeof SigninSchema>;
 
-describe("signin server action", () => {
+describe("signin", () => {
   afterEach(() => {
     vi.clearAllMocks();
   });

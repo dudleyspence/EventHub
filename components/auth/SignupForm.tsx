@@ -2,7 +2,7 @@
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { SignupSchema } from "@/schemas";
+import { SignupSchema } from "@/schemas/auth";
 
 import React, { useState, useTransition } from "react";
 import { Icon } from "@iconify/react";

@@ -7,8 +7,9 @@ import {
   publicRoutes,
   authRoutes,
   adminRoutePrefix,
-  adminRoutes,
   adminLandingPage,
+  adminOnlyRoutes,
+  adminVersionRoutes,
 } from "@/routes";
 import { currentRole } from "./lib/auth";
 
@@ -16,49 +17,60 @@ const { auth } = NextAuth(authConfig);
 
 export default auth(async (req) => {
   const { nextUrl } = req;
-  const isLoggedIn = !!req.auth;
   const userRole = await currentRole();
-  console.log(userRole);
+  const pathway = nextUrl.pathname;
+
+  // USER CHECKS:
+  const isLoggedIn = !!req.auth;
   const userIsAdmin = userRole === "ADMIN";
 
+  // ROUTE STATUS CHECKS:
   const isAPIAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
-  const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
-  const isAuthRoute = authRoutes.includes(nextUrl.pathname);
-  const isAdminRoute = adminRoutes.includes(nextUrl.pathname);
+  const isAuthRoute = authRoutes.includes(pathway);
+  const isPublicRoute = publicRoutes.some((routeRegex) => {
+    return routeRegex.test(pathway);
+  });
+  const isAdminVersionRoute = adminVersionRoutes.some((routeRegex) => {
+    return routeRegex.test(pathway);
+  });
 
+  const isAdminOnlyRoute = adminOnlyRoutes.some((routeRegex) => {
+    return routeRegex.test(pathway);
+  });
+
+  // ROUTE REDIRECTS:
   if (isAPIAuthRoute) {
     return undefined;
   }
 
-  // protects admin routes from non-admins
-  if (isAdminRoute && !userIsAdmin) {
-    return Response.redirect(new URL(DEFAULT_SIGNIN_REDIRECT, nextUrl));
+  // When user is logged out they can only access public routes and auth routes
+  if (!isLoggedIn && !isPublicRoute && !isAuthRoute) {
+    return Response.redirect(new URL("/signin", nextUrl));
   }
 
-  // admin doesnt need the landing page - redirects to events
-  if (userIsAdmin && nextUrl.pathname === "/") {
-    return Response.redirect(new URL(adminLandingPage, nextUrl));
-  }
-
-  // if user is admin but going to a non-admin route, redirect to the admin version of the page
-  if (userIsAdmin && isAdminRoute) {
-    return Response.redirect(
-      new URL(adminRoutePrefix + nextUrl.pathname, nextUrl)
-    );
-  }
-
+  // the user must be signed out to access the login page
   if (isAuthRoute) {
-    // if user is logged in direct them to landing page
-    // if not logged in then allow them to signin page
     if (isLoggedIn) {
       return Response.redirect(new URL(DEFAULT_SIGNIN_REDIRECT, nextUrl));
     }
     return undefined;
   }
 
-  // if user isnt logged in then protects all non public routes and sends user to signin
-  if (!isLoggedIn && !isPublicRoute) {
-    return Response.redirect(new URL("/signin", nextUrl));
+  // admin doesnt need the landing page - redirects to events
+  if (userIsAdmin && pathway === "/") {
+    return Response.redirect(new URL(adminLandingPage, nextUrl));
+  }
+
+  // protects admin routes that dont exist for non-admins
+  if (isAdminOnlyRoute && !userIsAdmin) {
+    return Response.redirect(new URL(DEFAULT_SIGNIN_REDIRECT, nextUrl));
+  }
+
+  // if user is admin but going to a non-admin route, redirect to the admin version of the page
+  if (userIsAdmin && isAdminVersionRoute) {
+    return Response.redirect(
+      new URL(adminRoutePrefix + nextUrl.pathname, nextUrl)
+    );
   }
 
   return undefined;

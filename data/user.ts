@@ -1,7 +1,8 @@
 import { db } from "@/lib/db";
 
-// this is the equivalent of my axios folder in other apps
-// simply housing functions for fetching data from the db
+// in the model view controller
+// this is the model
+// direct interaction with the database
 
 export async function getUserByEmail(email: string) {
   try {
