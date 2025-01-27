@@ -16,25 +16,25 @@ export async function getEvents({
   const whereFilter: any = {};
 
   if (category) {
-    whereFilter.categoryId = category;
+    whereFilter.category = category;
   }
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  if (startDate && !endDate) {
-    // start date given means find only that day
-    const startDateBegining = new Date(startDate);
-    startDateBegining.setHours(0, 0, 0, 0);
+  // start date given means find only that day
+  const startDateBegining = new Date(startDate);
+  startDateBegining.setHours(0, 0, 0, 0);
 
+  if (startDate && !endDate) {
     whereFilter.date = {
       gte: startDateBegining,
     };
   } else if (startDate && endDate) {
     // both dates given means find events between them
     // when someone chooses a single day this will be the start and end of the same day
-    const startDateBegining = new Date(startDate).setHours(0, 0, 0, 0);
-    const endDateEnding = new Date(endDate).setHours(23, 59, 59, 999);
+    const endDateEnding = new Date(endDate);
+    endDateEnding.setHours(23, 59, 59, 999);
 
     whereFilter.date = {
       gte: startDateBegining,
@@ -53,7 +53,16 @@ export async function getEvents({
     skip,
   });
 
-  return events;
+  // need this for pagination
+  const totalEvents = await db.event.count({
+    where: whereFilter,
+  });
+
+  return {
+    events,
+    total: totalEvents,
+    totalPages: Math.ceil(totalEvents / limit),
+  };
 }
 
 // desired behaviour:

@@ -38,9 +38,10 @@ describe("fetchEvents Invalid Params", () => {
 describe("fetchEvents Valid Params", () => {
   it("should return a list of maximum 10 events when using the default limit", async () => {
     const results = await fetchEventsAction({});
+    const events = results.events;
 
-    if (Array.isArray(results)) {
-      expect(results.length).toBeLessThanOrEqual(10);
+    if (Array.isArray(events)) {
+      expect(events.length).toBeLessThanOrEqual(10);
     } else {
       throw new Error(`Expected an array of events`);
     }
@@ -48,9 +49,10 @@ describe("fetchEvents Valid Params", () => {
 
   it("returns a list of events using default order by date desc if not given params", async () => {
     const results = await fetchEventsAction({});
-    if (Array.isArray(results)) {
-      for (let i = 0; i < results.length - 1; i++) {
-        const isOrdered = results[i].date >= results[i + 1].date;
+    const events = results.events;
+    if (Array.isArray(events)) {
+      for (let i = 0; i < events.length - 1; i++) {
+        const isOrdered = events[i].date >= events[i + 1].date;
         expect(isOrdered).toBe(true);
       }
     } else {
@@ -60,13 +62,128 @@ describe("fetchEvents Valid Params", () => {
 
   it("only returns future events when no date is provided", async () => {
     const results = await fetchEventsAction({});
+    const events = results.events;
 
-    if (Array.isArray(results)) {
+    if (Array.isArray(events)) {
       const today = new Date();
 
-      const isFuture = results.every((results) => results.date > today);
+      const isFuture = events.every((event) => event.date > today);
 
       expect(isFuture).toBe(true);
+    } else {
+      throw new Error(`Expected an array of events`);
+    }
+  });
+
+  it("successfully searches by category", async () => {
+    const results = await fetchEventsAction({ category: "Live Music" });
+    const events = results.events;
+
+    if (Array.isArray(events)) {
+      const hasCategory = events.every(
+        (event) => event.category === "Live Music"
+      );
+      expect(hasCategory).toBe(true);
+    } else {
+      throw new Error(`Expected an array of events`);
+    }
+  });
+
+  it("successfully searches by startDate", async () => {
+    const testDate = new Date("2025-04-14 00:00:00.000");
+    const results = await fetchEventsAction({
+      startDate: testDate,
+    });
+    const events = results.events;
+
+    if (Array.isArray(events)) {
+      const hasCorrectDate = events.every((event) => event.date >= testDate);
+      expect(hasCorrectDate).toBe(true);
+    } else {
+      throw new Error(`Expected an array of events`);
+    }
+  });
+
+  it("returns empty object when no events occur after the given start date", async () => {
+    // year 5025
+    const testDate = new Date("5025-04-14 00:00:00.000");
+    const results = await fetchEventsAction({
+      startDate: testDate,
+    });
+    const events = results.events;
+
+    if (Array.isArray(events)) {
+      const hasCorrectDate = events.every((event) => event.date >= testDate);
+      expect(hasCorrectDate).toBe(true);
+
+      expect(events).toEqual([]);
+    } else {
+      throw new Error(`Expected an array of events`);
+    }
+  });
+
+  it("successfully searches by startDate", async () => {
+    const testStartDate = new Date("2025-01-14 00:00:00.000");
+    const testEndDate = new Date("2030-04-14 00:00:00.000");
+
+    const results = await fetchEventsAction({
+      startDate: testStartDate,
+      endDate: testEndDate,
+    });
+    const events = results.events;
+
+    if (Array.isArray(events)) {
+      const hasCorrectDate = events.every(
+        (event) => testStartDate <= event.date && event.date <= testEndDate
+      );
+      expect(hasCorrectDate).toBe(true);
+    } else {
+      throw new Error(`Expected an array of events`);
+    }
+  });
+
+  it("returns a list of events using asc order by date", async () => {
+    const results = await fetchEventsAction({ sort: "asc" });
+    const events = results.events;
+
+    if (Array.isArray(events)) {
+      for (let i = 0; i < events.length - 1; i++) {
+        const isOrdered = events[i].date <= events[i + 1].date;
+        expect(isOrdered).toBe(true);
+      }
+    } else {
+      throw new Error(`Expected an array of events`);
+    }
+  });
+
+  it("returns a list of events using default desc and order by maxCapacity", async () => {
+    const results = await fetchEventsAction({ orderBy: "totalAttendees" });
+    const events = results.events;
+
+    if (Array.isArray(events)) {
+      for (let i = 0; i < events.length - 1; i++) {
+        const isOrdered =
+          events[i].totalAttendees >= events[i + 1].totalAttendees;
+        expect(isOrdered).toBe(true);
+      }
+    } else {
+      throw new Error(`Expected an array of events`);
+    }
+  });
+
+  it("returns a list of events using asc order by maxCapacity", async () => {
+    const results = await fetchEventsAction({
+      orderBy: "totalAttendees",
+      sort: "asc",
+    });
+    const events = results.events;
+
+    if (Array.isArray(events)) {
+      for (let i = 0; i < events.length - 1; i++) {
+        const isOrdered =
+          events[i].totalAttendees <= events[i + 1].totalAttendees;
+        expect(isOrdered).toBe(true);
+      }
     } else {
       throw new Error(`Expected an array of events`);
     }

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import EventCard from "../events/EventCard";
+import EventCard from "../EventCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -11,12 +11,9 @@ import "swiper/css/mousewheel";
 import { Pagination, Navigation, Mousewheel, A11y } from "swiper/modules";
 import { FetchEventsOutput } from "@/types/events";
 import Link from "next/link";
+import { Event } from "@prisma/client";
 
-export default function UpcomingEvents({
-  events,
-}: {
-  events: FetchEventsOutput;
-}) {
+export default function UpcomingEvents({ events }: { events: Event[] }) {
   if (!events || events.length === 0) {
     return <div>Loading events...</div>;
   }
@@ -38,7 +35,7 @@ export default function UpcomingEvents({
       {events.map((event) => (
         <SwiperSlide
           key={event.id}
-          className="mx-3 max-w-fit my-5 cursor-pointer"
+          className="mx-3 min-w-[350px] min-h-[400px] max-w-fit my-5 cursor-pointer"
         >
           <Link href={`/events/${event.id}`}>
             <EventCard

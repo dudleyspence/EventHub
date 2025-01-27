@@ -5,9 +5,9 @@ import UpcomingEventsHeader from "@/public/graphics/UPCOMING_EVENTS.png";
 import Image from "next/image";
 
 export default async function UpcomingEventsContainer() {
-  const events = await fetchEventsAction({});
+  const eventsObj = await fetchEventsAction({});
 
-  if (!Array.isArray(events) || events.length === 0) {
+  if (!Array.isArray(eventsObj.events) || eventsObj.events.length === 0) {
     return null;
   }
 
@@ -21,7 +21,7 @@ export default async function UpcomingEventsContainer() {
           className="absolute -top-10 left-10 "
         />
       </div>
-      <UpcomingEvents events={events} />
+      <UpcomingEvents events={eventsObj.events} />
     </div>
   );
 }

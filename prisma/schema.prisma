@@ -72,7 +72,7 @@ model Event {
   title             String
   description       String?
   maxCapacity       Int?
-  totalAttendees    Int?
+  totalAttendees    Int             @default(0)
   categoryRel       Category?       @relation("EventCategory", fields: [category], references: [name])
   category          String?
   image             String
