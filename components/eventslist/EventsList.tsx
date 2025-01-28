@@ -10,7 +10,7 @@ interface EventListProps {
 
 export default function EventList({ events }: EventListProps) {
   return (
-    <div className="w-full grid grid-cols-2 gap-5 mt-8">
+    <div className="w-full grid sm:grid-cols-2 gap-5 mt-8 pr-5">
       {events.map((event) => (
         <Link key={event.id} href={`/events/${event.id}`}>
           <EventCard

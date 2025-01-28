@@ -47,12 +47,12 @@ describe("fetchEvents Valid Params", () => {
     }
   });
 
-  it("returns a list of events using default order by date desc if not given params", async () => {
+  it("returns a list of events using default order by date asc if not given params", async () => {
     const results = await fetchEventsAction({});
     const events = results.events;
     if (Array.isArray(events)) {
       for (let i = 0; i < events.length - 1; i++) {
-        const isOrdered = events[i].date >= events[i + 1].date;
+        const isOrdered = events[i].date <= events[i + 1].date;
         expect(isOrdered).toBe(true);
       }
     } else {
@@ -156,14 +156,14 @@ describe("fetchEvents Valid Params", () => {
     }
   });
 
-  it("returns a list of events using default desc and order by maxCapacity", async () => {
+  it("returns a list of events using default asc and order by maxCapacity", async () => {
     const results = await fetchEventsAction({ orderBy: "totalAttendees" });
     const events = results.events;
 
     if (Array.isArray(events)) {
       for (let i = 0; i < events.length - 1; i++) {
         const isOrdered =
-          events[i].totalAttendees >= events[i + 1].totalAttendees;
+          events[i].totalAttendees <= events[i + 1].totalAttendees;
         expect(isOrdered).toBe(true);
       }
     } else {

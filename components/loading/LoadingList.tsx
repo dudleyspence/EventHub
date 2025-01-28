@@ -9,7 +9,7 @@ export default function LoadingList({
 }) {
   const placeholderArray = Array.from({ length: eventsPerPage });
   return (
-    <div className="w-full grid grid-cols-2 gap-5 mt-8">
+    <div className="w-full grid sm:grid-cols-2 gap-5 mt-8">
       {placeholderArray.map((_, index) => (
         <Card key={index} className="w-full h-[400px] p-4">
           <CardHeader className="flex-col gap-2 items-start h-1/3">
