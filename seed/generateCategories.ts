@@ -20,5 +20,6 @@ export function generateCategories() {
     { name: "Outdoor Activities" },
     { name: "Gaming" },
     { name: "Charity" },
+    { name: "Community" },
   ];
 }

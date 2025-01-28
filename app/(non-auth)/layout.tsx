@@ -8,7 +8,7 @@ export default function NonAuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="w-full max-w-[1280px] justify-items-center min-h-screen">
+    <div className="w-screen max-w-[1280px] justify-items-center min-h-screen">
       <DynamicNavbar />
       {children}
       <Footer />

@@ -28,7 +28,9 @@ export default function AdminNavbar() {
     <Navbar maxWidth="xl" className="pt-5">
       <NavbarContent>
         <NavbarBrand>
-          <Image alt="website logo" src={logo} height={45} />
+          <Link href="/">
+            <Image alt="website logo" src={logo} height={45} />
+          </Link>
         </NavbarBrand>
       </NavbarContent>
 

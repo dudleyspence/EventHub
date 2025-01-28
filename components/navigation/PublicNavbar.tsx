@@ -11,6 +11,7 @@ import {
   DropdownMenu,
   DropdownItem,
   DropdownTrigger,
+  Link,
 } from "@nextui-org/react";
 import Image from "next/image";
 import logo from "@/public/brand/Logo.png";
@@ -28,7 +29,9 @@ export default function PublicNavbar() {
     <Navbar maxWidth="xl" className="pt-5">
       <NavbarContent>
         <NavbarBrand>
-          <Image alt="website logo" src={logo} height={45} />
+          <Link href="/">
+            <Image alt="website logo" src={logo} height={45} />
+          </Link>{" "}
         </NavbarBrand>
       </NavbarContent>
 
