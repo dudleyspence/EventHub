@@ -19,6 +19,7 @@ export async function seed() {
   clearDatabase();
 
   const seedAdmin = {
+    id: "test_id",
     email: process.env.ADMINEMAIL as string,
     name: "ADMIN USER",
     image: faker.image.avatar(),
@@ -50,7 +51,9 @@ export async function seed() {
     skipDuplicates: true,
   });
 
-  const allUsers = await db.user.findMany();
+  const allUsers = await db.user.findMany({
+    where: { id: { not: "test_id" } },
+  });
   const allEvents = await db.event.findMany();
 
   // uses map to register each user to 5 random events

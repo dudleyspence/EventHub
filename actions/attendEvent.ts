@@ -1,29 +1,45 @@
 "use server";
 
 import { getEvent } from "@/data/event";
+import {
+  createUserEventAttendance,
+  getEventAttendance,
+} from "@/data/eventAttendence";
 import { getUserById } from "@/data/user";
 
-export async function attendEvent(user_id: string, event_id: string) {
+export async function attendEventAction(user_id: string, event_id: string) {
+  // checks event is valid
   const eventExists = await getEvent(event_id);
   if (!eventExists) {
     throw new Error("Event not found");
   }
 
+  // checks user is valid
   const userExists = await getUserById(user_id);
   if (!userExists) {
     throw new Error("User not found");
   }
 
-  const alreadyAttending = await 
-  if 
+  // checks user is not already attending this event
+  const alreadyAttending = await getEventAttendance(user_id, event_id);
+  if (alreadyAttending) {
+    throw new Error("User is already attending this event");
+  }
 
-  // CHECKS
-  // if user_id and event_id are valid
-  // if user is not already attending the event
-  // if event is not full
+  // checks event is not at max capacity
+  if (
+    eventExists.maxCapacity &&
+    eventExists.totalAttendees >= eventExists.maxCapacity
+  ) {
+    throw new Error("Event has reached maximum capacity");
+  }
 
-  // UPDATE EVENT
-  // UPDATE USER
+  // create event attendance
+  const attendance = await createUserEventAttendance(user_id, event_id);
 
-  // return success or failure message
+  if (!attendance) {
+    throw new Error("Failed to create event attendance");
+  }
+
+  return { success: "User attendance created" };
 }

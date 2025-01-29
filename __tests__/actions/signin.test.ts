@@ -7,14 +7,6 @@ import { z } from "zod";
 // https://www.prisma.io/blog/testing-series-1-8eRB5p0Y8o
 // this provided good notes for mocking the prisma client
 
-vi.mock("@/auth", () => ({
-  signIn: vi.fn(),
-}));
-
-vi.mock("@/lib/user", () => ({
-  getUserByEmail: vi.fn(),
-}));
-
 type SigninData = z.infer<typeof SigninSchema>;
 
 describe("signin", () => {
@@ -23,6 +15,10 @@ describe("signin", () => {
   });
 
   describe("Schema validation tests", () => {
+    vi.mock("@/auth", () => ({
+      signIn: vi.fn(),
+    }));
+
     it("returns an error if validation fails", async () => {
       const invalidValues: SigninData = { email: "", password: "" };
       const result = await signin(invalidValues);
@@ -42,26 +38,4 @@ describe("signin", () => {
       });
     });
   });
-
-  // describe("Database Interaction", () => {
-  //   it("returns an error if validation passes and the user exists but the password is not correct", async () => {
-  //     const invalidValues: SigninData = {
-  //       email: process.env.ADMINEMAIL as string,
-  //       password: "incorrect",
-  //     };
-  //     const result = await signin(invalidValues);
-  //     expect(result).toEqual({
-  //       error: "Invalid Credentials",
-  //     });
-  //   });
-
-  //   it("returns a success if validation passes", async () => {
-  //     const invalidValues: SigninData = {
-  //       email: process.env.ADMINEMAIL as string,
-  //       password: process.env.ADMINPASSWORD as string,
-  //     };
-  //     const result = await signin(invalidValues);
-  //     expect(result).toEqual({ success: "Signed In!" });
-  //   });
-  // });
 });

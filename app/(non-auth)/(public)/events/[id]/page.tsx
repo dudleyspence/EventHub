@@ -3,6 +3,7 @@ import React from "react";
 import { fetchSingleEvent } from "@/actions/fetchSingleEvent";
 import Image from "next/image";
 import { FormatDateToReadable } from "@/utils/FormatUTCDateReadable";
+import AttendEventButton from "@/components/event/AttendEventButton";
 
 interface PageProps {
   params: {
@@ -32,12 +33,15 @@ export default async function page({ params }: PageProps) {
             <h1 className="my-5 text-3xl font-bold">{event.title}</h1>
           </div>
 
-          {event.maxCapacity && (
-            <Capacity
-              totalAttendees={event.totalAttendees}
-              maxCapacity={event.maxCapacity}
-            />
-          )}
+          <div className="flex flex-row gap-5">
+            <AttendEventButton event_id={event.id} />
+            {event.maxCapacity && (
+              <Capacity
+                totalAttendees={event.totalAttendees}
+                maxCapacity={event.maxCapacity}
+              />
+            )}
+          </div>
         </div>
         <p className="mt-5">{event.description}</p>
       </div>
