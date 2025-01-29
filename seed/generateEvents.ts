@@ -10,7 +10,7 @@ export async function generateEvents(
 
   const EventsData = Array.from({ length: n }, (_, i) => ({
     title: `Test Event ${i + 1}`,
-    description: faker.lorem.sentences(2),
+    description: faker.lorem.sentences(15),
     maxCapacity: faker.number.int({ min: 10, max: 100 }),
     totalAttendees: 0,
     image: images[i] || faker.image.urlLoremFlickr({ category: "nightlife" }),
@@ -20,6 +20,7 @@ export async function generateEvents(
   }));
 
   const eventForTesting = {
+    id: "test_id",
     title: `New Years Celebrarions`,
     description:
       "Join us for an unforgettable New Year's celebration to ring in the coming year with joy, laughter, and great company! The evening will feature live music, dazzling performances, and a countdown to midnight that will light up the night. Enjoy delicious food and drinks, capture memories at our photo booth, and soak in the festive atmosphere. Whether you’re dancing the night away or sharing resolutions with loved ones, this event promises a magical start to the new year. Let’s toast to new beginnings and make it a night to remember!",

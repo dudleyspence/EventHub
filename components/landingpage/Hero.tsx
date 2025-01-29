@@ -3,8 +3,11 @@ import React from "react";
 import Image from "next/image";
 import { RotateWords } from "../UI/RotateWords";
 import { Button } from "@nextui-org/react";
+import { useSession } from "next-auth/react";
 
 export default function Hero() {
+  const { data: session } = useSession();
+
   return (
     <div className="w-full h-[600px] flex flex-col items-end py-10 sm:py-10">
       <div className="relative w-full h-full overflow-hidden lg:rounded-xl shadow-2xl">
@@ -22,16 +25,29 @@ export default function Hero() {
           >
             Browse Events
           </Button>
-          <Button
-            size="lg"
-            radius="full"
-            variant="solid"
-            className="text-xl text-black font-bold bg-amber-200"
-            as="a"
-            href="/signup"
-          >
-            Register
-          </Button>
+          {session ? (
+            <Button
+              size="lg"
+              radius="full"
+              variant="solid"
+              className="text-xl text-black font-bold bg-amber-200"
+              as="a"
+              href="/dashboard"
+            >
+              Dashboard
+            </Button>
+          ) : (
+            <Button
+              size="lg"
+              radius="full"
+              variant="solid"
+              className="text-xl text-black font-bold bg-amber-200"
+              as="a"
+              href="/signup"
+            >
+              Register
+            </Button>
+          )}
         </div>
         <Image
           className="object-cover overflow-hidden"

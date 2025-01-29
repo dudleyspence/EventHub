@@ -6,7 +6,6 @@ import { Pagination } from "@nextui-org/react";
 import { Event } from "@prisma/client";
 import LoadingList from "../loading/LoadingList";
 import FilterSidebar from "./FilterSidebar";
-import FiltersSkeleton from "../loading/FiltersSkeleton";
 import FilterDrawer from "./FilterDrawer";
 
 export default function EventsListContainer() {
@@ -51,12 +50,14 @@ export default function EventsListContainer() {
 
   return (
     <div className="w-full flex flex-col items-center gap-16">
-      <FilterDrawer filters={filters} setFilters={setFilters} />
       <div className="w-full flex flex-row gap-5">
         <div id="filters" className="hidden lg:block lg:w-1/4">
           <FilterSidebar filters={filters} setFilters={setFilters} />
         </div>
         <div id="event-list" className="w-full lg:w-3/4">
+          <div className="justify-self-end mr-10">
+            <FilterDrawer filters={filters} setFilters={setFilters} />
+          </div>
           {isLoading ? (
             <LoadingList eventsPerPage={filters.limit} />
           ) : (
