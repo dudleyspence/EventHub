@@ -1,9 +1,8 @@
-import Capacity from "@/components/event/CapacityChart";
 import React from "react";
 import { fetchSingleEvent } from "@/actions/fetchSingleEvent";
 import Image from "next/image";
 import { FormatDateToReadable } from "@/utils/FormatUTCDateReadable";
-import AttendEventButton from "@/components/event/AttendEventButton";
+import AttendanceControls from "@/components/event/AttendanceControls";
 
 interface PageProps {
   params: {
@@ -13,7 +12,6 @@ interface PageProps {
 
 export default async function page({ params }: PageProps) {
   const { id } = await params;
-
   const event = await fetchSingleEvent(id);
 
   return (
@@ -33,15 +31,7 @@ export default async function page({ params }: PageProps) {
             <h1 className="my-5 text-3xl font-bold">{event.title}</h1>
           </div>
 
-          <div className="flex flex-row gap-5">
-            <AttendEventButton event_id={event.id} />
-            {event.maxCapacity && (
-              <Capacity
-                totalAttendees={event.totalAttendees}
-                maxCapacity={event.maxCapacity}
-              />
-            )}
-          </div>
+          <AttendanceControls event={event} />
         </div>
         <p className="mt-5">{event.description}</p>
       </div>
