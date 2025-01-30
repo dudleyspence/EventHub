@@ -15,7 +15,6 @@ import {
 } from "@nextui-org/react";
 import Image from "next/image";
 import logo from "@/public/brand/Logo.png";
-import { signOut } from "next-auth/react";
 
 type MenuItem = {
   name: string;
@@ -50,10 +49,22 @@ export default function PublicNavbar() {
             </Link>
           </NavbarItem>
         ))}
-        <Button as="a" href="/signin">
+        <Button
+          className="text-black"
+          variant="flat"
+          color="primary"
+          as="a"
+          href="/signin"
+        >
           Sign In
         </Button>
-        <Button as="a" href="/signup">
+        <Button
+          variant="flat"
+          className="text-black"
+          color="primary"
+          as="a"
+          href="/signup"
+        >
           Sign Up
         </Button>
       </NavbarContent>
@@ -77,12 +88,11 @@ export default function PublicNavbar() {
               </DropdownItem>
             ))}
             <DropdownItem key="logout" color="danger">
-              <Button
-                size="sm"
-                color="danger"
-                onPress={() => signOut({ callbackUrl: "/signin" })}
-              >
-                Sign Out
+              <Button color="primary" as="a" href="/signin">
+                Sign In
+              </Button>
+              <Button color="primary" as="a" href="/signup">
+                Sign Up
               </Button>
             </DropdownItem>
           </>

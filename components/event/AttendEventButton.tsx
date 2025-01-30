@@ -2,6 +2,7 @@
 import { attendEventAction } from "@/actions/attendEvent";
 import { checkAttendance } from "@/actions/checkAttendance";
 import { removeEventAttendance } from "@/actions/removeEventAttendance";
+import { useLoginModal } from "@/context/LoginModelProvider";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { Button } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
@@ -18,10 +19,13 @@ export default function AttendEventButton({
   const [attending, setAttending] = useState(false);
   const [loading, setLoading] = useState(true);
   const user = useCurrentUser();
-
+  const { openLoginModal } = useLoginModal();
   useEffect(() => {
     async function isAttending() {
-      if (!user || !user.id) return;
+      if (!user || !user.id) {
+        setLoading(false);
+        return;
+      }
       const attendance = await checkAttendance(user.id, event_id);
       setAttending(attendance);
       setLoading(false);
@@ -31,7 +35,11 @@ export default function AttendEventButton({
 
   async function handleAttendEvent() {
     setLoading(true);
-    if (!user || !user.id || !event_id) return;
+    if (!user || !user.id) {
+      setLoading(false);
+      openLoginModal();
+      return;
+    }
     try {
       const response = await attendEventAction(user.id, event_id);
       if (response.success) {
@@ -49,7 +57,11 @@ export default function AttendEventButton({
 
   async function handleRemoveAttendance() {
     setLoading(true);
-    if (!user || !user.id || !event_id) return;
+    if (!user || !user.id) {
+      setLoading(false);
+      openLoginModal();
+      return;
+    }
     try {
       const response = await removeEventAttendance(user.id, event_id);
       console.log("Removed", response);
@@ -73,6 +85,7 @@ export default function AttendEventButton({
           isLoading={loading}
           disabled={loading}
           onPress={handleRemoveAttendance}
+          color="warning"
         >
           Attending
         </Button>

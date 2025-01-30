@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
 const db = new PrismaClient();
-export async function getEventAttendance(user_id: string, event_id: string) {
+export async function findEventAttendance(user_id: string, event_id: string) {
   const attendance = await db.eventAttendee.findFirst({
     where: {
       userId: user_id,
@@ -44,5 +44,15 @@ export async function deleteUserEventAttendance(
   if (!eventAttendence) {
     throw new Error("User is not attending the event");
   }
-  return await db.eventAttendee.delete({ where: { id: eventAttendence?.id } });
+
+  return db.$transaction([
+    db.eventAttendee.delete({
+      where: { id: eventAttendence?.id },
+    }),
+
+    db.event.update({
+      where: { id: event_id },
+      data: { totalAttendees: { decrement: 1 } },
+    }),
+  ]);
 }

@@ -11,3 +11,11 @@ export async function getEvent(event_id: string) {
 
   return event;
 }
+
+export async function deleteEvent(event_id: string) {
+  return await db.event.delete({
+    where: {
+      id: event_id,
+    },
+  });
+}

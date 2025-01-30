@@ -1,6 +1,5 @@
 import { fetchSingleEvent } from "@/actions/fetchSingleEvent";
 import { describe, expect, it } from "vitest";
-import { Event } from "@prisma/client";
 
 describe("fetchSingleEvent", () => {
   it("returns a signle event when given the event id", async () => {

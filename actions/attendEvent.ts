@@ -3,7 +3,7 @@
 import { getEvent } from "@/data/event";
 import {
   createUserEventAttendance,
-  getEventAttendance,
+  findEventAttendance,
 } from "@/data/eventAttendence";
 import { getUserById } from "@/data/user";
 
@@ -21,7 +21,7 @@ export async function attendEventAction(user_id: string, event_id: string) {
   }
 
   // checks user is not already attending this event
-  const alreadyAttending = await getEventAttendance(user_id, event_id);
+  const alreadyAttending = await findEventAttendance(user_id, event_id);
   if (alreadyAttending) {
     throw new Error("User is already attending this event");
   }

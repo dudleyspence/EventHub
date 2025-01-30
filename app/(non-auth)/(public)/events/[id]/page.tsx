@@ -33,7 +33,7 @@ export default async function page({ params }: PageProps) {
 
           <AttendanceControls event={event} />
         </div>
-        <p className="mt-5">{event.description}</p>
+        <p className="mt-10">{event.description}</p>
       </div>
     </div>
   );

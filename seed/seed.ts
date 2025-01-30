@@ -6,6 +6,7 @@ import { generateUsers } from "@/seed/generateUsers";
 import { generateEvents } from "@/seed/generateEvents";
 import * as dotenv from "dotenv";
 import { generateCategories } from "./generateCategories";
+import bcrypt from "bcryptjs";
 
 const envFile =
   process.env.NODE_ENV === "test" ? ".env.test" : ".env.development";
@@ -18,12 +19,20 @@ export async function seed() {
 
   clearDatabase();
 
+  let hashedPassword;
+
+  if (process.env.ADMINPASSWORD) {
+    hashedPassword = await bcrypt.hash(process.env.ADMINPASSWORD, 10);
+  } else {
+    console.log("No admin password found");
+  }
+
   const seedAdmin = {
     id: "test_id",
     email: process.env.ADMINEMAIL as string,
     name: "ADMIN USER",
     image: faker.image.avatar(),
-    password: process.env.ADMINPASSWORD as string,
+    password: hashedPassword,
     role: UserRole.ADMIN,
   };
 
