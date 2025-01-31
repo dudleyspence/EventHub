@@ -2,11 +2,14 @@
 import React from "react";
 import { NextUIProvider } from "@nextui-org/react";
 import { SessionProvider } from "next-auth/react";
+import { LoginModalProvider } from "@/context/LoginModelProvider";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <SessionProvider>
-      <NextUIProvider>{children}</NextUIProvider>{" "}
-    </SessionProvider>
+    <LoginModalProvider>
+      <SessionProvider>
+        <NextUIProvider>{children}</NextUIProvider>{" "}
+      </SessionProvider>
+    </LoginModalProvider>
   );
 }

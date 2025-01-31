@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { Event } from "@prisma/client";
-import Link from "next/link";
 import EventCard from "../EventCard";
 
 interface EventListProps {
@@ -10,18 +9,18 @@ interface EventListProps {
 
 export default function EventList({ events }: EventListProps) {
   return (
-    <div className="w-full grid sm:grid-cols-2 gap-5 mt-8 pr-5">
+    <div className="w-full grid sm:grid-cols-2 place-items-center gap-5 mt-8 px-5">
       {events.map((event) => (
-        <Link key={event.id} href={`/events/${event.id}`}>
-          <EventCard
-            name={event.title}
-            date={event.date}
-            maxCapacity={event.maxCapacity}
-            totalAttendees={event.totalAttendees}
-            image={event.image}
-            category={event.category}
-          />
-        </Link>
+        <EventCard
+          key={event.id}
+          id={event.id}
+          name={event.title}
+          date={event.date}
+          maxCapacity={event.maxCapacity}
+          totalAttendees={event.totalAttendees}
+          image={event.image}
+          category={event.category}
+        />
       ))}
     </div>
   );

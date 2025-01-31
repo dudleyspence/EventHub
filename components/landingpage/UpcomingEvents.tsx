@@ -18,6 +18,7 @@ export default function UpcomingEvents({ events }: { events: Event[] }) {
     return <div>Loading events...</div>;
   }
 
+  console.log(events);
   return (
     <Swiper
       className="w-screen max-w-[1280px] mt-8"
@@ -37,16 +38,15 @@ export default function UpcomingEvents({ events }: { events: Event[] }) {
           key={event.id}
           className="mx-3 min-w-[350px] min-h-[400px] max-w-fit my-5 cursor-pointer"
         >
-          <Link href={`/events/${event.id}`}>
-            <EventCard
-              name={event.title}
-              date={event.date}
-              maxCapacity={event.maxCapacity}
-              totalAttendees={event.totalAttendees}
-              image={event.image}
-              category={event.category}
-            />
-          </Link>
+          <EventCard
+            id={event.id}
+            name={event.title}
+            date={event.date}
+            maxCapacity={event.maxCapacity}
+            totalAttendees={event.totalAttendees}
+            image={event.image}
+            category={event.category}
+          />
         </SwiperSlide>
       ))}
     </Swiper>

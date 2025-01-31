@@ -91,7 +91,7 @@ model Event {
 
 model EventAttendee {
   id      String @id @default(cuid())
-  event   Event  @relation("EventAttendees", fields: [eventId], references: [id])
+  event   Event  @relation("EventAttendees", fields: [eventId], references: [id], onDelete: Cascade)
   eventId String
   user    User   @relation("EventAttendees", fields: [userId], references: [id])
   userId  String

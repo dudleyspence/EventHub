@@ -15,7 +15,6 @@ import {
 } from "@nextui-org/react";
 import Image from "next/image";
 import logo from "@/public/brand/Logo.png";
-import { signOut } from "next-auth/react";
 
 type MenuItem = {
   name: string;
@@ -23,7 +22,10 @@ type MenuItem = {
 };
 
 export default function PublicNavbar() {
-  const menuItems: MenuItem[] = [{ name: "Events", path: "/events" }];
+  const menuItems: MenuItem[] = [
+    { name: "Home", path: "/" },
+    { name: "Events", path: "/events" },
+  ];
 
   return (
     <Navbar maxWidth="xl" className="pt-5">
@@ -31,22 +33,38 @@ export default function PublicNavbar() {
         <NavbarBrand>
           <Link href="/">
             <Image alt="website logo" src={logo} height={45} />
-          </Link>{" "}
+          </Link>
         </NavbarBrand>
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-6" justify="center">
         {menuItems.map((item) => (
           <NavbarItem key={item.name}>
-            <Button as="a" href={item.path} size="lg" color="foreground">
+            <Link
+              href={item.path}
+              size="lg"
+              className="text-lg text-black font-bold"
+            >
               {item.name}
-            </Button>
+            </Link>
           </NavbarItem>
         ))}
-        <Button as="a" href="/signin">
+        <Button
+          className="text-black"
+          variant="flat"
+          color="primary"
+          as="a"
+          href="/signin"
+        >
           Sign In
         </Button>
-        <Button as="a" href="/signup">
+        <Button
+          variant="flat"
+          className="text-black"
+          color="primary"
+          as="a"
+          href="/signup"
+        >
           Sign Up
         </Button>
       </NavbarContent>
@@ -59,20 +77,25 @@ export default function PublicNavbar() {
           />
         </DropdownTrigger>
         <DropdownMenu aria-label="Mobile Navigation" variant="flat">
-          {menuItems.map((item, index) => (
-            <DropdownItem key={index} href={item.path}>
-              {item.name}
+          <>
+            {menuItems.map((item, index) => (
+              <DropdownItem
+                className="text-lg font-bold"
+                key={index}
+                href={item.path}
+              >
+                {item.name}
+              </DropdownItem>
+            ))}
+            <DropdownItem key="logout" color="danger">
+              <Button color="primary" as="a" href="/signin">
+                Sign In
+              </Button>
+              <Button color="primary" as="a" href="/signup">
+                Sign Up
+              </Button>
             </DropdownItem>
-          ))}
-          <DropdownItem key="logout" color="danger">
-            <Button
-              size="sm"
-              color="danger"
-              onPress={() => signOut({ callbackUrl: "/signin" })}
-            >
-              Sign Out
-            </Button>
-          </DropdownItem>
+          </>
         </DropdownMenu>
       </Dropdown>
     </Navbar>

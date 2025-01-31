@@ -37,7 +37,11 @@ export default function AdminNavbar() {
       <NavbarContent className="hidden sm:flex gap-6" justify="center">
         {menuItems.map((item) => (
           <NavbarItem key={item.name}>
-            <Link size="lg" color="foreground" href={item.path}>
+            <Link
+              size="lg"
+              className="text-lg text-black font-bold"
+              href={item.path}
+            >
               {item.name}
             </Link>
           </NavbarItem>
@@ -59,22 +63,28 @@ export default function AdminNavbar() {
           />
         </DropdownTrigger>
         <DropdownMenu aria-label="Mobile Navigation" variant="flat">
-          {menuItems.map((item, index) => (
-            <DropdownItem key={`${item.name}-${index}`}>
-              <Link color="foreground" href={item.path}>
-                {item.name}
-              </Link>
+          <>
+            {menuItems.map((item, index) => (
+              <DropdownItem key={`${item.name}-${index}`}>
+                <Link
+                  color="foreground"
+                  className="text-lg text-black font-bold"
+                  href={item.path}
+                >
+                  {item.name}
+                </Link>
+              </DropdownItem>
+            ))}
+            <DropdownItem key="logout" color="danger">
+              <Button
+                size="sm"
+                color="danger"
+                onPress={() => signOut({ callbackUrl: "/signin" })}
+              >
+                Sign Out
+              </Button>
             </DropdownItem>
-          ))}
-          <DropdownItem key="logout" color="danger">
-            <Button
-              size="sm"
-              color="danger"
-              onPress={() => signOut({ callbackUrl: "/signin" })}
-            >
-              Sign Out
-            </Button>
-          </DropdownItem>
+          </>
         </DropdownMenu>
       </Dropdown>
     </Navbar>

@@ -1,6 +1,7 @@
 import React from "react";
 import DynamicNavbar from "@/components/navigation/DynamicNavbar";
 import Footer from "@/components/Footer";
+import LoginModal from "@/components/auth/LoginModel";
 
 export default function NonAuthLayout({
   children,
@@ -10,6 +11,7 @@ export default function NonAuthLayout({
   return (
     <div className="w-screen max-w-[1280px] justify-items-center min-h-screen">
       <DynamicNavbar />
+      <LoginModal />
       {children}
       <Footer />
     </div>
