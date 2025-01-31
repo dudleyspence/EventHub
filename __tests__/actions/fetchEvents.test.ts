@@ -1,4 +1,4 @@
-import { fetchEventsAction } from "@/actions/fetchEvents";
+import { fetchEventsAction } from "@/lib/actions/fetchEvents";
 import { describe, expect, it } from "vitest";
 
 // describe("", () => {

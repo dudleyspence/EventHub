@@ -8,7 +8,7 @@ import React, { useState, useTransition } from "react";
 import { Icon } from "@iconify/react";
 
 import { Form, Input, Checkbox, Button } from "@nextui-org/react";
-import { signup } from "@/actions/signup";
+import { signup } from "@/lib/actions/signup";
 
 export default function SignupForm() {
   const [isPending, startTransition] = useTransition();

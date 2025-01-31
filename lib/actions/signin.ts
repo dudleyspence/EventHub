@@ -7,7 +7,7 @@ import { signIn } from "@/auth";
 
 import { DEFAULT_SIGNIN_REDIRECT } from "@/routes";
 import { AuthError } from "next-auth";
-import { getUserByEmail } from "@/data/user";
+import { getUserByEmail } from "@/lib/user";
 import { SigninInput } from "@/types/auth";
 
 export async function signin(values: SigninInput) {

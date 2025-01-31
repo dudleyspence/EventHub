@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "test": "npm run seed:test && vitest",
-    "coverage": "vitest run --coverage",
+    "coverage": "npm run seed:test && vitest run --coverage",
     "setup:dev": "npm run reset:dev && npm run generate:dev && npm run db:push:dev",
     "seed:dev": "NODE_ENV=development tsx seed/run-seed.ts",
     "setup:test": "npm run reset:test && npm run generate:test && npm run db:push:test",

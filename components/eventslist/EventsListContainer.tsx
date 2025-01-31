@@ -1,5 +1,5 @@
 "use client";
-import { fetchEventsAction } from "@/actions/fetchEvents";
+import { fetchEventsAction } from "@/lib/actions/fetchEvents";
 import React, { useEffect, useState } from "react";
 import EventList from "./EventsList";
 import { Pagination } from "@nextui-org/react";

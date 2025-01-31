@@ -16,12 +16,3 @@ export const FetchEventsSchema = z.object({
   page: z.number().int().gt(0).default(1),
   limit: z.number().int().gt(0).default(10),
 });
-
-export const CreateEventSchema = z.object({
-  title: z.string().min(3).max(100),
-  description: z.string().min(10).max(500),
-  maxCapacity: z.number().int().min(1).optional(),
-  image: z.string().url(),
-  date: z.date(),
-  category: z.string(),
-});

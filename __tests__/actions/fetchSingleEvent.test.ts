@@ -1,4 +1,4 @@
-import { fetchSingleEvent } from "@/actions/fetchSingleEvent";
+import { fetchSingleEvent } from "@/lib/actions/fetchSingleEvent";
 import { describe, expect, it } from "vitest";
 
 describe("fetchSingleEvent", () => {

@@ -1,5 +1,5 @@
 import { describe, it, expect, afterEach, vi } from "vitest";
-import { signin } from "@/actions/signin";
+import { signin } from "@/lib/actions/signin";
 
 import { SigninSchema } from "@/schemas/auth";
 import { z } from "zod";

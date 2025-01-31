@@ -1,6 +1,6 @@
 "use server";
 
-import { getEvent } from "@/data/event";
+import { getEvent } from "@/lib/event";
 
 export async function fetchSingleEvent(event_id: string) {
   const event = await getEvent(event_id);

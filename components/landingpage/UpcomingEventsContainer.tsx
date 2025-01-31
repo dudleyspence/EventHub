@@ -1,4 +1,4 @@
-import { fetchEventsAction } from "@/actions/fetchEvents";
+import { fetchEventsAction } from "@/lib/actions/fetchEvents";
 import React from "react";
 import UpcomingEvents from "./UpcomingEvents";
 import UpcomingEventsHeader from "@/public/graphics/UPCOMING_EVENTS.png";

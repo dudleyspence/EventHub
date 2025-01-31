@@ -1,4 +1,4 @@
-import { fetchCategories } from "@/actions/fetchCategories";
+import { fetchCategories } from "@/lib/actions/fetchCategories";
 import { Radio, RadioGroup } from "@heroui/react";
 import { Category } from "@prisma/client";
 import React, { useEffect, useState } from "react";

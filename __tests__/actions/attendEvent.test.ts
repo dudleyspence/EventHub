@@ -1,7 +1,7 @@
-import { attendEventAction } from "@/actions/attendEvent";
+import { attendEventAction } from "@/lib/actions/attendEvent";
 import { describe, expect, it } from "vitest";
 import { PrismaClient } from "@prisma/client";
-import { getEvent } from "@/data/event";
+import { getEvent } from "@/lib/event";
 
 const db = new PrismaClient();
 

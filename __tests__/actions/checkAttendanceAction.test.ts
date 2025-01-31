@@ -1,7 +1,7 @@
-import { checkAttendance } from "@/actions/checkAttendance";
+import { checkAttendance } from "@/lib/actions/checkAttendance";
 import { beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { PrismaClient, UserRole } from "@prisma/client";
-import { attendEventAction } from "@/actions/attendEvent";
+import { attendEventAction } from "@/lib/actions/attendEvent";
 import { faker } from "@faker-js/faker";
 
 const db = new PrismaClient();

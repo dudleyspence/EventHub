@@ -4,7 +4,7 @@ import authConfig from "./auth.config";
 import { db } from "./lib/db";
 import { UserRole } from "@prisma/client";
 import { Adapter } from "next-auth/adapters";
-import { getUserById } from "./data/user";
+import { getUserById } from "./lib/user";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   pages: {

@@ -7,7 +7,7 @@ import { SigninSchema } from "@/schemas/auth";
 import React, { useState, useTransition } from "react";
 import { Button, Input, Checkbox, Link, Form } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
-import { signin } from "@/actions/signin";
+import { signin } from "@/lib/actions/signin";
 import { useSearchParams } from "next/navigation";
 
 export default function SigninForm() {

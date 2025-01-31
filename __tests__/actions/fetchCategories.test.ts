@@ -1,4 +1,4 @@
-import { fetchCategories } from "@/actions/fetchCategories";
+import { fetchCategories } from "@/lib/actions/fetchCategories";
 import { describe, expect, it } from "vitest";
 
 describe("fetchCategories", () => {

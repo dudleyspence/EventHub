@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import MostPopularImage from "@/public/graphics/MOST_POPULAR.png";
-import { fetchEventsAction } from "@/actions/fetchEvents";
+import { fetchEventsAction } from "@/lib/actions/fetchEvents";
 import MostPopularCard from "./MostPopularCard";
 import Link from "next/link";
 

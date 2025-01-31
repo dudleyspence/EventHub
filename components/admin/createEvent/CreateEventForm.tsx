@@ -122,7 +122,9 @@ export default function CreateEventForm() {
           />
         )}
       />
-      <Button className="mt-5 self-end">Publish Event</Button>
+      <Button type="submit" className="mt-5 self-end">
+        Publish Event
+      </Button>
     </Form>
   );
 }
