@@ -28,7 +28,7 @@ export default function FilterSidebar({ setFilters, filters }) {
   }, []);
 
   function handleCategoryChange(value: string) {
-    const updatedFilter = { ...filters };
+    const updatedFilter = { ...filters, page: 1 };
     delete updatedFilter.category;
     if (value !== "None") {
       updatedFilter.category = value;

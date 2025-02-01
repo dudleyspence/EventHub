@@ -1,11 +1,10 @@
 import { checkAttendance } from "@/lib/actions/checkAttendance";
-import { beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { attendEventAction } from "@/lib/actions/attendEvent";
 import { removeEventAttendance } from "@/lib/actions/removeEventAttendance";
 import { faker } from "@faker-js/faker";
-import { UserRole, PrismaClient } from "@prisma/client";
-
-const db = new PrismaClient();
+import { UserRole } from "@prisma/client";
+import { db } from "@/lib/db";
 
 describe("removeEventAttendance", () => {
   beforeAll(async () => {
@@ -36,7 +35,12 @@ describe("removeEventAttendance", () => {
     await db.event.create({ data: event3 });
   });
 
-  it("throws an error if the user is already no attending the event", async () => {
+  afterAll(async () => {
+    await db.user.deleteMany({ where: { id: "test_id3" } });
+    await db.event.deleteMany({ where: { id: "test_id3" } });
+  });
+
+  it("throws an error if the user is already not attending the event", async () => {
     await expect(removeEventAttendance("test_id3", "test_id3")).rejects.toThrow(
       "User is not attending the event"
     );

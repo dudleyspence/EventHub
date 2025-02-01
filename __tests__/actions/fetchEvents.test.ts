@@ -66,6 +66,7 @@ describe("fetchEvents Valid Params", () => {
 
     if (Array.isArray(events)) {
       const today = new Date();
+      today.setHours(0, 0, 0, 0);
 
       const isFuture = events.every((event) => event.date > today);
 

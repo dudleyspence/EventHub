@@ -5,8 +5,7 @@ import { PrismaClient } from "@prisma/client";
 import { checkAttendance } from "@/lib/actions/checkAttendance";
 import { removeEvent } from "@/lib/actions/removeEvent";
 import { attendEventAction } from "@/lib/actions/attendEvent";
-
-const db = new PrismaClient();
+import { db } from "@/lib/db";
 
 describe("removeEvent", () => {
   beforeAll(async () => {

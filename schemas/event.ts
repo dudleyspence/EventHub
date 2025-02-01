@@ -17,6 +17,6 @@ export const CreateEventSchema = z.object({
     .min(1, "The max capacity of an event must be at least 1")
     .optional(),
   image: z.string().url("An image is required"),
-  date: z.date(),
+  date: z.date().min(new Date()),
   category: z.string(),
 });

@@ -9,7 +9,7 @@ import {
   Textarea,
 } from "@heroui/react";
 import React from "react";
-import { CreateEventSchema } from "@/schemas/events";
+import { CreateEventSchema } from "@/schemas/event";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -60,33 +60,48 @@ export default function CreateEventForm() {
         )}
       />
       <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-5 pt-5">
-        <Select className="w-full" label="Category">
-          {categories.map((category) => (
-            <SelectItem key={category.name}>{category.name}</SelectItem>
-          ))}
-        </Select>
+        <Controller
+          control={control}
+          name="category"
+          render={({ field }) => (
+            <Select className="w-full" label="Category" {...field}>
+              {categories.map((category) => (
+                <SelectItem key={category.name} value={category.name}>
+                  {category.name}
+                </SelectItem>
+              ))}
+            </Select>
+          )}
+        />
         <Controller
           control={control}
           name="maxCapacity"
           render={({ field, fieldState }) => (
             <Input
-              isRequired
               {...field}
               label="Maximum Capacity"
               variant="bordered"
               type="number"
               isInvalid={fieldState.invalid}
               errorMessage={fieldState.error?.message}
+              onChange={(e) => field.onChange(Number(e.target.value))}
             />
           )}
         />
         <div className="w-full flex flex-row gap-4">
-          <DatePicker
-            hideTimeZone
-            showMonthAndYearPickers
-            defaultValue={now(getLocalTimeZone())}
-            label="Event Date"
-            variant="bordered"
+          <Controller
+            control={control}
+            name="date"
+            render={({ field }) => (
+              <DatePicker
+                {...field}
+                hideTimeZone
+                showMonthAndYearPickers
+                defaultValue={new Date()}
+                label="Event Date"
+                variant="bordered"
+              />
+            )}
           />
         </div>
         <Controller

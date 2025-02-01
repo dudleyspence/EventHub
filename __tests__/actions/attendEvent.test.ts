@@ -1,9 +1,7 @@
 import { attendEventAction } from "@/lib/actions/attendEvent";
 import { describe, expect, it } from "vitest";
-import { PrismaClient } from "@prisma/client";
 import { getEvent } from "@/lib/event";
-
-const db = new PrismaClient();
+import { db } from "@/lib/db";
 
 describe("attendEventAction", () => {
   it("returns an error if the event doesnt exist", async () => {

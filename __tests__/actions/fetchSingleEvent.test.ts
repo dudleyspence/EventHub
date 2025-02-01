@@ -20,3 +20,5 @@ describe("fetchSingleEvent", () => {
     });
   });
 });
+
+// error when id inst valid
