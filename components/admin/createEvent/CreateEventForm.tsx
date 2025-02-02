@@ -21,7 +21,8 @@ import {
 import { createEventAction } from "@/lib/actions/createEvent";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
+import { DragAndDropUploader } from "./ImageDragAndDrop";
+import { useUploadImage } from "@/hooks/useUploadImage";
 
 type CreateEventFormInput = z.infer<typeof CreateEventSchema>;
 
@@ -32,7 +33,16 @@ export default function CreateEventForm() {
   const user = useCurrentUser();
   const router = useRouter();
 
-  const { handleSubmit, control } = useForm<CreateEventFormInput>({
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+
+  const { handleImageUpload, isUploading } = useUploadImage(selectedImage);
+
+  const {
+    handleSubmit,
+    control,
+    setValue,
+    formState: { errors },
+  } = useForm<CreateEventFormInput>({
     resolver: zodResolver(CreateEventSchema),
     defaultValues: {
       title: "",
@@ -48,7 +58,7 @@ export default function CreateEventForm() {
   // CHECK DATE IS IN UTC FORMAT
   // SWAP THE IMAGE TO BE IMAGE UPLOAD WITH DRAG AND DROP
 
-  const onSubmit = (data: z.infer<typeof CreateEventSchema>) => {
+  const onSubmit = (data: CreateEventFormInput) => {
     if (!hasMaxCapacity) {
       data.maxCapacity = undefined;
     }
@@ -73,10 +83,7 @@ export default function CreateEventForm() {
   };
 
   return (
-    <Form
-      onSubmit={handleSubmit(onSubmit)}
-      className="w-full flex flex-col items-center min-h-[700px] mb-10 my-5 p-10"
-    >
+    <Form className="w-full flex flex-col items-center min-h-[700px] mb-10 my-5 p-10">
       <Controller
         control={control}
         name="title"
@@ -183,33 +190,11 @@ export default function CreateEventForm() {
             />
           </div>
         </div>
-        <div
-          id="drag and drop"
-          className="min-w-full min-h-full  rounded-md border-3 border-dashed border-gray-300 flex justify-center items-center"
-        >
-          <Image
-            width={150}
-            height={150}
-            src="https://www.shutterstock.com/image-vector/upload-document-data-file-cloud-600nw-2297720825.jpg"
-            alt="image"
-          />
-        </div>
-        {/* <Controller
-          control={control}
-          name="image"
-          render={({ field, fieldState }) => (
-            <Input
-              isRequired
-              {...field}
-              isDisabled={isPending}
-              label="Image URL"
-              variant="bordered"
-              type="url"
-              isInvalid={fieldState.invalid}
-              errorMessage={fieldState.error?.message}
-            />
-          )}
-        /> */}
+
+        <DragAndDropUploader
+          isError={errors?.image}
+          setSelectedImage={setSelectedImage}
+        />
       </div>
       <Controller
         control={control}
@@ -230,10 +215,21 @@ export default function CreateEventForm() {
         )}
       />
       <Button
-        isDisabled={isPending}
-        isLoading={isPending}
-        type="submit"
+        isDisabled={isPending || isUploading}
+        isLoading={isPending || isUploading}
         className="mt-5 self-end"
+        onPress={async () => {
+          if (selectedImage) {
+            const imageUrl = await handleImageUpload();
+
+            if (imageUrl) {
+              setValue("image", imageUrl, { shouldValidate: true });
+              console.log(imageUrl);
+            }
+          }
+
+          handleSubmit(onSubmit)();
+        }}
       >
         Publish Event
       </Button>
