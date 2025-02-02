@@ -8,7 +8,7 @@ import {
   SelectItem,
   Textarea,
 } from "@heroui/react";
-import React, { startTransition, useState, useTransition } from "react";
+import React, { useState, useTransition } from "react";
 import { CreateEventSchema } from "@/schemas/event";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
@@ -18,13 +18,20 @@ import {
   DesktopDateTimePicker,
   MobileDateTimePicker,
 } from "@mui/x-date-pickers";
+import { createEventAction } from "@/lib/actions/createEvent";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 type CreateEventFormInput = z.infer<typeof CreateEventSchema>;
 
 export default function CreateEventForm() {
-  const { isLoading, categories } = useCategories();
+  const { categories } = useCategories();
   const [hasMaxCapacity, setHasMaxCapacity] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const user = useCurrentUser();
+  const router = useRouter();
+
   const { handleSubmit, control } = useForm<CreateEventFormInput>({
     resolver: zodResolver(CreateEventSchema),
     defaultValues: {
@@ -37,23 +44,33 @@ export default function CreateEventForm() {
     },
   });
 
-  const getToday = () => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return today;
-  };
+  // THINGS TO CONSIDER: LOADING PAGE FOR LOADING THE FORM
+  // CHECK DATE IS IN UTC FORMAT
+  // SWAP THE IMAGE TO BE IMAGE UPLOAD WITH DRAG AND DROP
 
   const onSubmit = (data: z.infer<typeof CreateEventSchema>) => {
     if (!hasMaxCapacity) {
       data.maxCapacity = undefined;
     }
 
-    startTransition(async () => {});
-  };
+    startTransition(async () => {
+      if (!user || !user.id) {
+        alert("failure finding user");
+        return;
+      }
+      try {
+        const event = await createEventAction(data, user.id);
 
-  if (isLoading) {
-    return <div>Loading form...</div>;
-  }
+        if (event) {
+          alert("Event created");
+          router.push(`/admin/events/${event.id}`);
+        }
+      } catch (error) {
+        console.log(error);
+        alert("Failed to create event");
+      }
+    });
+  };
 
   return (
     <Form
@@ -66,7 +83,7 @@ export default function CreateEventForm() {
         render={({ field, fieldState }) => (
           <Input
             isRequired
-            // isDisabled={isPending}
+            isDisabled={isPending}
             {...field}
             label="Event Name"
             variant="bordered"
@@ -80,8 +97,17 @@ export default function CreateEventForm() {
           <Controller
             control={control}
             name="category"
-            render={({ field }) => (
-              <Select className="w-full" label="Category" {...field}>
+            render={({ field, fieldState }) => (
+              <Select
+                isRequired
+                isInvalid={fieldState.invalid}
+                errorMessage={fieldState.error?.message}
+                isDisabled={isPending}
+                variant="bordered"
+                className="w-full"
+                label="Category"
+                {...field}
+              >
                 {categories.map((category) => (
                   <SelectItem key={category.name} value={category.name}>
                     {category.name}
@@ -97,6 +123,7 @@ export default function CreateEventForm() {
               <div className="w-full">
                 <div className="md:hidden block w-full">
                   <MobileDateTimePicker
+                    disabled={isPending}
                     className="w-full shadow-sm"
                     {...field}
                     label="Event Date"
@@ -109,12 +136,13 @@ export default function CreateEventForm() {
                 <div className="hidden md:block w-full">
                   <DesktopDateTimePicker
                     {...field}
+                    disabled={isPending}
                     className="w-full shadow-sm"
                     slotProps={{ textField: { sx: { borderRadius: "8px" } } }}
                     label="Event Date"
                     value={field.value}
                     disablePast
-                    minDate={getToday()}
+                    minDate={new Date()}
                     onChange={(newValue) => field.onChange(newValue)}
                   />
                 </div>
@@ -125,6 +153,7 @@ export default function CreateEventForm() {
             <Checkbox
               className="mb-2"
               checked={hasMaxCapacity}
+              isDisabled={isPending}
               onChange={() => {
                 setHasMaxCapacity(!hasMaxCapacity);
               }}
@@ -143,7 +172,7 @@ export default function CreateEventForm() {
                     const value = e.target.value;
                     field.onChange(value === "" ? undefined : Number(value));
                   }}
-                  isDisabled={!hasMaxCapacity}
+                  isDisabled={!hasMaxCapacity || isPending}
                   label="Maximum Capacity"
                   variant="bordered"
                   type="number"
@@ -154,14 +183,25 @@ export default function CreateEventForm() {
             />
           </div>
         </div>
-
-        <Controller
+        <div
+          id="drag and drop"
+          className="min-w-full min-h-full  rounded-md border-3 border-dashed border-gray-300 flex justify-center items-center"
+        >
+          <Image
+            width={150}
+            height={150}
+            src="https://www.shutterstock.com/image-vector/upload-document-data-file-cloud-600nw-2297720825.jpg"
+            alt="image"
+          />
+        </div>
+        {/* <Controller
           control={control}
           name="image"
           render={({ field, fieldState }) => (
             <Input
               isRequired
               {...field}
+              isDisabled={isPending}
               label="Image URL"
               variant="bordered"
               type="url"
@@ -169,7 +209,7 @@ export default function CreateEventForm() {
               errorMessage={fieldState.error?.message}
             />
           )}
-        />
+        /> */}
       </div>
       <Controller
         control={control}
@@ -179,6 +219,7 @@ export default function CreateEventForm() {
             isRequired
             {...field}
             label="Description"
+            isDisabled={isPending}
             placeholder="Enter your description"
             className="mt-5"
             variant="bordered"
@@ -188,7 +229,12 @@ export default function CreateEventForm() {
           />
         )}
       />
-      <Button type="submit" className="mt-5 self-end">
+      <Button
+        isDisabled={isPending}
+        isLoading={isPending}
+        type="submit"
+        className="mt-5 self-end"
+      >
         Publish Event
       </Button>
     </Form>

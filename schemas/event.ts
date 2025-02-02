@@ -18,5 +18,5 @@ export const CreateEventSchema = z.object({
     .optional(),
   image: z.string().url("An image is required"),
   date: z.date().min(new Date()),
-  category: z.string(),
+  category: z.string().nonempty("Please select a category"),
 });
