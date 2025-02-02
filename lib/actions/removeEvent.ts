@@ -1,8 +1,8 @@
 "use server";
 
-import { getUserById } from "@/data/user";
+import { getUserById } from "@/lib/user";
 import { fetchSingleEvent } from "./fetchSingleEvent";
-import { deleteEvent } from "@/data/event";
+import { deleteEvent } from "@/lib/event";
 
 export async function removeEvent(user_id: string, event_id: string) {
   const user = await getUserById(user_id);

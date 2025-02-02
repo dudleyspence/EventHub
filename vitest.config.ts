@@ -12,5 +12,9 @@ export default defineConfig({
       // Force Vitest to process ESM code in next-auth, next, oauth4webapi, etc.
       inline: ["next", "next-auth", "oauth4webapi"],
     },
+    coverage: {
+      include: ["lib/**/*.ts"],
+      exclude: ["**/*.tsx", "app/**/page.tsx", "components/**", "lib/auth.ts"],
+    },
   },
 });

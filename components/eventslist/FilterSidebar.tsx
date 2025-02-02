@@ -1,4 +1,4 @@
-import { fetchCategories } from "@/actions/fetchCategories";
+import { fetchCategories } from "@/lib/actions/fetchCategories";
 import { Radio, RadioGroup } from "@heroui/react";
 import { Category } from "@prisma/client";
 import React, { useEffect, useState } from "react";
@@ -28,7 +28,7 @@ export default function FilterSidebar({ setFilters, filters }) {
   }, []);
 
   function handleCategoryChange(value: string) {
-    const updatedFilter = { ...filters };
+    const updatedFilter = { ...filters, page: 1 };
     delete updatedFilter.category;
     if (value !== "None") {
       updatedFilter.category = value;

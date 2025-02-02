@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
 
 import { SignupSchema } from "@/schemas/auth";
-import { getUserByEmail } from "@/data/user";
+import { getUserByEmail } from "@/lib/user";
 import { SignupInput } from "@/types/auth";
 
 export async function signup(values: SignupInput) {

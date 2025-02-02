@@ -1,4 +1,4 @@
-import { fetchCategories } from "@/actions/fetchCategories";
+import { fetchCategories } from "@/lib/actions/fetchCategories";
 import { Category } from "@prisma/client";
 import { useEffect, useState } from "react";
 

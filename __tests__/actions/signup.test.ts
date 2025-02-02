@@ -1,6 +1,6 @@
 import { SignupSchema } from "@/schemas/auth";
 import { describe, it, expect, afterEach, vi } from "vitest";
-import { signup } from "@/actions/signup";
+import { signup } from "@/lib/actions/signup";
 import { z } from "zod";
 
 vi.mock("@/auth", () => ({

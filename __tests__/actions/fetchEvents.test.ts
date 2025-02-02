@@ -1,4 +1,4 @@
-import { fetchEventsAction } from "@/actions/fetchEvents";
+import { fetchEventsAction } from "@/lib/actions/fetchEvents";
 import { describe, expect, it } from "vitest";
 
 // describe("", () => {
@@ -66,6 +66,7 @@ describe("fetchEvents Valid Params", () => {
 
     if (Array.isArray(events)) {
       const today = new Date();
+      today.setHours(0, 0, 0, 0);
 
       const isFuture = events.every((event) => event.date > today);
 

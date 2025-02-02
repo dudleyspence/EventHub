@@ -5,7 +5,7 @@ import { SigninSchema } from "@/schemas/auth";
 import bcrypt from "bcryptjs";
 
 import type { NextAuthConfig } from "next-auth";
-import { getUserByEmail } from "./data/user";
+import { getUserByEmail } from "./lib/user";
 
 export default {
   providers: [

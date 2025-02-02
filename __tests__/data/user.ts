@@ -1,4 +1,4 @@
-import { getUserByEmail, getUserById } from "@/data/user";
+import { getUserByEmail, getUserById } from "@/lib/user";
 import { describe, it, expect } from "vitest";
 
 describe("getUserByEmail", () => {

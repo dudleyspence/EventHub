@@ -70,11 +70,11 @@ model Category {
 model Event {
   id                String          @id @default(cuid())
   title             String
-  description       String?
+  description       String
   maxCapacity       Int?
   totalAttendees    Int             @default(0)
-  categoryRel       Category?       @relation("EventCategory", fields: [category], references: [name])
-  category          String?
+  categoryRel       Category       @relation("EventCategory", fields: [category], references: [name])
+  category          String
   image             String
   date              DateTime
   userId            String

@@ -9,7 +9,7 @@ import {
   Button,
   useDisclosure,
 } from "@heroui/react";
-import { removeEvent } from "@/actions/removeEvent";
+import { removeEvent } from "@/lib/actions/removeEvent";
 import { useRouter } from "next/navigation";
 
 export default function DeleteEventButtton({

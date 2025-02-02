@@ -24,3 +24,14 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+/* MUI date picker */
+
+.MuiInputBase-root {
+  border-radius: 10px !important;
+  --tw-border-opacity: 1 !important;
+}
+
+.Mui-selected {
+  background-color: #f5a524 !important;
+}

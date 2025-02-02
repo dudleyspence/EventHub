@@ -1,11 +1,11 @@
 "use server";
 
-import { getEvent } from "@/data/event";
+import { getEvent } from "@/lib/event";
 import {
   createUserEventAttendance,
   findEventAttendance,
-} from "@/data/eventAttendence";
-import { getUserById } from "@/data/user";
+} from "@/lib/eventAttendence";
+import { getUserById } from "@/lib/user";
 
 export async function attendEventAction(user_id: string, event_id: string) {
   // checks event is valid

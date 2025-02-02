@@ -1,5 +1,5 @@
 "use server";
-import { findEventAttendance } from "@/data/eventAttendence";
+import { findEventAttendance } from "@/lib/eventAttendence";
 
 export async function checkAttendance(user_id: string, event_id: string) {
   const attendance = await findEventAttendance(user_id, event_id);

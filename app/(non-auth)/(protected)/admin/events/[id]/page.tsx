@@ -1,5 +1,5 @@
 import React from "react";
-import { fetchSingleEvent } from "@/actions/fetchSingleEvent";
+import { fetchSingleEvent } from "@/lib/actions/fetchSingleEvent";
 import Image from "next/image";
 import { FormatDateToReadable } from "@/utils/FormatUTCDateReadable";
 import Capacity from "@/components/event/CapacityChart";

@@ -1,7 +1,7 @@
 "use client";
-import { attendEventAction } from "@/actions/attendEvent";
-import { checkAttendance } from "@/actions/checkAttendance";
-import { removeEventAttendance } from "@/actions/removeEventAttendance";
+import { attendEventAction } from "@/lib/actions/attendEvent";
+import { checkAttendance } from "@/lib/actions/checkAttendance";
+import { removeEventAttendance } from "@/lib/actions/removeEventAttendance";
 import { useLoginModal } from "@/context/LoginModelProvider";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { Button } from "@nextui-org/react";

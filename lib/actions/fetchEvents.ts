@@ -1,6 +1,6 @@
 "use server";
 
-import { getEvents } from "@/data/events";
+import { getEvents } from "@/lib/events";
 import { FetchEventsSchema } from "@/schemas/events";
 import { FetchEventsInput, FetchEventsOutput } from "@/types/events";
 
