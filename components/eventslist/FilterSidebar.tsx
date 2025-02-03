@@ -42,7 +42,6 @@ export default function FilterSidebar({ setFilters, filters }) {
     delete updatedFilter.endDate;
 
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
 
     const weekFromNow = new Date();
     weekFromNow.setDate(today.getDate() + 7);

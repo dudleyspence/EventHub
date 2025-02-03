@@ -19,16 +19,11 @@ export async function getEvents({
     whereFilter.category = category;
   }
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
   // start date given means find only that day
-  const startDateBegining = new Date(startDate);
-  startDateBegining.setHours(0, 0, 0, 0);
 
   if (startDate && !endDate) {
     whereFilter.date = {
-      gte: startDateBegining,
+      gte: startDate,
     };
   } else if (startDate && endDate) {
     // both dates given means find events between them
@@ -37,7 +32,7 @@ export async function getEvents({
     endDateEnding.setHours(23, 59, 59, 999);
 
     whereFilter.date = {
-      gte: startDateBegining,
+      gte: startDate,
       lte: endDateEnding,
     };
   }
@@ -63,6 +58,20 @@ export async function getEvents({
     total: totalEvents,
     totalPages: Math.ceil(totalEvents / limit),
   };
+}
+
+export function getUserEvents(user_id: string, history: boolean) {
+  const today = new Date();
+
+  const dateConstraint = history ? { lt: today } : { gte: today };
+
+  return db.event.findMany({
+    where: {
+      date: dateConstraint,
+      attendees: { some: { userId: user_id } },
+    },
+    orderBy: { date: "asc" },
+  });
 }
 
 // desired behaviour:

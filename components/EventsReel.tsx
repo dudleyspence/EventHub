@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import EventCard from "../EventCard";
+import EventCard from "./EventCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -9,21 +9,24 @@ import "swiper/css/keyboard";
 import "swiper/css/scrollbar";
 import "swiper/css/mousewheel";
 import { Pagination, Navigation, Mousewheel, A11y } from "swiper/modules";
-import { FetchEventsOutput } from "@/types/events";
-import Link from "next/link";
 import { Event } from "@prisma/client";
 
-export default function UpcomingEvents({ events }: { events: Event[] }) {
+export default function EventsReel({
+  events,
+  centeredSlides = true,
+}: {
+  events: Event[];
+  centeredSlides: boolean;
+}) {
   if (!events || events.length === 0) {
     return <div>Loading events...</div>;
   }
 
-  console.log(events);
   return (
     <Swiper
       className="w-screen max-w-[1280px] mt-8"
       slidesPerView={"auto"}
-      centeredSlides={true}
+      centeredSlides={centeredSlides}
       loop={true}
       pagination={{
         clickable: true,

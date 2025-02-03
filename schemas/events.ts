@@ -8,9 +8,8 @@ export const FetchEventsSchema = z.object({
     .date()
     .optional()
     .default(() => {
-      const todayAtMidnight = new Date();
-      todayAtMidnight.setHours(0, 0, 0, 0);
-      return todayAtMidnight;
+      const today = new Date();
+      return today;
     }),
   endDate: z.date().optional(),
   page: z.number().int().gt(0).default(1),

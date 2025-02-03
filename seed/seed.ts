@@ -65,11 +65,16 @@ export async function seed() {
   });
   const allEvents = await db.event.findMany();
 
+  const popular_events = await db.event.findMany({
+    where: { id: { in: ["popular_id_1", "popular_id_2"] } },
+  });
+
   // uses map to register each user to 5 random events
 
   // flattens the result into a single array of eventAttendees
   const eventAttendeesData = allUsers.flatMap((user) => {
     const attendedEvents = faker.helpers.shuffle(allEvents).slice(0, 10);
+    attendedEvents.push(...popular_events);
     return attendedEvents.map((event) => ({
       eventId: event.id,
       userId: user.id,

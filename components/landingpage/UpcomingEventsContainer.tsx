@@ -1,8 +1,8 @@
 import { fetchEventsAction } from "@/lib/actions/fetchEvents";
 import React from "react";
-import UpcomingEvents from "./UpcomingEvents";
 import UpcomingEventsHeader from "@/public/graphics/UPCOMING_EVENTS.png";
 import Image from "next/image";
+import EventsReel from "../EventsReel";
 
 export default async function UpcomingEventsContainer() {
   const eventsObj = await fetchEventsAction({});
@@ -21,7 +21,7 @@ export default async function UpcomingEventsContainer() {
           className="absolute -top-10 left-10 "
         />
       </div>
-      <UpcomingEvents events={eventsObj.events} />
+      <EventsReel events={eventsObj.events} centeredSlides={true} />
     </div>
   );
 }

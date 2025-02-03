@@ -1,5 +1,7 @@
 import { getEventPhotos } from "@/seed/eventPhotos";
 import { faker } from "@faker-js/faker";
+import generateLandingPageEvents from "./generateLandingPageEvents";
+import { aD } from "vitest/dist/chunks/reporters.Y8BYiXBN.js";
 
 export async function generateEvents(
   admin_id: string,
@@ -32,7 +34,10 @@ export async function generateEvents(
     userId: admin_id,
     category: "Community",
   };
-  EventsData.push(eventForTesting);
+
+  const { popularEvents, comingSoon } = generateLandingPageEvents(admin_id);
+
+  EventsData.push(eventForTesting, ...popularEvents, ...comingSoon);
 
   return EventsData;
 }
