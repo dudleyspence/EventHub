@@ -16,6 +16,8 @@ import {
 import Image from "next/image";
 import logo from "@/public/brand/Logo.png";
 import { signOut } from "next-auth/react";
+import { FaSignOutAlt } from "react-icons/fa";
+import Searchbar from "./Searchbar";
 
 export default function UserNavbar() {
   const menuItems = [
@@ -47,15 +49,19 @@ export default function UserNavbar() {
             </Link>
           </NavbarItem>
         ))}
+        <Searchbar />
         <Button
-          size="sm"
+          size="md"
           color="danger"
+          endContent={<FaSignOutAlt size={16} />}
           onPress={() => signOut({ callbackUrl: "/signin" })}
         >
           Sign Out
         </Button>
       </NavbarContent>
-
+      <div className="sm:hidden">
+        <Searchbar />
+      </div>
       <Dropdown placement="bottom-end">
         <DropdownTrigger>
           <NavbarMenuToggle
@@ -63,6 +69,7 @@ export default function UserNavbar() {
             className="sm:hidden"
           />
         </DropdownTrigger>
+
         <DropdownMenu aria-label="Mobile Navigation" variant="flat">
           <>
             {menuItems.map((item, index) => (
@@ -76,6 +83,7 @@ export default function UserNavbar() {
               <Button
                 size="sm"
                 color="danger"
+                endContent={<FaSignOutAlt size={16} />}
                 onPress={() => signOut({ callbackUrl: "/signin" })}
               >
                 Sign Out

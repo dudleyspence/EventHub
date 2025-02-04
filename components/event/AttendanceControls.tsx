@@ -3,15 +3,36 @@ import React, { useState } from "react";
 import AttendEventButton from "./AttendEventButton";
 import Capacity from "./CapacityChart";
 import { Event } from "@prisma/client";
+import useAttendEvent from "@/hooks/useAttendEvent";
+import { Alert } from "@nextui-org/react";
 
-export default function AttendanceControls({ event }: { event: Event }) {
-  const [attendance, setAttendance] = useState<number>(event.totalAttendees);
+export default function AttendanceControls({
+  event,
+  setShowSuccessAlert,
+}: {
+  event: Event;
+  setShowSuccessAlert: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
+  const [attendanceValue, setAttendanceValue] = useState<number>(
+    event.totalAttendees
+  );
+
+  const { handleAttendEvent, handleRemoveAttendance, loading, attending } =
+    useAttendEvent(event.id, setAttendanceValue, setShowSuccessAlert);
 
   return (
     <div className="flex flex-row gap-5">
-      <AttendEventButton setAttendance={setAttendance} event_id={event.id} />
+      <AttendEventButton
+        handleAttendEvent={handleAttendEvent}
+        loading={loading}
+        attending={attending}
+        handleRemoveAttendance={handleRemoveAttendance}
+      />
       {event.maxCapacity && (
-        <Capacity totalAttendees={attendance} maxCapacity={event.maxCapacity} />
+        <Capacity
+          totalAttendees={attendanceValue}
+          maxCapacity={event.maxCapacity}
+        />
       )}
     </div>
   );
