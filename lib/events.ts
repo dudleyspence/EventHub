@@ -74,6 +74,17 @@ export function getUserEvents(user_id: string, history: boolean) {
   });
 }
 
+export async function eventSearch(searchTerm: string) {
+  const result = await db.event.findMany({
+    where: {
+      title: {
+        contains: searchTerm,
+      },
+    },
+  });
+  return result;
+}
+
 // desired behaviour:
 
 // gets all events
