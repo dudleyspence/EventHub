@@ -16,6 +16,7 @@ import {
 import Image from "next/image";
 import logo from "@/public/brand/Logo.png";
 import { signOut } from "next-auth/react";
+import { FaSignOutAlt } from "react-icons/fa";
 
 export default function AdminNavbar() {
   const menuItems = [
@@ -49,6 +50,7 @@ export default function AdminNavbar() {
         <Button
           size="sm"
           color="danger"
+          endContent={<FaSignOutAlt />}
           onPress={() => signOut({ callbackUrl: "/signin" })}
         >
           Sign Out
@@ -79,6 +81,7 @@ export default function AdminNavbar() {
               <Button
                 size="sm"
                 color="danger"
+                endContent={<FaSignOutAlt />}
                 onPress={() => signOut({ callbackUrl: "/signin" })}
               >
                 Sign Out
