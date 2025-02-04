@@ -1,5 +1,5 @@
 import useSearchEvents from "@/hooks/useSearchEvents";
-import { Input, Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
+import { Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
 import React from "react";
 import { CiSearch } from "react-icons/ci";
 
