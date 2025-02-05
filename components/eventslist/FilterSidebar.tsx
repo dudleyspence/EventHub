@@ -1,17 +1,26 @@
+"use client";
 import { fetchCategories } from "@/lib/actions/fetchCategories";
 import { Radio, RadioGroup } from "@heroui/react";
 import { Category } from "@prisma/client";
 import React, { useEffect, useState } from "react";
 import FiltersSkeleton from "../loading/FiltersSkeleton";
+import { useRouter } from "next/navigation";
 
-export default function FilterSidebar({ setFilters, filters }) {
-  const [categories, setCategories] = useState<Category[]>([]);
+export default function FilterSidebar({
+  category,
+  date,
+  handleFilterChange,
+}: {
+  category: string | undefined;
+  date: string;
+  handleFilterChange: (params: string, value: string) => void;
+}) {
+  const [categories, setCategories] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     setIsLoading(true);
-    setError(null);
 
     async function fetchCategoryList() {
       try {
@@ -19,7 +28,7 @@ export default function FilterSidebar({ setFilters, filters }) {
         setCategories(response);
       } catch (error) {
         console.error(error);
-        setError("Failed to fetch categories");
+        alert("Failed to fetch categories");
       } finally {
         setIsLoading(false);
       }
@@ -27,37 +36,10 @@ export default function FilterSidebar({ setFilters, filters }) {
     fetchCategoryList();
   }, []);
 
-  function handleCategoryChange(value: string) {
-    const updatedFilter = { ...filters, page: 1 };
-    delete updatedFilter.category;
-    if (value !== "None") {
-      updatedFilter.category = value;
-    }
-    setFilters(updatedFilter);
-  }
-
-  function handleDateChange(value: string) {
-    const updatedFilter = { ...filters };
-    delete updatedFilter.startDate;
-    delete updatedFilter.endDate;
-
-    const today = new Date();
-
-    const weekFromNow = new Date();
-    weekFromNow.setDate(today.getDate() + 7);
-
-    const monthFromNow = new Date();
-    monthFromNow.setMonth(today.getMonth() + 1);
-
-    if (value === "week") {
-      updatedFilter.startDate = today;
-      updatedFilter.endDate = weekFromNow;
-    } else if (value === "month") {
-      updatedFilter.startDate = today;
-      updatedFilter.endDate = monthFromNow;
-    }
-
-    setFilters(updatedFilter);
+  function handleCategoryChange(category: string) {
+    router.push(
+      category === "None" ? `/events` : `/events/category/${category}`
+    );
   }
 
   if (isLoading) {
@@ -73,7 +55,10 @@ export default function FilterSidebar({ setFilters, filters }) {
           color="secondary"
           defaultValue="any"
           label="Select a date"
-          onValueChange={handleDateChange}
+          value={date}
+          onValueChange={(value) => {
+            handleFilterChange("date", value);
+          }}
         >
           <Radio value="any">Any</Radio>
           <Radio value="week">This week</Radio>
@@ -90,13 +75,14 @@ export default function FilterSidebar({ setFilters, filters }) {
           <RadioGroup
             color="secondary"
             defaultValue="None"
+            value={category || "None"}
             label="Select a category"
             onValueChange={handleCategoryChange}
           >
             <Radio value="None">None</Radio>
             {categories.map((category) => (
-              <Radio key={category.name} value={category.name}>
-                {category.name}
+              <Radio key={category} value={category}>
+                {category}
               </Radio>
             ))}
           </RadioGroup>

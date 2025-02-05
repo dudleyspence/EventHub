@@ -3,5 +3,6 @@
 import { getCategories } from "@/lib/categories";
 
 export async function fetchCategories() {
-  return await getCategories();
+  const categories = await getCategories();
+  return categories.map((category) => category.name);
 }
