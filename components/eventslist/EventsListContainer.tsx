@@ -11,18 +11,23 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 interface searchParamProps {
   category?: string | undefined;
-  startDate?: string | undefined;
-  endDate?: string | undefined;
-  page: number;
 }
 
-export default function EventsListContainer({
-  category,
-  startDate,
-  endDate,
-  page = 1,
-}: searchParamProps) {
+export default function EventsListContainer({ category }: searchParamProps) {
   const searchParams = useSearchParams();
+
+  // checks provided page is valid and defaults to 1
+  let page = Number(searchParams.get("page")) || 1;
+  if (!Number.isInteger(page)) {
+    page = 1;
+  }
+
+  // checks provided date is valid and defaults to any
+  let date = searchParams.get("date") || "any";
+  if (!["any", "week", "month"].includes(date)) {
+    date = "any";
+  }
+
   const router = useRouter();
 
   const [events, setEvents] = useState<Event[]>([]);
@@ -36,22 +41,27 @@ export default function EventsListContainer({
 
     const filters: any = { page: page };
 
+    const today = new Date();
+    const weekFromNow = new Date();
+    weekFromNow.setDate(today.getDate() + 7);
+    const monthFromNow = new Date();
+    monthFromNow.setMonth(today.getMonth() + 1);
+
     if (category) {
       filters.category = category;
     }
-
-    if (startDate) {
-      const formattedStartDate = new Date(startDate);
-      filters.startDate = formattedStartDate;
+    if (date === "week") {
+      filters.startDate = today;
+      filters.endDate = weekFromNow;
     }
-    if (endDate) {
-      const formattedEndDate = new Date(endDate);
-      filters.endDate = formattedEndDate;
+    if (date === "month") {
+      filters.startDate = today;
+      filters.endDate = monthFromNow;
     }
-    console.log(filters);
 
     async function refetchData() {
       try {
+        console.log(filters);
         const response = await fetchEventsAction(filters);
         setEvents(response.events);
         setTotalPages(response.totalPages);
@@ -63,7 +73,7 @@ export default function EventsListContainer({
       }
     }
     refetchData();
-  }, [category, startDate, endDate, page]);
+  }, [category, date, page]);
 
   function handleFilterChange(param: string, value: string) {
     const params = new URLSearchParams(searchParams);
@@ -90,7 +100,12 @@ export default function EventsListContainer({
     <div className="w-full flex flex-col items-center gap-16">
       <div className="w-full flex flex-row gap-5">
         <div id="filters" className="hidden lg:block lg:w-1/4">
-          <FilterSidebar category={category} />
+          <FilterSidebar
+            category={category}
+            date={date}
+            page={page}
+            handleFilterChange={handleFilterChange}
+          />
         </div>
         <div id="event-list" className="w-full lg:w-3/4">
           <div className="justify-self-end mr-10">

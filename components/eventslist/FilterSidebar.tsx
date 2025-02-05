@@ -4,17 +4,21 @@ import { Radio, RadioGroup } from "@heroui/react";
 import { Category } from "@prisma/client";
 import React, { useEffect, useState } from "react";
 import FiltersSkeleton from "../loading/FiltersSkeleton";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function FilterSidebar({
   category,
+  date,
+  handleFilterChange,
 }: {
   category: string | undefined;
+  date: string;
+  page: number;
+  handleFilterChange: (params: string, value: string) => void;
 }) {
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   useEffect(() => {
     setIsLoading(true);
@@ -39,35 +43,6 @@ export default function FilterSidebar({
     );
   }
 
-  function handleDateChange(value: string) {
-    const params = new URLSearchParams(searchParams);
-
-    const today = new Date();
-
-    const weekFromNow = new Date();
-    weekFromNow.setDate(today.getDate() + 7);
-
-    const monthFromNow = new Date();
-    monthFromNow.setMonth(today.getMonth() + 1);
-
-    if (value === "week") {
-      params.set("startDate", today.toISOString());
-      params.set("endDate", weekFromNow.toISOString());
-    } else if (value === "month") {
-      params.set("startDate", today.toISOString());
-      params.set("endDate", monthFromNow.toISOString());
-    } else {
-      params.delete("startDate");
-      params.delete("endDate");
-    }
-
-    let newUrl = `/events?${params.toString()}`;
-    if (category) {
-      newUrl = `/events/category/${category}?${params.toString()}`;
-    }
-    router.push(newUrl);
-  }
-
   if (isLoading) {
     return <FiltersSkeleton />;
   }
@@ -81,7 +56,10 @@ export default function FilterSidebar({
           color="secondary"
           defaultValue="any"
           label="Select a date"
-          onValueChange={handleDateChange}
+          value={date}
+          onValueChange={(value) => {
+            handleFilterChange("date", value);
+          }}
         >
           <Radio value="any">Any</Radio>
           <Radio value="week">This week</Radio>
