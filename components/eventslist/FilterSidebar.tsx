@@ -1,17 +1,23 @@
+"use client";
 import { fetchCategories } from "@/lib/actions/fetchCategories";
 import { Radio, RadioGroup } from "@heroui/react";
 import { Category } from "@prisma/client";
 import React, { useEffect, useState } from "react";
 import FiltersSkeleton from "../loading/FiltersSkeleton";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export default function FilterSidebar({ setFilters, filters }) {
+export default function FilterSidebar({
+  category,
+}: {
+  category: string | undefined;
+}) {
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     setIsLoading(true);
-    setError(null);
 
     async function fetchCategoryList() {
       try {
@@ -27,19 +33,14 @@ export default function FilterSidebar({ setFilters, filters }) {
     fetchCategoryList();
   }, []);
 
-  function handleCategoryChange(value: string) {
-    const updatedFilter = { ...filters, page: 1 };
-    delete updatedFilter.category;
-    if (value !== "None") {
-      updatedFilter.category = value;
-    }
-    setFilters(updatedFilter);
+  function handleCategoryChange(category: string) {
+    router.push(
+      category === "None" ? `/events` : `/events/category/${category}`
+    );
   }
 
   function handleDateChange(value: string) {
-    const updatedFilter = { ...filters };
-    delete updatedFilter.startDate;
-    delete updatedFilter.endDate;
+    const params = new URLSearchParams(searchParams);
 
     const today = new Date();
 
@@ -50,14 +51,21 @@ export default function FilterSidebar({ setFilters, filters }) {
     monthFromNow.setMonth(today.getMonth() + 1);
 
     if (value === "week") {
-      updatedFilter.startDate = today;
-      updatedFilter.endDate = weekFromNow;
+      params.set("startDate", today.toISOString());
+      params.set("endDate", weekFromNow.toISOString());
     } else if (value === "month") {
-      updatedFilter.startDate = today;
-      updatedFilter.endDate = monthFromNow;
+      params.set("startDate", today.toISOString());
+      params.set("endDate", monthFromNow.toISOString());
+    } else {
+      params.delete("startDate");
+      params.delete("endDate");
     }
 
-    setFilters(updatedFilter);
+    let newUrl = `/events?${params.toString()}`;
+    if (category) {
+      newUrl = `/events/category/${category}?${params.toString()}`;
+    }
+    router.push(newUrl);
   }
 
   if (isLoading) {
@@ -90,6 +98,7 @@ export default function FilterSidebar({ setFilters, filters }) {
           <RadioGroup
             color="secondary"
             defaultValue="None"
+            value={category || "None"}
             label="Select a category"
             onValueChange={handleCategoryChange}
           >
