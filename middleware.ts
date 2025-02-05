@@ -18,7 +18,8 @@ const { auth } = NextAuth(authConfig);
 export default auth(async (req) => {
   const { nextUrl } = req;
   const userRole = await currentRole();
-  const pathway = nextUrl.pathname;
+  const pathway = nextUrl.pathname + nextUrl.search;
+  console.log(pathway);
 
   // USER CHECKS:
   const isLoggedIn = !!req.auth;
@@ -56,8 +57,8 @@ export default auth(async (req) => {
     return undefined;
   }
 
-  // admin doesnt need the landing page - redirects to events
   if (userIsAdmin && pathway === "/") {
+    // admin doesnt need the landing page - redirects to events
     return Response.redirect(new URL(adminLandingPage, nextUrl));
   }
 
@@ -68,9 +69,8 @@ export default auth(async (req) => {
 
   // if user is admin but going to a non-admin route, redirect to the admin version of the page
   if (userIsAdmin && isAdminVersionRoute) {
-    return Response.redirect(
-      new URL(adminRoutePrefix + nextUrl.pathname, nextUrl)
-    );
+    // IMPORTANT: nextUrl.pathname doesnt include the queries
+    return Response.redirect(new URL(adminRoutePrefix + pathway, nextUrl));
   }
 
   return undefined;

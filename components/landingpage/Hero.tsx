@@ -9,7 +9,7 @@ export default function Hero() {
   const { data: session } = useSession();
 
   return (
-    <div className="w-full h-[600px] flex flex-col items-end py-10 sm:py-10">
+    <div className="w-full h-[600px] flex flex-col items-end py-10 ">
       <div className="relative w-full h-full overflow-hidden lg:rounded-xl shadow-2xl">
         <div className="absolute inset-0 flex items-center justify-center z-10">
           <RotateWords text="Events you love..." words={eventTypes} />

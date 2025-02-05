@@ -66,6 +66,7 @@ model Account {
 
 model Category {
   name             String    @id @unique
+  image            String?
   events           Event[]   @relation("EventCategory")
 }
 

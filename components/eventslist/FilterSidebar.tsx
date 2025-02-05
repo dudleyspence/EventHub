@@ -1,7 +1,6 @@
 "use client";
 import { fetchCategories } from "@/lib/actions/fetchCategories";
 import { Radio, RadioGroup } from "@heroui/react";
-import { Category } from "@prisma/client";
 import React, { useEffect, useState } from "react";
 import FiltersSkeleton from "../loading/FiltersSkeleton";
 import { useRouter } from "next/navigation";
@@ -57,6 +56,7 @@ export default function FilterSidebar({
           label="Select a date"
           value={date}
           onValueChange={(value) => {
+            console.log(value);
             handleFilterChange("date", value);
           }}
         >

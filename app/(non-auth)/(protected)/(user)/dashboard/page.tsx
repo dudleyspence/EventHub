@@ -13,7 +13,7 @@ export default async function page() {
   return (
     <div className="flex flex-col gap-20 py-10">
       {/* <Image height={80} src={dashboardHeader} alt="Dashboard header" /> */}
-      <div>
+      <div className="pl-6">
         <h1 className="text-4xl font-bold mb-5">Dashboard</h1>
         <h1 className="text-2xl font-bold">Welcome, {user.name}!</h1>
       </div>

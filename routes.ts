@@ -2,7 +2,7 @@
  * The unprotected routes
  * @type {regex[]}
  */
-export const publicRoutes = [/^\/$/, /^\/events$/, /^\/events\/[^/]+$/];
+export const publicRoutes = [/^\/$/, /^\/events$/, /^\/events.*$/];
 
 const privateRoutes = [/^\/dashboard$/];
 
@@ -22,10 +22,7 @@ export const adminLandingPage = "/admin/events";
  * Routes that only exist for admin
  * @type {regex[]}
  */
-export const adminOnlyRoutes = [
-  /^\/admin\/events\/[^/]+\/update$/,
-  /^\/admin\/events\/create$/,
-];
+export const adminOnlyRoutes = [/^\/admin.*$/];
 
 /**
  * Routes that normal users have and there is an admin version

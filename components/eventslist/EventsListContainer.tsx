@@ -8,7 +8,6 @@ import LoadingList from "../loading/LoadingList";
 import FilterSidebar from "./FilterSidebar";
 import FilterDrawer from "./FilterDrawer";
 import { useRouter, useSearchParams } from "next/navigation";
-
 interface searchParamProps {
   category?: string | undefined;
 }
@@ -61,7 +60,6 @@ export default function EventsListContainer({ category }: searchParamProps) {
 
     async function refetchData() {
       try {
-        console.log(filters);
         const response = await fetchEventsAction(filters);
         setEvents(response.events);
         setTotalPages(response.totalPages);
@@ -78,13 +76,18 @@ export default function EventsListContainer({ category }: searchParamProps) {
   function handleFilterChange(param: string, value: string) {
     const params = new URLSearchParams(searchParams);
     params.set(param, value);
-    params.delete("page");
+
+    if (param !== "page") {
+      params.delete("page");
+    }
+    if (param === "date" && value === "any") {
+      params.delete("date");
+    }
 
     let newUrl = `/events?${params.toString()}`;
     if (category) {
       newUrl = `/events/category/${category}?${params.toString()}`;
     }
-
     router.push(newUrl);
   }
 
