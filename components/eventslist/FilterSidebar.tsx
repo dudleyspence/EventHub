@@ -16,7 +16,7 @@ export default function FilterSidebar({
   page: number;
   handleFilterChange: (params: string, value: string) => void;
 }) {
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
@@ -29,7 +29,7 @@ export default function FilterSidebar({
         setCategories(response);
       } catch (error) {
         console.error(error);
-        setError("Failed to fetch categories");
+        alert("Failed to fetch categories");
       } finally {
         setIsLoading(false);
       }
@@ -82,8 +82,8 @@ export default function FilterSidebar({
           >
             <Radio value="None">None</Radio>
             {categories.map((category) => (
-              <Radio key={category.name} value={category.name}>
-                {category.name}
+              <Radio key={category} value={category}>
+                {category}
               </Radio>
             ))}
           </RadioGroup>
