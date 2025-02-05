@@ -1,5 +1,6 @@
 import EventsListContainer from "@/components/eventslist/EventsListContainer";
 import { fetchCategories } from "@/lib/actions/fetchCategories";
+import { redirect } from "next/navigation";
 import React from "react";
 
 interface PageProps {
@@ -10,11 +11,11 @@ interface PageProps {
 
 export default async function page({ params }: PageProps) {
   let { category } = await params;
+
   const categoryList = await fetchCategories();
   category = category ? decodeURIComponent(category) : undefined;
 
   if (category) {
-    console.log(category);
     category = categoryList.includes(category) ? category : undefined;
   }
 

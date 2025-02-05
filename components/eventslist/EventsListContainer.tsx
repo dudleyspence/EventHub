@@ -78,6 +78,7 @@ export default function EventsListContainer({ category }: searchParamProps) {
   function handleFilterChange(param: string, value: string) {
     const params = new URLSearchParams(searchParams);
     params.set(param, value);
+    params.delete("page");
 
     let newUrl = `/events?${params.toString()}`;
     if (category) {
@@ -103,13 +104,16 @@ export default function EventsListContainer({ category }: searchParamProps) {
           <FilterSidebar
             category={category}
             date={date}
-            page={page}
             handleFilterChange={handleFilterChange}
           />
         </div>
         <div id="event-list" className="w-full lg:w-3/4">
           <div className="justify-self-end mr-10">
-            <FilterDrawer />
+            <FilterDrawer
+              category={category}
+              date={date}
+              handleFilterChange={handleFilterChange}
+            />
           </div>
           {isLoading ? (
             <LoadingList eventsPerPage={10} />

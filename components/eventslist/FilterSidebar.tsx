@@ -13,7 +13,6 @@ export default function FilterSidebar({
 }: {
   category: string | undefined;
   date: string;
-  page: number;
   handleFilterChange: (params: string, value: string) => void;
 }) {
   const [categories, setCategories] = useState<string[]>([]);

@@ -3,7 +3,15 @@ import { Drawer, DrawerContent, Button, useDisclosure } from "@heroui/react";
 import FilterSidebar from "./FilterSidebar";
 import { CiFilter } from "react-icons/ci";
 
-export default function FilterDrawer() {
+export default function FilterDrawer({
+  category,
+  date,
+  handleFilterChange,
+}: {
+  category: string | undefined;
+  date: string;
+  handleFilterChange: (params: string, value: string) => void;
+}) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
@@ -20,7 +28,11 @@ export default function FilterDrawer() {
         <DrawerContent>
           {(onClose) => (
             <div className="pb-10">
-              <FilterSidebar />
+              <FilterSidebar
+                category={category}
+                date={date}
+                handleFilterChange={handleFilterChange}
+              />
             </div>
           )}
         </DrawerContent>
