@@ -73,11 +73,14 @@ export function getUserEvents(user_id: string, history: boolean) {
     orderBy: { date: "asc" },
   });
 }
-
 export async function eventSearch(searchTerm: string) {
+  console.log(searchTerm);
   const result = await db.event.findMany({
     where: {
       title: {
+        search: searchTerm,
+      },
+      description: {
         search: searchTerm,
       },
     },

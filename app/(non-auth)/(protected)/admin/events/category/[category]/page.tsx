@@ -1,6 +1,5 @@
 import EventsListContainer from "@/components/eventslist/EventsListContainer";
 import { fetchCategories } from "@/lib/actions/fetchCategories";
-import { redirect } from "next/navigation";
 import React from "react";
 
 interface PageProps {

@@ -38,7 +38,7 @@ export default function EventsListContainer({ category }: searchParamProps) {
     setIsLoading(true);
     setError(null);
 
-    const filters: any = { page: page };
+    const filters: { page: number } = { page: page };
 
     const today = new Date();
     const weekFromNow = new Date();

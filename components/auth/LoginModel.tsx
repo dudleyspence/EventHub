@@ -12,7 +12,7 @@ export default function LoginModal() {
   return (
     <Modal isOpen={isOpen} onOpenChange={(open) => !open && closeLoginModal()}>
       <ModalContent>
-        {(onClose) => (
+        {() => (
           <>
             <ModalHeader className="flex flex-col gap-1">
               <Image height={50} src={logo} alt="brand logo" />

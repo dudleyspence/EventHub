@@ -2,7 +2,6 @@
 import React from "react";
 import { Divider, Link } from "@nextui-org/react";
 import { AuthButtons } from "./AuthButtons";
-import React from "react";
 
 interface CardWrapperProps {
   children: React.ReactNode;

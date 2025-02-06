@@ -20,7 +20,6 @@ const eslintConfig = [
       "prettier",
     ],
     rules: {
-      "no-console": "warn",
       "no-unused-vars": "warn",
       "@typescript-eslint/no-unused-vars": ["warn"],
       "react/no-unescaped-entities": "error",

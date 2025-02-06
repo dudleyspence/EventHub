@@ -4,7 +4,6 @@ import AttendEventButton from "./AttendEventButton";
 import Capacity from "./CapacityChart";
 import { Event } from "@prisma/client";
 import useAttendEvent from "@/hooks/useAttendEvent";
-import { Alert } from "@nextui-org/react";
 
 export default function AttendanceControls({
   event,
