@@ -7,10 +7,9 @@ import DeleteEventButtton from "@/components/admin/DeleteEventButtton";
 import { currentUser } from "@/lib/auth";
 
 interface PageProps {
-  params: {
-    id: string;
-  };
+  params: Promise<{ id: string }>;
 }
+
 export default async function page({ params }: PageProps) {
   const { id } = await params;
   const event = await fetchSingleEvent(id);

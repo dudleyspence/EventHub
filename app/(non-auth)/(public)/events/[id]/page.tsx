@@ -3,9 +3,7 @@ import { fetchSingleEvent } from "@/lib/actions/fetchSingleEvent";
 import EventContent from "@/components/event/EventContent";
 
 interface PageProps {
-  params: {
-    id: string;
-  };
+  params: Promise<{ id: string }>;
 }
 
 export default async function page({ params }: PageProps) {

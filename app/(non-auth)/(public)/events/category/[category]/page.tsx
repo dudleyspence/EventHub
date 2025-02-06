@@ -4,9 +4,7 @@ import Image from "next/image";
 import React from "react";
 
 interface PageProps {
-  params: {
-    category?: string;
-  };
+  params: Promise<{ category: string | undefined }>;
 }
 
 export default async function page({ params }: PageProps) {
