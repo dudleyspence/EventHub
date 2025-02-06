@@ -84,7 +84,7 @@ export default function PublicNavbar() {
             setIsMenuOpen(!isMenuOpen);
           }}
         >
-          <DropdownTrigger>
+          <DropdownTrigger className="lg:hidden">
             <Button isIconOnly className="bg-transparent">
               {isMenuOpen ? <RxCross1 size={25} /> : <IoIosMenu size={30} />}
             </Button>

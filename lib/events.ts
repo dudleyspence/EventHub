@@ -78,7 +78,7 @@ export async function eventSearch(searchTerm: string) {
   const result = await db.event.findMany({
     where: {
       title: {
-        contains: searchTerm,
+        search: searchTerm,
       },
     },
   });
