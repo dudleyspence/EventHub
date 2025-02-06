@@ -34,7 +34,9 @@ export default async function page({ params }: PageProps) {
           <div className="flex flex-row gap-5">
             <div>
               {/* <Button>Update Event</Button> */}
-              <DeleteEventButtton event_id={event.id} user_id={user?.id} />
+              {user && user.id && (
+                <DeleteEventButtton event_id={event.id} user_id={user.id} />
+              )}
             </div>
             {event.maxCapacity && (
               <Capacity
