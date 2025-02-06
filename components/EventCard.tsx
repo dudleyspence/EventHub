@@ -1,7 +1,6 @@
 import React from "react";
 import { Card, CardHeader, CardBody, Chip } from "@nextui-org/react";
 import Image from "next/image";
-import { Event } from "@prisma/client";
 import Link from "next/link";
 
 import { FormatDateToReadable } from "@/utils/FormatUTCDateReadable";
