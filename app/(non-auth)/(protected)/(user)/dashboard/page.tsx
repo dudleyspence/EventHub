@@ -1,6 +1,5 @@
 import React from "react";
-import dashboardHeader from "@/public/graphics/dashboard.png";
-import Image from "next/image";
+
 import { currentUser } from "@/lib/auth";
 import DashboardUpcomingEvents from "@/components/dashboard/DashboardUpcomingEvents";
 import DashboardEventsHistory from "@/components/dashboard/DashboardEventsHistory";

@@ -126,7 +126,7 @@ export default function CreateEventForm() {
           <Controller
             control={control}
             name="date"
-            render={({ field, fieldState }) => (
+            render={({ field }) => (
               <div className="w-full">
                 <div className="md:hidden block w-full">
                   <MobileDateTimePicker

@@ -1,7 +1,6 @@
 // prisma/schema.prisma
 generator client {
   provider = "prisma-client-js"
-  previewFeatures = ["fullTextSearchPostgres"]
 }
 
 
@@ -13,7 +12,7 @@ generator client {
 // run npx prisma migrate reset
 
 datasource db {
-  provider  = "postgresql"
+  provider  = "mysql"
   url  	    = env("DATABASE_URL")
 }
 
@@ -83,7 +82,11 @@ model Event {
   user              User             @relation("UserEvents", fields: [userId], references: [id])
   attendees         EventAttendee[]  @relation("EventAttendees")
   createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt  
+  updatedAt         DateTime         @updatedAt 
+
+ @@fulltext([title])
+ @@fulltext([title, description])
+
 }
 
 

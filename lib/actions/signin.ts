@@ -1,7 +1,4 @@
 "use server";
-
-import * as z from "zod";
-
 import { SigninSchema } from "@/schemas/auth";
 import { signIn } from "@/auth";
 

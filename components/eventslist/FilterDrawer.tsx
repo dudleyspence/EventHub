@@ -10,7 +10,7 @@ export default function FilterDrawer({
 }: {
   category: string | undefined;
   date: string;
-  handleFilterChange: (params: string, value: string) => void;
+  handleFilterChange: () => void;
 }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -26,7 +26,7 @@ export default function FilterDrawer({
         className="w-[350px]"
       >
         <DrawerContent>
-          {(onClose) => (
+          {() => (
             <div className="pb-10">
               <FilterSidebar
                 category={category}

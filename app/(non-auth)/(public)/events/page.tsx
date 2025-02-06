@@ -1,5 +1,4 @@
 import EventsListContainer from "@/components/eventslist/EventsListContainer";
-import Image from "next/image";
 import React from "react";
 
 export default function page() {
