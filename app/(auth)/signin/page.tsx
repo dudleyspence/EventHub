@@ -2,7 +2,20 @@ import { CardWrapper } from "@/components/auth/CardWrapper";
 import SignInForm from "@/components/auth/SigninForm";
 import React from "react";
 
-export default function page() {
+type SearchParamsType = Promise<{ error: string }>;
+
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: SearchParamsType;
+}) {
+  const params = await searchParams;
+
+  const error =
+    params.error === "OAuthAccountNotLinked"
+      ? "Email already in use with a different provider!"
+      : "";
+
   return (
     <CardWrapper
       headerLabel="Welcome Back!"
@@ -11,7 +24,7 @@ export default function page() {
       backButtonLabel="Sign Up"
       backButtonHref="/signup"
     >
-      <SignInForm />
+      <SignInForm urlError={error} />
     </CardWrapper>
   );
 }

@@ -8,15 +8,8 @@ import React, { useState, useTransition } from "react";
 import { Button, Input, Checkbox, Link, Form } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { signin } from "@/lib/actions/signin";
-import { useSearchParams } from "next/navigation";
 
-export default function SigninForm() {
-  const searchParams = useSearchParams();
-  const urlError =
-    searchParams.get("error") === "OAuthAccountNotLinked"
-      ? "Email already in use with a different provider!"
-      : "";
-
+export default function SigninForm({ urlError }: { urlError: string }) {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
