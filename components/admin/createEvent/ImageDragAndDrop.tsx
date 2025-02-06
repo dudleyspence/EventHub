@@ -16,7 +16,9 @@ export function DragAndDropUploader({
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const { getRootProps, getInputProps } = useDropzone({
-    accept: "image/*",
+    accept: {
+      "image/*": [],
+    },
     onDrop: (acceptedFiles) => {
       const file = acceptedFiles[0];
       if (file) {

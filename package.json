@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "type-check": "tsc --noEmit",
     "setup:dev": "npm run reset:dev && npm run migrate:dev && npm run seed:dev",
     "reset:dev": "dotenv -e .env.development -- npx prisma migrate reset --force",
     "migrate:dev": "dotenv -e .env.development -- npx prisma db push",

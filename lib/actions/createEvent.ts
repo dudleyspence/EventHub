@@ -17,10 +17,8 @@ export async function createEventAction(
 
   const categories = await fetchCategories();
 
-  const categoryNames = categories.map((category) => category.name);
-
   // this may cause an error, maybe need to map categories to be a list of names first
-  if (!categoryNames.includes(parsedEvent.data.category)) {
+  if (!categories.includes(parsedEvent.data.category)) {
     throw new Error("Invalid category");
   }
 

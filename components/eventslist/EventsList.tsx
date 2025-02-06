@@ -16,7 +16,6 @@ export default function EventList({ events }: EventListProps) {
           id={event.id}
           name={event.title}
           date={event.date}
-          maxCapacity={event.maxCapacity}
           totalAttendees={event.totalAttendees}
           image={event.image}
           category={event.category}

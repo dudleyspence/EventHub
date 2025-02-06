@@ -10,7 +10,7 @@ export default function FilterDrawer({
 }: {
   category: string | undefined;
   date: string;
-  handleFilterChange: () => void;
+  handleFilterChange: (params: string, value: string) => void;
 }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 

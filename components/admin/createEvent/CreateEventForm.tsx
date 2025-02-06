@@ -116,8 +116,8 @@ export default function CreateEventForm() {
                 {...field}
               >
                 {categories.map((category) => (
-                  <SelectItem key={category.name} value={category.name}>
-                    {category.name}
+                  <SelectItem key={category} value={category}>
+                    {category}
                   </SelectItem>
                 ))}
               </Select>

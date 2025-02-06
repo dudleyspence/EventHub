@@ -8,6 +8,11 @@ const query = "Events";
 export async function getEventPhotos(n: number) {
   const results = await client.photos.search({ query, per_page: n });
 
-  const photoURLs = results.photos.map((photo: any) => photo.src.large);
-  return photoURLs;
+  if ("photos" in results) {
+    const photoURLs = results.photos.map((photo) => photo.src.large);
+    return photoURLs;
+  } else {
+    console.error("Error fetching photos:", results);
+    return [];
+  }
 }
