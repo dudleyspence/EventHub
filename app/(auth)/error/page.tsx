@@ -11,7 +11,7 @@ export default function page() {
   );
 }
 
-export function ErrorCard() {
+function ErrorCard() {
   return (
     <Card className="bg-slate-50 shadow-lg rounded-lg p-5 w-full max-w-md">
       <CardHeader>
