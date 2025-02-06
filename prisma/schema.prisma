@@ -2,7 +2,6 @@
 generator client {
   provider = "prisma-client-js"
   previewFeatures = ["fullTextSearchPostgres"]
-
 }
 
 
@@ -16,7 +15,6 @@ generator client {
 datasource db {
   provider  = "postgresql"
   url  	    = env("DATABASE_URL")
-  directUrl = env("DATABASE_URL_UNPOOLED")
 }
 
 enum UserRole {
@@ -66,7 +64,8 @@ model Account {
 
 model Category {
   name             String    @id @unique
-  image            String?
+  image            String
+  description      String
   events           Event[]   @relation("EventCategory")
 }
 
@@ -84,7 +83,7 @@ model Event {
   user              User             @relation("UserEvents", fields: [userId], references: [id])
   attendees         EventAttendee[]  @relation("EventAttendees")
   createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt
+  updatedAt         DateTime         @updatedAt  
 }
 
 
