@@ -3,7 +3,7 @@ import { Button, Card, CardFooter, CardHeader } from "@nextui-org/react";
 import Link from "next/link";
 import React from "react";
 
-export default function AuthErrorPage() {
+export default function page() {
   return (
     <div className="flex justify-center items-center">
       <ErrorCard />
