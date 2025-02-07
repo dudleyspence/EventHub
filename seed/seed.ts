@@ -1,18 +1,17 @@
 // https://www.prisma.io/docs/orm/prisma-migrate/workflows/seeding
 
-import { PrismaClient, UserRole } from "@prisma/client";
+import { UserRole } from "@prisma/client";
 import { faker } from "@faker-js/faker";
 import { generateUsers } from "@/seed/generateUsers";
 import { generateEvents } from "@/seed/generateEvents";
 import * as dotenv from "dotenv";
 import { generateCategories } from "./generateCategories";
 import bcrypt from "bcryptjs";
+import { db } from "@/lib/db";
 
 const envFile =
   process.env.NODE_ENV === "test" ? ".env.test" : ".env.development";
 dotenv.config({ path: envFile });
-
-const db = new PrismaClient();
 
 export async function seed() {
   // before seeding clear database

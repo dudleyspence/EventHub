@@ -1,7 +1,6 @@
 import { getEventPhotos } from "@/seed/eventPhotos";
 import { faker } from "@faker-js/faker";
 import generateLandingPageEvents from "./generateLandingPageEvents";
-import { aD } from "vitest/dist/chunks/reporters.Y8BYiXBN.js";
 
 export async function generateEvents(
   admin_id: string,

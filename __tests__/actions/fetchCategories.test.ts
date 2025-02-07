@@ -11,11 +11,12 @@ describe("fetchCategories", () => {
     const categories = await fetchCategories();
 
     expect(categories.length).toBeGreaterThan(0);
-    expect(categories[0]).toMatchObject({ name: expect.any(String) });
   });
 
   it("each category has the correct format", async () => {
     const categories = await fetchCategories();
-    expect(categories[0]).toMatchObject({ name: expect.any(String) });
+    categories.forEach((category) => {
+      expect(category).toBeTypeOf("string");
+    });
   });
 });
