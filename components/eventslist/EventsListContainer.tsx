@@ -8,11 +8,18 @@ import LoadingList from "../loading/LoadingList";
 import FilterSidebar from "./FilterSidebar";
 import FilterDrawer from "./FilterDrawer";
 import { useRouter, useSearchParams } from "next/navigation";
+import { eventsFilters } from "@/types/events";
+import SortEvents from "./SortEvents";
+
 interface searchParamProps {
   category?: string | undefined;
+  categories: string[];
 }
 
-export default function EventsListContainer({ category }: searchParamProps) {
+export default function EventsListContainer({
+  category,
+  categories,
+}: searchParamProps) {
   const searchParams = useSearchParams();
 
   // checks provided page is valid and defaults to 1
@@ -38,7 +45,9 @@ export default function EventsListContainer({ category }: searchParamProps) {
     setIsLoading(true);
     setError(null);
 
-    const filters: any = { page: page };
+    const filters: eventsFilters = {
+      page: page,
+    };
 
     const today = new Date();
     const weekFromNow = new Date();
@@ -107,14 +116,16 @@ export default function EventsListContainer({ category }: searchParamProps) {
           <FilterSidebar
             category={category}
             date={date}
+            categories={categories}
             handleFilterChange={handleFilterChange}
           />
         </div>
         <div id="event-list" className="flex flex-col w-full lg:w-3/4">
-          <div className="self-end mr-10">
+          <div className="w-full flex flex-row justify-end gap-10 px-10">
             <FilterDrawer
               category={category}
               date={date}
+              categories={categories}
               handleFilterChange={handleFilterChange}
             />
           </div>

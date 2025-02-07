@@ -1,39 +1,23 @@
 "use client";
-import { fetchCategories } from "@/lib/actions/fetchCategories";
 import { Radio, RadioGroup } from "@heroui/react";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import FiltersSkeleton from "../loading/FiltersSkeleton";
 import { useRouter } from "next/navigation";
 
-export default function FilterSidebar({
-  category,
-  date,
-  handleFilterChange,
-}: {
+export interface FilterSidebarProps {
   category: string | undefined;
   date: string;
   handleFilterChange: (params: string, value: string) => void;
-}) {
-  const [categories, setCategories] = useState<string[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  categories: string[];
+}
+
+export default function FilterSidebar({
+  category,
+  categories,
+  date,
+  handleFilterChange,
+}: FilterSidebarProps) {
   const router = useRouter();
-
-  useEffect(() => {
-    setIsLoading(true);
-
-    async function fetchCategoryList() {
-      try {
-        const response = await fetchCategories();
-        setCategories(response);
-      } catch (error) {
-        console.error(error);
-        alert("Failed to fetch categories");
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    fetchCategoryList();
-  }, []);
 
   function handleCategoryChange(category: string) {
     router.push(
@@ -41,7 +25,7 @@ export default function FilterSidebar({
     );
   }
 
-  if (isLoading) {
+  if (!categories) {
     return <FiltersSkeleton />;
   }
 
@@ -69,24 +53,20 @@ export default function FilterSidebar({
       <div>
         <h3 className="font-bold text-xl">Categories</h3>
 
-        {isLoading ? (
-          <p>Loading...</p>
-        ) : (
-          <RadioGroup
-            color="secondary"
-            defaultValue="None"
-            value={category || "None"}
-            label="Select a category"
-            onValueChange={handleCategoryChange}
-          >
-            <Radio value="None">None</Radio>
-            {categories.map((category) => (
-              <Radio key={category} value={category}>
-                {category}
-              </Radio>
-            ))}
-          </RadioGroup>
-        )}
+        <RadioGroup
+          color="secondary"
+          defaultValue="None"
+          value={category || "None"}
+          label="Select a category"
+          onValueChange={handleCategoryChange}
+        >
+          <Radio value="None">None</Radio>
+          {categories.map((category) => (
+            <Radio key={category} value={category}>
+              {category}
+            </Radio>
+          ))}
+        </RadioGroup>
       </div>
     </div>
   );

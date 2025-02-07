@@ -10,9 +10,10 @@ interface EventListProps {
 export default function EventList({ events }: EventListProps) {
   return (
     <div className="w-full grid sm:grid-cols-2 place-items-center gap-5 mt-8 px-5">
-      {events.map((event) => (
+      {events.map((event, index) => (
         <EventCard
           key={event.id}
+          index={index}
           id={event.id}
           name={event.title}
           date={event.date}

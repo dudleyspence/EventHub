@@ -1,4 +1,5 @@
 import EventsListContainer from "@/components/eventslist/EventsListContainer";
+import { fetchCategories } from "@/lib/actions/fetchCategories";
 import { fetchCategory } from "@/lib/actions/fetchCategory";
 import Image from "next/image";
 import React from "react";
@@ -9,6 +10,9 @@ interface PageProps {
 
 export default async function page({ params }: PageProps) {
   const { category } = await params;
+  const allCategories = await fetchCategories();
+
+  console.log(allCategories);
 
   const decodedCategory = category ? decodeURIComponent(category) : undefined;
 
@@ -32,6 +36,7 @@ export default async function page({ params }: PageProps) {
           <div className="relative sm:h-[280px] w-full h-[200px] sm:w-2/3 md:w-1/2">
             <Image
               fill
+              priority
               className="object-cover rounded-md"
               src={fullCategory.image}
               alt={fullCategory.name}
@@ -39,7 +44,11 @@ export default async function page({ params }: PageProps) {
           </div>
         </div>
       )}
-      <EventsListContainer category={decodedCategory} />;
+      <EventsListContainer
+        categories={allCategories}
+        category={decodedCategory}
+      />
+      ;
     </div>
   );
 }

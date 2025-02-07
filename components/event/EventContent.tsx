@@ -5,9 +5,13 @@ import Image from "next/image";
 import React, { useState } from "react";
 import AttendanceControls from "./AttendanceControls";
 import { Alert } from "@heroui/react";
+import Capacity from "./CapacityChart";
 
 export default function EventContent({ event }: { event: Event }) {
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [attendanceValue, setAttendanceValue] = useState<number>(
+    event.totalAttendees
+  );
 
   return (
     <div className="w-full">
@@ -27,9 +31,17 @@ export default function EventContent({ event }: { event: Event }) {
           alt={event.title}
           src={event.image}
         />
+        <div className="absolute bottom-2 right-2">
+          {event.maxCapacity && (
+            <Capacity
+              totalAttendees={attendanceValue}
+              maxCapacity={event.maxCapacity}
+            />
+          )}
+        </div>
       </div>
       <div className="p-5 px-7  w-full">
-        <div className=" flex flex-col sm:flex-row justify-between">
+        <div className=" flex flex-row justify-between">
           <div>
             <p>{FormatDateToReadable(event.date)}</p>
             <h1 className="my-5 text-3xl font-bold">{event.title}</h1>
@@ -37,6 +49,7 @@ export default function EventContent({ event }: { event: Event }) {
 
           <AttendanceControls
             event={event}
+            setAttendanceValue={setAttendanceValue}
             setShowSuccessAlert={setShowSuccessAlert}
           />
         </div>

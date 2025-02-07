@@ -5,14 +5,14 @@ import { RotateWords } from "../UI/RotateWords";
 import { Button } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 
-export default function Hero() {
+export default function Hero({ categories }: { categories: string[] }) {
   const { data: session } = useSession();
 
   return (
     <div className="w-full h-[600px] flex flex-col items-end py-10 ">
       <div className="relative w-full h-full overflow-hidden lg:rounded-xl shadow-2xl">
         <div className="absolute inset-0 flex items-center justify-center z-10">
-          <RotateWords text="Events you love..." words={eventTypes} />
+          <RotateWords text="Events you love..." words={categories} />
         </div>
         <div className="absolute bottom-10 z-10 inset-0 flex flex-row items-end justify-center gap-5 mt-10">
           <Button
@@ -60,36 +60,3 @@ export default function Hero() {
     </div>
   );
 }
-
-const eventTypes = [
-  "Live music",
-  "Cinema",
-  "Theatre",
-  "Comedy",
-  "Workshops",
-  "Festivals",
-  "Sports",
-  "Conferences",
-  "Exhibitions",
-  "Networking",
-  "Family events",
-  "Food and drink",
-  "Art shows",
-  "Dance performances",
-  "Literary events",
-  "Outdoor activities",
-  "Parties",
-  "Charity events",
-  "Webinars",
-  "Gaming tournaments",
-  "Tech talks",
-  "Cultural celebrations",
-  "Stand-up comedy",
-  "Pop-up markets",
-  "Yoga and fitness",
-  "Historical tours",
-  "Science fairs",
-  "Book signings",
-  "Fashion shows",
-  "Photography exhibitions",
-];

@@ -9,3 +9,13 @@ export interface FetchEventsOutput {
   total: number;
   totalPages: number;
 }
+
+export interface eventsFilters {
+  category?: string;
+  startDate?: Date;
+  endDate?: Date;
+  page?: number;
+  limit?: number;
+  orderBy?: "date" | "totalAttendees";
+  sort?: "asc" | "desc";
+}

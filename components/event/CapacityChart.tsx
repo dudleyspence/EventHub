@@ -23,7 +23,7 @@ export default function Capacity({
   //bg-gradient-to-br from-violet-500 to-fuchsia-500
 
   return (
-    <Card className="w-[130px] h-full border-none bg-white rounded-xl">
+    <Card className="w-[130px] h-full border-none bg-white/75 rounded-xl">
       <CardBody className="justify-center items-center pb-0">
         <CircularProgress
           classNames={{
