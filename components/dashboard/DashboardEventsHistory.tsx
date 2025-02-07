@@ -12,7 +12,7 @@ export default async function DashboardEventsHistory({
   const events = await fetchUserEvents(user_id, true);
 
   return (
-    <div className="bg-orange-300 rounded-xl mt-6">
+    <div className="bg-orange-300 xl:rounded-xl mt-6">
       <div className="relative">
         <Image
           height={80}

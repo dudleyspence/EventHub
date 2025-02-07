@@ -14,7 +14,7 @@ export default async function DashboardUpcomingEvents({
   const events = await fetchUserEvents(user_id, false);
 
   return (
-    <div className="bg-orange-300 rounded-xl mt-6">
+    <div className="bg-orange-300 xl:rounded-xl mt-6">
       <div className="relative">
         <Image
           height={100}

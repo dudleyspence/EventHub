@@ -110,8 +110,8 @@ export default function EventsListContainer({ category }: searchParamProps) {
             handleFilterChange={handleFilterChange}
           />
         </div>
-        <div id="event-list" className="w-full lg:w-3/4">
-          <div className="justify-self-end mr-10">
+        <div id="event-list" className="flex flex-col w-full lg:w-3/4">
+          <div className="self-end mr-10">
             <FilterDrawer
               category={category}
               date={date}

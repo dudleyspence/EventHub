@@ -22,14 +22,14 @@ export default function EventContent({ event }: { event: Event }) {
       />
       <div className="mt-5 relative w-full rounded-xl h-[400px]">
         <Image
-          className="object-cover overflow-hidden rounded-xl"
+          className="object-cover overflow-hidden xl:rounded-xl"
           fill
           alt={event.title}
           src={event.image}
         />
       </div>
       <div className="p-5 px-7  w-full">
-        <div className=" flex flex-row justify-between">
+        <div className=" flex flex-col sm:flex-row justify-between">
           <div>
             <p>{FormatDateToReadable(event.date)}</p>
             <h1 className="my-5 text-3xl font-bold">{event.title}</h1>
