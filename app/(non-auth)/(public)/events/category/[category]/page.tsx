@@ -1,7 +1,7 @@
 import EventsListContainer from "@/components/eventslist/EventsListContainer";
+import ServerImage from "@/components/UI/ServerImage";
 import { fetchCategories } from "@/lib/actions/fetchCategories";
 import { fetchCategory } from "@/lib/actions/fetchCategory";
-import Image from "next/image";
 import React from "react";
 
 interface PageProps {
@@ -32,12 +32,10 @@ export default async function page({ params }: PageProps) {
           </div>
 
           <div className="relative sm:h-[280px] w-full h-[200px] sm:w-2/3 md:w-1/2">
-            <Image
-              fill
-              priority
-              className="object-cover rounded-md"
-              src={fullCategory.image}
+            <ServerImage
               alt={fullCategory.name}
+              imageUrl={fullCategory.image}
+              isPriority={true}
             />
           </div>
         </div>

@@ -16,12 +16,14 @@ export default function AuthLayout({
         alt="graphic"
         src={yellowGraphic}
         height={450}
+        priority
         className="hidden mb-4 xs:block fixed top-[-250] right-[-250]"
       />
       <Image
         alt="graphic"
         src={orangeGraphic}
         height={700}
+        priority
         className="hidden mb-4 xs:block fixed bottom-[-250] left-[-250]"
       />
 

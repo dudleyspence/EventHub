@@ -1,18 +1,19 @@
 "use client";
 import React from "react";
-import { Event } from "@prisma/client";
 import Image from "next/image";
 import Capacity from "../event/CapacityChart";
 import { FormatDateToReadable } from "@/utils/FormatUTCDateReadable";
 import { Chip } from "@nextui-org/react";
+import { EventListEvent } from "@/types/events";
 
-export default function MostPopularCard({ event }: { event: Event }) {
+export default function MostPopularCard({ event }: { event: EventListEvent }) {
   if (!event) return null;
 
   return (
     <div className="relative w-full h-[400px] shadow-xl sm:rounded-xl">
       <Image
         fill
+        loading="lazy"
         alt={event.title}
         className="object-cover sm:rounded-xl"
         src={event.image}

@@ -9,13 +9,13 @@ import "swiper/css/keyboard";
 import "swiper/css/scrollbar";
 import "swiper/css/mousewheel";
 import { Pagination, Navigation, Mousewheel, A11y } from "swiper/modules";
-import { Event } from "@prisma/client";
+import { EventListEvent } from "@/types/events";
 
 export default function EventsReel({
   events,
   centeredSlides = true,
 }: {
-  events: Event[];
+  events: EventListEvent[];
   centeredSlides: boolean;
 }) {
   if (!events || events.length === 0) {

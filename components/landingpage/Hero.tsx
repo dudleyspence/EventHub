@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
-import Image from "next/image";
 import { RotateWords } from "../UI/RotateWords";
 import { Button } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
+import ServerImage from "../UI/ServerImage";
 
 export default function Hero({ categories }: { categories: string[] }) {
   const { data: session } = useSession();
@@ -49,12 +49,10 @@ export default function Hero({ categories }: { categories: string[] }) {
             </Button>
           )}
         </div>
-        <Image
-          className="object-cover overflow-hidden"
-          fill
-          priority
-          alt="party"
-          src="https://c0.wallpaperflare.com/path/857/866/439/person-candid-livemusic-festival-e5d1f147d41c46e564eb9920bb3faf03.jpg"
+        <ServerImage
+          isPriority={true}
+          imageUrl="https://res.cloudinary.com/dvb1ktpjd/image/upload/v1739023224/EventHubHeroImage_ot7umq.jpg"
+          alt="hero image"
         />
       </div>
     </div>
