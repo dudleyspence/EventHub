@@ -17,14 +17,14 @@ export default function AttendEventButton({
   handleRemoveAttendance,
 }: AttendEventButtonProps) {
   return (
-    <div className="w-full">
+    <div>
       {attending ? (
         <Button
           isLoading={loading}
           disabled={loading}
           onPress={handleRemoveAttendance}
           color="warning"
-          fullWidth
+          className="w-[140px]"
         >
           Attending
         </Button>
@@ -33,7 +33,7 @@ export default function AttendEventButton({
           isLoading={loading}
           disabled={loading}
           onPress={handleAttendEvent}
-          fullWidth
+          className="w-[140px]"
         >
           Attend Event
         </Button>

@@ -19,14 +19,14 @@ export default function AttendanceControls({
     useAttendEvent(event.id, setAttendanceValue, setShowSuccessAlert);
 
   return (
-    <div className="flex flex-col gap-3 justify-end items-end w-[140px]">
+    <div className="flex flex-row xs:flex-col gap-3 justify-end items-end ">
       <AttendEventButton
         handleAttendEvent={handleAttendEvent}
         loading={loading}
         attending={attending}
         handleRemoveAttendance={handleRemoveAttendance}
       />
-      <Button fullWidth>Add to Calendar</Button>
+      <Button className="min-w-[140px]">Add to Calendar</Button>
     </div>
   );
 }

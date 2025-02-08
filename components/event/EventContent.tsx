@@ -40,8 +40,8 @@ export default function EventContent({ event }: { event: Event }) {
           )}
         </div>
       </div>
-      <div className="p-5 px-7  w-full">
-        <div className=" flex flex-row justify-between">
+      <div className="p-5 px-4 w-full">
+        <div className=" flex flex-col xs:flex-row justify-between gap-5">
           <div>
             <p>{FormatDateToReadable(event.date)}</p>
             <h1 className="my-5 text-3xl font-bold">{event.title}</h1>

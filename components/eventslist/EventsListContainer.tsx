@@ -9,7 +9,6 @@ import FilterSidebar from "./FilterSidebar";
 import FilterDrawer from "./FilterDrawer";
 import { useRouter, useSearchParams } from "next/navigation";
 import { eventsFilters } from "@/types/events";
-import SortEvents from "./SortEvents";
 
 interface searchParamProps {
   category?: string | undefined;
