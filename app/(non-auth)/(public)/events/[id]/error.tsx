@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import React from "react";
-import graphic from "@/public/graphics/EventHubGraphicYellow.png";
 import Link from "next/link";
 
 export default function error() {
@@ -12,7 +11,7 @@ export default function error() {
           <Image
             className="opacity-35"
             fill
-            src={graphic}
+            src="https://res.cloudinary.com/dvb1ktpjd/image/upload/v1739046473/EventHubGraphicYellow_n5y6ik.png"
             alt="eventhub graphic"
           />
         </div>

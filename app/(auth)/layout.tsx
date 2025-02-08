@@ -1,9 +1,8 @@
 import React from "react";
 import Image from "next/image";
 import logo from "@/public/brand/Logo.png";
-import yellowGraphic from "@/public/graphics/EventHubGraphicYellow.png";
-import orangeGraphic from "@/public/graphics/EventHubGraphicOrange.png";
 import Link from "next/link";
+import ServerImage from "@/components/UI/ServerImage";
 
 export default function AuthLayout({
   children,
@@ -12,20 +11,20 @@ export default function AuthLayout({
 }) {
   return (
     <div className="h-screen w-screen flex flex-col items-center justify-center">
-      <Image
-        alt="graphic"
-        src={yellowGraphic}
-        height={450}
-        priority
-        className="hidden mb-4 xs:block fixed top-[-250] right-[-250]"
-      />
-      <Image
-        alt="graphic"
-        src={orangeGraphic}
-        height={700}
-        priority
-        className="hidden mb-4 xs:block fixed bottom-[-250] left-[-250]"
-      />
+      <div className="hidden mb-4 xs:block fixed top-[-250] right-[-250] h-[450px] w-[450px]">
+        <ServerImage
+          isPriority={true}
+          alt="orangeGraphic"
+          imageUrl="https://res.cloudinary.com/dvb1ktpjd/image/upload/v1739046473/EventHubGraphicOrange_a5rqqe.png"
+        />
+      </div>
+      <div className="hidden mb-4 xs:block fixed bottom-[-250] left-[-250] h-[700px] w-[700px]">
+        <ServerImage
+          isPriority={true}
+          alt="orangeGraphic"
+          imageUrl="https://res.cloudinary.com/dvb1ktpjd/image/upload/v1739046473/EventHubGraphicOrange_a5rqqe.png"
+        />
+      </div>
 
       <Link href="/">
         <Image alt="website logo" src={logo} height={45} className="mb-4" />
