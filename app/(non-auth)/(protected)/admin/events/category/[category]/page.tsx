@@ -8,6 +8,7 @@ interface PageProps {
 
 export default async function page({ params }: PageProps) {
   let { category } = await params;
+  const allCategories = await fetchCategories();
 
   const categoryList = await fetchCategories();
   category = category ? decodeURIComponent(category) : undefined;
@@ -21,7 +22,7 @@ export default async function page({ params }: PageProps) {
       <h1 className="w-full text-center font-bold text-5xl mb-10">
         Browse Events
       </h1>
-      <EventsListContainer category={category} />;
+      <EventsListContainer categories={allCategories} category={category} />;
     </div>
   );
 }

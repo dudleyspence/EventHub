@@ -12,8 +12,6 @@ export default async function page({ params }: PageProps) {
   const { category } = await params;
   const allCategories = await fetchCategories();
 
-  console.log(allCategories);
-
   const decodedCategory = category ? decodeURIComponent(category) : undefined;
 
   const fullCategory = decodedCategory
