@@ -11,14 +11,14 @@ export default function AuthLayout({
 }) {
   return (
     <div className="h-screen w-screen flex flex-col items-center justify-center">
-      <div className="hidden mb-4 xs:block fixed top-[-250] right-[-250] h-[450px] w-[450px]">
+      <div className="hidden mb-4 xs:block fixed top-[-250px] right-[-250px] h-[450px] w-[450px]">
         <ServerImage
           isPriority={true}
           alt="orangeGraphic"
           imageUrl="https://res.cloudinary.com/dvb1ktpjd/image/upload/v1739046473/EventHubGraphicOrange_a5rqqe.png"
         />
       </div>
-      <div className="hidden mb-4 xs:block fixed bottom-[-250] left-[-250] h-[700px] w-[700px]">
+      <div className="hidden mb-4 xs:block fixed bottom-[-250px] left-[-250px] h-[700px] w-[700px]">
         <ServerImage
           isPriority={true}
           alt="orangeGraphic"
