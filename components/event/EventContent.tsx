@@ -1,11 +1,11 @@
 "use client";
 import { FormatDateToReadable } from "@/utils/FormatUTCDateReadable";
 import { Event } from "@prisma/client";
-import Image from "next/image";
 import React, { useState } from "react";
 import AttendanceControls from "./AttendanceControls";
 import { Alert } from "@heroui/react";
 import Capacity from "./CapacityChart";
+import ServerImage from "../UI/ServerImage";
 
 export default function EventContent({ event }: { event: Event }) {
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
@@ -25,11 +25,11 @@ export default function EventContent({ event }: { event: Event }) {
         onClose={() => setShowSuccessAlert(false)}
       />
       <div className="mt-5 relative w-full rounded-xl h-[400px]">
-        <Image
-          className="object-cover overflow-hidden xl:rounded-xl"
-          fill
+        <ServerImage
+          imageUrl={event.image}
           alt={event.title}
-          src={event.image}
+          isPriority={true}
+          style="xl:rounded-xl"
         />
         <div className="absolute bottom-2 right-2">
           {event.maxCapacity && (

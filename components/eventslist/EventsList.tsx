@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
-import { Event } from "@prisma/client";
 import EventCard from "../EventCard";
+import { EventListEvent } from "@/types/events";
 
 interface EventListProps {
-  events: Event[];
+  events: EventListEvent[];
 }
 
 export default function EventList({ events }: EventListProps) {

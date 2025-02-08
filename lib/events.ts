@@ -41,17 +41,28 @@ export async function getEvents({
 
   const skip = (page - 1) * limit;
 
-  const events = await db.event.findMany({
-    where: whereFilter,
-    orderBy: orderByClause,
-    take: limit,
-    skip,
-  });
-
-  // need this for pagination
-  const totalEvents = await db.event.count({
-    where: whereFilter,
-  });
+  // have to make two db queries one for total count and one for paginated results
+  // apparently using a single transaction reduces the latency of this
+  const [events, totalEvents] = await db.$transaction([
+    db.event.findMany({
+      where: whereFilter,
+      orderBy: orderByClause,
+      take: limit,
+      skip,
+      select: {
+        id: true,
+        title: true,
+        date: true,
+        maxCapacity: true,
+        totalAttendees: true,
+        image: true,
+        category: true,
+      },
+    }),
+    db.event.count({
+      where: whereFilter,
+    }),
+  ]);
 
   return {
     events,
