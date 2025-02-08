@@ -7,7 +7,6 @@ import { FormatDateToReadable } from "@/utils/FormatUTCDateReadable";
 
 interface EventCardProps {
   id: string;
-  index: number | undefined;
   name: string;
   date: Date;
   totalAttendees: number | null;
@@ -19,7 +18,6 @@ export default function EventCard({
   id,
   name,
   date,
-  index,
   totalAttendees,
   image,
   category,
