@@ -7,7 +7,6 @@ import MostPopular from "@/components/landingpage/MostPopularContainer";
 import { fetchCategories } from "@/lib/actions/fetchCategories";
 
 export default async function LandingPage() {
-  // const session = await auth();
   const categories = await fetchCategories();
 
   return (

@@ -16,7 +16,7 @@ export default function ServerImage({
 }: ServerImageProps) {
   return (
     <Image
-      className={`object-cover overflow-hidden ${style}`}
+      className={`object-cover overflow-hidden transition-opacity duration-700 ease-in-out ${style}`}
       src={imageUrl}
       priority={isPriority}
       fill
