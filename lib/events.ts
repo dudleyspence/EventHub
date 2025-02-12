@@ -77,15 +77,6 @@ export function getUserEvents(user_id: string, history: boolean) {
   const dateConstraint = history ? { lt: today } : { gte: today };
 
   return db.event.findMany({
-    select: {
-      id: true,
-      title: true,
-      date: true,
-      maxCapacity: true,
-      totalAttendees: true,
-      image: true,
-      category: true,
-    },
     where: {
       date: dateConstraint,
       attendees: { some: { userId: user_id } },
@@ -93,18 +84,18 @@ export function getUserEvents(user_id: string, history: boolean) {
     orderBy: { date: "asc" },
   });
 }
+
 export async function eventSearch(searchTerm: string) {
   console.log(searchTerm);
-  const result = await db.event.findMany({
-    where: {
-      title: {
-        search: searchTerm + "*",
-      },
-      description: {
-        search: searchTerm,
-      },
-    },
-  });
+  if (searchTerm.length > 1) {
+    searchTerm += "*";
+  }
+
+  const result = await db.$queryRaw`
+    SELECT * FROM event
+    WHERE MATCH(title, description) AGAINST(${searchTerm} IN BOOLEAN MODE);
+  `;
+
   return result;
 }
 
