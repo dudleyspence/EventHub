@@ -33,7 +33,6 @@ export default function SignupForm() {
   const onSubmit = (data: z.infer<typeof SignupSchema>) => {
     setError("");
     setSuccess("");
-    // Handle form submission (e.g., send to an API)
     startTransition(() => {
       signup(data).then((data) => {
         setError(data.error);

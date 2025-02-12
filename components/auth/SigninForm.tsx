@@ -25,7 +25,6 @@ export default function SigninForm({ urlError }: { urlError: string }) {
   const onSubmit = (data: z.infer<typeof SigninSchema>) => {
     setError("");
     setSuccess("");
-    // Handle form submission (e.g., send to an API)
     startTransition(() => {
       signin(data).then((data) => {
         setError(data?.error);

@@ -106,4 +106,5 @@ export async function clearDatabase() {
   await db.event.deleteMany();
   await db.user.deleteMany();
   await db.account.deleteMany();
+  await db.category.deleteMany();
 }
