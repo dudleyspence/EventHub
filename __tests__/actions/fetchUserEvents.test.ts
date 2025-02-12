@@ -4,10 +4,10 @@ import { db } from "@/lib/db";
 import { getUserById } from "@/lib/user";
 import { faker } from "@faker-js/faker";
 import { UserRole } from "@prisma/client";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 describe("fetchUserEvents", () => {
-  beforeAll(async () => {
+  beforeEach(async () => {
     const user = {
       id: "user_events_user",
       email: "user_events@test.com",
@@ -17,7 +17,7 @@ describe("fetchUserEvents", () => {
       role: UserRole.USER,
     };
     const pastEvent = {
-      title: `back to the future`,
+      title: `back to the past`,
       description: faker.lorem.sentences(1),
       maxCapacity: faker.number.int({ min: 10, max: 100 }),
       totalAttendees: 0,
@@ -27,24 +27,39 @@ describe("fetchUserEvents", () => {
       category: "Community",
     };
 
-    await db.user.create({ data: user });
-    const event = await db.event.create({ data: pastEvent });
+    const futureEvent = {
+      id: "furtureId",
+      title: `back to the future`,
+      description: faker.lorem.sentences(1),
+      maxCapacity: faker.number.int({ min: 10, max: 100 }),
+      totalAttendees: 0,
+      image: faker.image.urlLoremFlickr({ category: "nightlife" }),
+      date: faker.date.future(),
+      userId: "test_id",
+      category: "Community",
+    };
 
-    await attendEventAction("user_events_user", event.id);
+    await db.user.create({ data: user });
+    const eventPast = await db.event.create({ data: pastEvent });
+    const eventFuture = await db.event.create({ data: futureEvent });
+    await attendEventAction("user_events_user", eventPast.id);
+    await attendEventAction("user_events_user", eventFuture.id);
   });
 
-  afterAll(async () => {
+  afterEach(async () => {
     await db.user.deleteMany({ where: { id: "user_events_user" } });
+    await db.event.deleteMany({ where: { id: "furtureId" } });
+    await db.event.deleteMany({ where: { id: "pastId" } });
   });
 
   describe("Future events", () => {
     it("returns an array", async () => {
-      const events = await fetchUserEvents("test_id");
+      const events = await fetchUserEvents("user_events_user");
       expect(Array.isArray(events)).toBeTruthy();
     });
 
     it("returns an array of events", async () => {
-      const events = await fetchUserEvents("test_id");
+      const events = await fetchUserEvents("user_events_user");
       expect(events.length).toBeGreaterThan(0);
 
       events.forEach((event) => {
@@ -68,6 +83,7 @@ describe("fetchUserEvents", () => {
     it("returns an empty array when the user exists but has no upcoming events", async () => {
       const user = await getUserById("user_events_user");
       expect(user).not.toBeNull();
+      await db.event.deleteMany({ where: { id: "furtureId" } });
       const events = await fetchUserEvents("user_events_user");
       expect(events).toEqual([]);
     });
@@ -75,7 +91,7 @@ describe("fetchUserEvents", () => {
 
   describe("Historical Events", () => {
     it("returns an array", async () => {
-      const events = await fetchUserEvents("test_id", true);
+      const events = await fetchUserEvents("user_events_user", true);
       expect(Array.isArray(events)).toBeTruthy();
     });
 

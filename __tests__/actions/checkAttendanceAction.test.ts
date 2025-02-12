@@ -1,15 +1,15 @@
 import { checkAttendance } from "@/lib/actions/checkAttendance";
-import { beforeAll, beforeEach, describe, expect, it } from "vitest";
-import { PrismaClient, UserRole } from "@prisma/client";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { UserRole } from "@prisma/client";
 import { attendEventAction } from "@/lib/actions/attendEvent";
 import { faker } from "@faker-js/faker";
 import { db } from "@/lib/db";
 
 describe("checkAttendance", () => {
-  beforeAll(async () => {
+  beforeEach(async () => {
     const user = {
-      id: "test_id2",
-      email: "test@test.com",
+      id: "test_id7",
+      email: "test7@test.com",
       name: "TEST USER",
       image: faker.image.avatar(),
       password: "password",
@@ -19,7 +19,7 @@ describe("checkAttendance", () => {
     await db.user.create({ data: user });
 
     const event = {
-      id: "test_id2",
+      id: "test_id7",
       title: `tester`,
       description: "test",
       maxCapacity: 800,
@@ -34,15 +34,20 @@ describe("checkAttendance", () => {
     await db.event.create({ data: event });
   });
 
+  afterEach(async () => {
+    await db.user.deleteMany({ where: { id: "test_id7" } });
+    await db.event.deleteMany({ where: { id: "test_id7" } });
+  });
+
   it("returns false if user is not attending the event", async () => {
-    const response = await checkAttendance("test_id2", "test_id2");
+    const response = await checkAttendance("test_id7", "test_id7");
     expect(response).toBe(false);
   });
 
   it("returns true if user is attending the event", async () => {
-    await attendEventAction("test_id2", "test_id2");
+    await attendEventAction("test_id7", "test_id7");
 
-    const response = await checkAttendance("test_id2", "test_id2");
+    const response = await checkAttendance("test_id7", "test_id7");
     expect(response).toBe(true);
   });
 });

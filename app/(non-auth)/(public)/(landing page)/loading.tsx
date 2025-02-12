@@ -5,7 +5,7 @@ export default function loading() {
 
   return (
     <div className="w-full h-full flex flex-col justify-center items-center pb-20 py-10">
-      <div className="w-full h-[600px] bg-gray-200 animate-pulse flex flex-col items-end py-20 sm:py-10 overflow-hidden lg:rounded-xl shadow-2xl"></div>
+      <div className="w-full h-[520px] bg-gray-200 animate-pulse flex flex-col items-end my-20 sm:my-10 overflow-hidden lg:rounded-xl shadow-2xl"></div>
 
       <div className="bg-gray-50 h-[500px] animate-pulse overflow-hidden rounded-xl mt-6 flex flex-row items-center justify-center gap-10 w-screen max-w-[1280px]">
         {placeholderArray.map((_, index) => (

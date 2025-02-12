@@ -5,7 +5,9 @@ import { eventSearch } from "../events";
 export async function searchEvents(searchTerm: string) {
   if (!searchTerm) return [];
 
-  const events = await eventSearch(searchTerm);
+  const sanitizedSearchTerm = searchTerm.replace(/[^a-zA-Z0-9 ]/g, " ");
+
+  const events = await eventSearch(sanitizedSearchTerm.trim());
 
   return events;
 }

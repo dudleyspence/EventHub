@@ -27,3 +27,22 @@ export async function getUserById(id: string) {
     return null;
   }
 }
+
+export async function createUser(
+  email: string,
+  hashedPassword: string,
+  name: string
+) {
+  try {
+    const user = await db.user.create({
+      data: {
+        name,
+        email,
+        password: hashedPassword,
+      },
+    });
+    return user;
+  } catch (err) {
+    throw new Error("Error while creating user");
+  }
+}

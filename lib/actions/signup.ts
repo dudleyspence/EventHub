@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
 
 import { SignupSchema } from "@/schemas/auth";
-import { getUserByEmail } from "@/lib/user";
+import { createUser, getUserByEmail } from "@/lib/user";
 import { SignupInput } from "@/types/auth";
 
 export async function signup(values: SignupInput) {
@@ -23,13 +23,10 @@ export async function signup(values: SignupInput) {
     return { error: "This email address is already in use" };
   }
 
-  await db.user.create({
-    data: {
-      name,
-      email,
-      password: hashedPassword,
-    },
-  });
-
-  return { success: "Signup Complete" };
+  try {
+    await createUser(email, hashedPassword, name);
+    return { success: "Signup Complete" };
+  } catch (err) {
+    return { error: "Something went wrong while trying to signup" };
+  }
 }

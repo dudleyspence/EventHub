@@ -29,4 +29,7 @@ export interface eventsFilters {
   sort?: "asc" | "desc";
 }
 
-
+export type searchEventsOutput = {
+  id: string;
+  title: string;
+};

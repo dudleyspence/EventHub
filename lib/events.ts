@@ -1,4 +1,5 @@
 import { FetchEventsSchema } from "@/schemas/events";
+import { searchEventsOutput } from "@/types/events";
 import { PrismaClient } from "@prisma/client";
 import { z } from "zod";
 
@@ -91,10 +92,10 @@ export async function eventSearch(searchTerm: string) {
     searchTerm += "*";
   }
 
-  const result = await db.$queryRaw`
-    SELECT * FROM event
-    WHERE MATCH(title, description) AGAINST(${searchTerm} IN BOOLEAN MODE);
-  `;
+  const result = await db.$queryRaw<searchEventsOutput[]>`
+  SELECT id, title FROM event
+  WHERE MATCH(title, description) AGAINST(${searchTerm} IN BOOLEAN MODE);
+`;
 
   return result;
 }

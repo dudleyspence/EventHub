@@ -10,6 +10,7 @@ export default function Searchbar() {
   const router = useRouter();
 
   const { events } = useSearchEvents(searchTerm);
+  console.log(events);
 
   function handleSearchSelect(key: Key | null) {
     if (key === null) return;
@@ -23,6 +24,9 @@ export default function Searchbar() {
         placeholder="Search events..."
         onSelectionChange={handleSearchSelect}
         value={searchTerm}
+        defaultFilter={() => {
+          return true; // Show all items by default
+        }}
         onInputChange={(value) => {
           setSearchTerm(value);
         }}
