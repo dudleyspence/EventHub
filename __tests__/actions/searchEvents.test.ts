@@ -30,11 +30,11 @@ describe("searchEvents", () => {
     expect(searchResults).toEqual([]);
   });
   it("should return an empty array when a search is performed with a null search term", async () => {
-    const searchResults = await searchEvents(null);
+    const searchResults = await searchEvents(null as any);
     expect(searchResults).toEqual([]);
   });
   it("should return an empty array when a search is performed with an undefined search term", async () => {
-    const searchResults = await searchEvents(undefined);
+    const searchResults = await searchEvents(undefined as any);
     expect(searchResults).toEqual([]);
   });
   it("should return an empty array when a search is performed with an empty search term", async () => {

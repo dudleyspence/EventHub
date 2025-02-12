@@ -1,11 +1,11 @@
 "use client";
 
 import { searchEvents } from "@/lib/actions/searchEvents";
-import { Event } from "@prisma/client";
+import { searchEventsOutput } from "@/types/events";
 import { useEffect, useState } from "react";
 
 export default function useSearchEvents(searchTerm: string) {
-  const [events, setEvents] = useState<Event[]>([]);
+  const [events, setEvents] = useState<searchEventsOutput[]>([]);
 
   useEffect(() => {
     async function search() {
