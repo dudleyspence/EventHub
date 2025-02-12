@@ -1,12 +1,12 @@
 "use server";
 
 import { getUserEvents } from "@/lib/events";
-import { Event } from "@prisma/client";
+import { EventListEvent } from "@/types/events";
 
 export async function fetchUserEvents(
   user_id: string,
   history = false
-): Promise<Event[]> {
+): Promise<EventListEvent[]> {
   const results = await getUserEvents(user_id, history);
 
   return results;
