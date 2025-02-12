@@ -1,7 +1,6 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import AttendEventButton from "./AttendEventButton";
-import Capacity from "./CapacityChart";
 import { Event } from "@prisma/client";
 import useAttendEvent from "@/hooks/useAttendEvent";
 import { Button } from "@heroui/react";

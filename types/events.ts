@@ -28,3 +28,5 @@ export interface eventsFilters {
   orderBy?: "date" | "totalAttendees";
   sort?: "asc" | "desc";
 }
+
+

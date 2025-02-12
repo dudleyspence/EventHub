@@ -22,7 +22,6 @@ export default function DeleteEventButtton({
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [loading, setLoading] = React.useState(false);
   const router = useRouter();
-  // void because on close doesnt have params and doesnt return anything
   async function handleDeleteEvent(onClose: () => void) {
     setLoading(true);
     try {

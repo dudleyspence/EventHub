@@ -2,6 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import "./globals.css";
 import Providers from "./Providers";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: "EventHub",
@@ -16,7 +17,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="flex justify-center">
-        <Providers>{children}</Providers>
+        <Providers>
+          <SpeedInsights />
+          {children}
+        </Providers>
       </body>
     </html>
   );

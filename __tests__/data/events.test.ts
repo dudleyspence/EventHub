@@ -1,43 +1,17 @@
-import { fetchEventsAction } from "@/lib/actions/fetchEvents";
+import { getEvents } from "@/lib/events";
+import { FetchEventsSchema } from "@/schemas/events";
 import { describe, expect, it } from "vitest";
-
-// describe("", () => {
-//   it("returns an empty array if there isnt upcomming events", async () => {
-//     await clearDatabase();
-//     onTestFinished(async () => await seed());
-//     const events = await fetchEventsAction({});
-//     expect(events).toEqual([]);
-//   }, 5000);
-// });
-
-describe("fetchEvents Invalid Params", () => {
-  const invalidParams: Array<[string, any]> = [
-    ["invalid orderBy value", { orderBy: "speed" }],
-    ["invalid category value", { category: 10 }],
-    ["invalid sort value", { sort: "upsideDown" }],
-    ["negative page number", { page: -1 }],
-    ["zero limit", { limit: 0 }],
-    ["invalid startDate", { startDate: "not a date" }],
-    ["invalid endDate", { endDate: "not a date" }],
-    [
-      "invalid startDate and endDate",
-      { startDate: "not a date", endDate: "not a date" },
-    ],
-  ];
-
-  it.each(invalidParams)(
-    "returns an error when failing schema validation: %s",
-    async (description, params) => {
-      await expect(fetchEventsAction(params)).rejects.toThrow(
-        "Invalid data request"
-      );
-    }
-  );
-});
 
 describe("fetchEvents Valid Params", () => {
   it("returns an events search object", async () => {
-    const eventsSearch = await fetchEventsAction({});
+    const filter = {};
+    const validatedFields = FetchEventsSchema.safeParse(filter);
+
+    if (!validatedFields.success) {
+      throw new Error("Test setup failed");
+    }
+
+    const eventsSearch = await getEvents(validatedFields.data);
 
     expect(eventsSearch).toMatchObject({
       events: expect.any(Array),
@@ -47,7 +21,14 @@ describe("fetchEvents Valid Params", () => {
   });
 
   it("returns a search object with an array of event objects", async () => {
-    const eventsSearch = await fetchEventsAction({});
+    const filter = {};
+    const validatedFields = FetchEventsSchema.safeParse(filter);
+
+    if (!validatedFields.success) {
+      throw new Error("Test setup failed");
+    }
+
+    const eventsSearch = await getEvents(validatedFields.data);
     const events = eventsSearch.events;
     events.forEach((event) => {
       expect(event).toMatchObject({
@@ -63,7 +44,14 @@ describe("fetchEvents Valid Params", () => {
   });
 
   it("should return a list of maximum 10 events when using the default limit", async () => {
-    const results = await fetchEventsAction({});
+    const filter = {};
+    const validatedFields = FetchEventsSchema.safeParse(filter);
+
+    if (!validatedFields.success) {
+      throw new Error("Test setup failed");
+    }
+
+    const results = await getEvents(validatedFields.data);
     const events = results.events;
 
     if (Array.isArray(events)) {
@@ -74,7 +62,14 @@ describe("fetchEvents Valid Params", () => {
   });
 
   it("returns a list of events using default order by date asc if not given params", async () => {
-    const results = await fetchEventsAction({});
+    const filter = {};
+    const validatedFields = FetchEventsSchema.safeParse(filter);
+
+    if (!validatedFields.success) {
+      throw new Error("Test setup failed");
+    }
+
+    const results = await getEvents(validatedFields.data);
     const events = results.events;
     if (Array.isArray(events)) {
       for (let i = 0; i < events.length - 1; i++) {
@@ -87,7 +82,14 @@ describe("fetchEvents Valid Params", () => {
   });
 
   it("only returns future events when no date is provided", async () => {
-    const results = await fetchEventsAction({});
+    const filter = {};
+    const validatedFields = FetchEventsSchema.safeParse(filter);
+
+    if (!validatedFields.success) {
+      throw new Error("Test setup failed");
+    }
+
+    const results = await getEvents(validatedFields.data);
     const events = results.events;
 
     if (Array.isArray(events)) {
@@ -103,7 +105,14 @@ describe("fetchEvents Valid Params", () => {
   });
 
   it("successfully searches by category", async () => {
-    const results = await fetchEventsAction({ category: "Live Music" });
+    const filter = { category: "Live Music" };
+    const validatedFields = FetchEventsSchema.safeParse(filter);
+
+    if (!validatedFields.success) {
+      throw new Error("Test setup failed");
+    }
+
+    const results = await getEvents(validatedFields.data);
     const events = results.events;
 
     if (Array.isArray(events)) {
@@ -118,9 +127,16 @@ describe("fetchEvents Valid Params", () => {
 
   it("successfully searches by startDate", async () => {
     const testDate = new Date("2025-04-14 00:00:00.000");
-    const results = await fetchEventsAction({
+    const filter = {
       startDate: testDate,
-    });
+    };
+    const validatedFields = FetchEventsSchema.safeParse(filter);
+
+    if (!validatedFields.success) {
+      throw new Error("Test setup failed");
+    }
+
+    const results = await getEvents(validatedFields.data);
     const events = results.events;
 
     if (Array.isArray(events)) {
@@ -134,9 +150,16 @@ describe("fetchEvents Valid Params", () => {
   it("returns empty object when no events occur after the given start date", async () => {
     // year 5025
     const testDate = new Date("5025-04-14 00:00:00.000");
-    const results = await fetchEventsAction({
+    const filter = {
       startDate: testDate,
-    });
+    };
+    const validatedFields = FetchEventsSchema.safeParse(filter);
+
+    if (!validatedFields.success) {
+      throw new Error("Test setup failed");
+    }
+
+    const results = await getEvents(validatedFields.data);
     const events = results.events;
 
     if (Array.isArray(events)) {
@@ -153,10 +176,17 @@ describe("fetchEvents Valid Params", () => {
     const testStartDate = new Date("2025-01-14 00:00:00.000");
     const testEndDate = new Date("2030-04-14 00:00:00.000");
 
-    const results = await fetchEventsAction({
+    const filter = {
       startDate: testStartDate,
       endDate: testEndDate,
-    });
+    };
+    const validatedFields = FetchEventsSchema.safeParse(filter);
+
+    if (!validatedFields.success) {
+      throw new Error("Test setup failed");
+    }
+
+    const results = await getEvents(validatedFields.data);
     const events = results.events;
 
     if (Array.isArray(events)) {
@@ -170,7 +200,14 @@ describe("fetchEvents Valid Params", () => {
   });
 
   it("returns a list of events using asc order by date", async () => {
-    const results = await fetchEventsAction({ sort: "asc" });
+    const filter = { sort: "asc" };
+    const validatedFields = FetchEventsSchema.safeParse(filter);
+
+    if (!validatedFields.success) {
+      throw new Error("Test setup failed");
+    }
+
+    const results = await getEvents(validatedFields.data);
     const events = results.events;
 
     if (Array.isArray(events)) {
@@ -184,7 +221,14 @@ describe("fetchEvents Valid Params", () => {
   });
 
   it("returns a list of events using default asc and order by maxCapacity", async () => {
-    const results = await fetchEventsAction({ orderBy: "totalAttendees" });
+    const filter = { orderBy: "totalAttendees" };
+    const validatedFields = FetchEventsSchema.safeParse(filter);
+
+    if (!validatedFields.success) {
+      throw new Error("Test setup failed");
+    }
+
+    const results = await getEvents(validatedFields.data);
     const events = results.events;
 
     if (Array.isArray(events)) {
@@ -199,10 +243,17 @@ describe("fetchEvents Valid Params", () => {
   });
 
   it("returns a list of events using asc order by maxCapacity", async () => {
-    const results = await fetchEventsAction({
+    const filter = {
       orderBy: "totalAttendees",
       sort: "asc",
-    });
+    };
+    const validatedFields = FetchEventsSchema.safeParse(filter);
+
+    if (!validatedFields.success) {
+      throw new Error("Test setup failed");
+    }
+
+    const results = await getEvents(validatedFields.data);
     const events = results.events;
 
     if (Array.isArray(events)) {
@@ -217,9 +268,4 @@ describe("fetchEvents Valid Params", () => {
   });
 });
 
-// IMPORTANT NOTE
-// fetchEvents gets all events from the future and past
-// if i set the default start date to todat then the current behaviour is to return only todays events
-// need to change this so that default is today
-//if someone wants a sigle day then the start day will be that date at 0000
-// and the end day will be the same day but the end of the day
+

@@ -3,7 +3,7 @@ import { fetchSingleEvent } from "@/lib/actions/fetchSingleEvent";
 import Image from "next/image";
 import { FormatDateToReadable } from "@/utils/FormatUTCDateReadable";
 import Capacity from "@/components/event/CapacityChart";
-import DeleteEventButtton from "@/components/admin/DeleteEventButtton";
+import DeleteEventButtton from "@/components/admin/DeleteEventButton";
 import { currentUser } from "@/lib/auth";
 
 interface PageProps {
