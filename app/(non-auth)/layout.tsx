@@ -3,7 +3,7 @@ import DynamicNavbar from "@/components/navigation/DynamicNavbar";
 import Footer from "@/components/Footer";
 import LoginModal from "@/components/auth/LoginModel";
 
-export default function NonAuthLayout({
+export default async function NonAuthLayout({
   children,
 }: {
   children: React.ReactNode;

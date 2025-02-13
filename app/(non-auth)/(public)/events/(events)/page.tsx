@@ -3,8 +3,6 @@ import { fetchCategories } from "@/lib/actions/fetchCategories";
 import React from "react";
 
 export default async function page() {
-  const allCategories = await fetchCategories();
-
   return (
     <div className="pt-10 w-full">
       <div className="w-full bg-yellow-100 h-[250px] mb-5">
