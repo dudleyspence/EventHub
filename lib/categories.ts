@@ -1,11 +1,12 @@
 import { PrismaClient } from "@prisma/client";
+import { cache } from "react";
 
 const db = new PrismaClient();
-export async function getCategories() {
-  const categories = await db.category.findMany({
+
+export const getCategories = cache(async () => {
+  return await db.category.findMany({
     select: {
       name: true,
     },
   });
-  return categories;
-}
+});
