@@ -3,8 +3,7 @@ import React from "react";
 import EventList from "./EventsList";
 import { Pagination } from "@nextui-org/react";
 import LoadingList from "../loading/LoadingList";
-import FilterSidebar from "./FilterSidebar";
-import FilterDrawer from "./FilterDrawer";
+
 import { useEventListFilters } from "@/hooks/useEventListFilters";
 
 interface searchParamProps {
@@ -12,15 +11,8 @@ interface searchParamProps {
 }
 
 export default function EventsListContainer({ category }: searchParamProps) {
-  const {
-    isLoading,
-    error,
-    events,
-    totalPages,
-    date,
-    page,
-    handleFilterChange,
-  } = useEventListFilters(category);
+  const { isLoading, error, events, totalPages, page, handleFilterChange } =
+    useEventListFilters(category);
 
   if (error) {
     return (
@@ -32,39 +24,23 @@ export default function EventsListContainer({ category }: searchParamProps) {
   }
 
   return (
-    <div className="w-full flex flex-col items-center gap-16">
-      <div className="w-full flex flex-row gap-5">
-        <div id="filters" className="hidden lg:block lg:w-1/4">
-          <FilterSidebar
-            category={category}
-            date={date}
-            handleFilterChange={handleFilterChange}
-          />
-        </div>
-        <div id="event-list" className="flex flex-col w-full lg:w-3/4">
-          <div className="w-full flex flex-row justify-end gap-10 px-10">
-            <FilterDrawer
-              category={category}
-              date={date}
-              handleFilterChange={handleFilterChange}
-            />
-          </div>
-          {isLoading ? (
-            <LoadingList eventsPerPage={10} />
-          ) : (
-            <EventList events={events} />
-          )}
-        </div>
-      </div>
+    <div className="flex flex-col items-center gap-20">
+      {isLoading ? (
+        <LoadingList eventsPerPage={10} />
+      ) : (
+        <EventList events={events} />
+      )}
 
-      <Pagination
-        onChange={(value) => {
-          handleFilterChange("page", value.toString());
-        }}
-        total={totalPages}
-        color="warning"
-        page={page}
-      />
+      {events.length > 0 && (
+        <Pagination
+          onChange={(value) => {
+            handleFilterChange("page", value.toString());
+          }}
+          total={totalPages}
+          color="warning"
+          page={page}
+        />
+      )}
     </div>
   );
 }

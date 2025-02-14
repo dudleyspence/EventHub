@@ -1,12 +1,11 @@
-import { Category } from "@prisma/client";
+"use client";
 import React from "react";
 import ServerImage from "../UI/ServerImage";
+import { useCategory } from "@/hooks/useCategory";
 
-export default function CategoryBanner({
-  fullCategory,
-}: {
-  fullCategory: Category | undefined;
-}) {
+export default function CategoryBanner() {
+  const { fullCategory } = useCategory();
+
   return fullCategory ? (
     <div className="w-full bg-yellow-100 h-[400px] sm:h-[280px] mb-5 flex flex-col-reverse sm:flex-row justify-between rounded-md">
       <div>

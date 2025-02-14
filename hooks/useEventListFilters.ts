@@ -74,14 +74,8 @@ export function useEventListFilters(category: string | undefined) {
     if (param !== "page") {
       params.delete("page");
     }
-    if (param === "date" && value === "any") {
-      params.delete("date");
-    }
+    const newUrl = `/events/category/${category}?${params.toString()}`;
 
-    let newUrl = `/events?${params.toString()}`;
-    if (category) {
-      newUrl = `/events/category/${category}?${params.toString()}`;
-    }
     router.push(newUrl);
   }
 

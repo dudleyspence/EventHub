@@ -22,7 +22,6 @@ export default async function page({ params }: PageProps) {
 
   return (
     <div className="pt-10 w-full">
-      <CategoryBanner fullCategory={fullCategory} />
       <EventsListContainer category={decodedCategory} />;
     </div>
   );
