@@ -11,12 +11,14 @@ import React, { useState } from "react";
 import FiltersSkeleton from "../loading/FiltersSkeleton";
 import { useRouter, useSearchParams } from "next/navigation";
 import { CiFilter } from "react-icons/ci";
+import { Category } from "@prisma/client";
+import { useCategories } from "@/context/CategoriesContext";
 
-export function FilterSidebar({ categories }: { categories: string[] }) {
-  return <FilterSidebarLogic categories={categories} />;
+export function FilterSidebar() {
+  return <FilterSidebarLogic />;
 }
 
-export function MobileFilterSidebar({ categories }: { categories: string[] }) {
+export function MobileFilterSidebar() {
   const { onOpen, isOpen, onOpenChange } = useDisclosure();
 
   return (
@@ -33,7 +35,7 @@ export function MobileFilterSidebar({ categories }: { categories: string[] }) {
         <DrawerContent>
           {() => (
             <div className="pb-10">
-              <FilterSidebarLogic categories={categories} />;
+              <FilterSidebarLogic />;
             </div>
           )}
         </DrawerContent>
@@ -42,14 +44,16 @@ export function MobileFilterSidebar({ categories }: { categories: string[] }) {
   );
 }
 
-export function FilterSidebarLogic({ categories }: { categories: string[] }) {
+export function FilterSidebarLogic() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const categories: Category[] = useCategories();
 
   const [date, setDate] = useState("any");
   const [category, setCategory] = useState("all");
 
   function handleDateChange(value: string) {
+    setDate(value);
     const params = new URLSearchParams(searchParams);
     params.set("date", value);
     //reset page to 1
@@ -103,9 +107,9 @@ export function FilterSidebarLogic({ categories }: { categories: string[] }) {
           onValueChange={handleCategoryChange}
         >
           <Radio value="all">None</Radio>
-          {categories.map((category) => (
-            <Radio key={category} value={category}>
-              {category}
+          {categories.map((singleCategory) => (
+            <Radio key={singleCategory.name} value={singleCategory.name}>
+              {singleCategory.name}
             </Radio>
           ))}
         </RadioGroup>

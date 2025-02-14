@@ -68,6 +68,7 @@ export default auth(async (req) => {
   }
 
   // if user is admin but going to a non-admin route, redirect to the admin version of the page
+  console.log(userIsAdmin);
   if (userIsAdmin && isAdminVersionRoute) {
     // IMPORTANT: nextUrl.pathname doesnt include the queries
     return Response.redirect(new URL(adminRoutePrefix + pathway, nextUrl));

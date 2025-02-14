@@ -2,15 +2,16 @@
 import React from "react";
 import EventList from "./EventsList";
 import { Pagination } from "@nextui-org/react";
-import LoadingList from "../loading/LoadingList";
 
 import { useEventListFilters } from "@/hooks/useEventListFilters";
+import Image from "next/image";
+import LoadingList from "../loading/LoadingList";
 
-interface searchParamProps {
+interface EventListProps {
   category?: string | undefined;
 }
 
-export default function EventsListContainer({ category }: searchParamProps) {
+export default function EventsListContainer({ category }: EventListProps) {
   const { isLoading, error, events, totalPages, page, handleFilterChange } =
     useEventListFilters(category);
 
@@ -27,6 +28,8 @@ export default function EventsListContainer({ category }: searchParamProps) {
     <div className="flex flex-col items-center gap-20">
       {isLoading ? (
         <LoadingList eventsPerPage={10} />
+      ) : events.length === 0 ? (
+        <NoEventsFound />
       ) : (
         <EventList events={events} />
       )}
@@ -41,6 +44,20 @@ export default function EventsListContainer({ category }: searchParamProps) {
           page={page}
         />
       )}
+    </div>
+  );
+}
+
+function NoEventsFound() {
+  return (
+    <div className="w-full pt-[150px] flex justify-center items-center">
+      <div className="relative h-[300px] w-[300px]">
+        <Image
+          fill
+          src="https://res.cloudinary.com/dvb1ktpjd/image/upload/v1739050220/NoEventsFound_xy95mm.png"
+          alt="no events found graphic"
+        />
+      </div>
     </div>
   );
 }

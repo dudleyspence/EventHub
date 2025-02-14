@@ -16,7 +16,7 @@ export const adminRoutePrefix = "/admin";
  * The landing page for admin users
  * @type {string}
  */
-export const adminLandingPage = "/admin/events";
+export const adminLandingPage = "/admin/events/category/all";
 
 /**
  * Routes that only exist for admin

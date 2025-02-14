@@ -1,11 +1,12 @@
 "use client";
 
+import { Category } from "@prisma/client";
 import React, { createContext, useContext } from "react";
 
-const CategoriesContext = createContext<string[] | undefined>([]);
+const CategoriesContext = createContext<Category[]>([]);
 
 interface CategoriesContextProps {
-  categories: string[];
+  categories: Category[];
   children: React.ReactNode;
 }
 

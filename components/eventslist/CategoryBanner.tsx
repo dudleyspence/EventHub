@@ -2,9 +2,18 @@
 import React from "react";
 import ServerImage from "../UI/ServerImage";
 import { useCategory } from "@/hooks/useCategory";
+import { Category } from "@prisma/client";
+import { useCategories } from "@/context/CategoriesContext";
 
 export default function CategoryBanner() {
-  const { fullCategory } = useCategory();
+  const allCategories: Category[] = useCategories();
+  const decodedCategory = useCategory();
+
+  const fullCategory = allCategories.find(
+    (category) => category.name === decodedCategory
+  );
+
+  console.log(fullCategory);
 
   return fullCategory ? (
     <div className="w-full bg-yellow-100 h-[400px] sm:h-[280px] mb-5 flex flex-col-reverse sm:flex-row justify-between rounded-md">
