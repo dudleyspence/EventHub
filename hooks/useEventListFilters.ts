@@ -38,7 +38,7 @@ export function useEventListFilters(category: string | undefined) {
     const monthFromNow = new Date();
     monthFromNow.setMonth(today.getMonth() + 1);
 
-    if (category) {
+    if (category !== "all") {
       filters.category = category;
     }
     if (date === "week") {

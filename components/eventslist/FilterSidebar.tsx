@@ -3,26 +3,24 @@ import { Radio, RadioGroup } from "@heroui/react";
 import React from "react";
 import FiltersSkeleton from "../loading/FiltersSkeleton";
 import { useRouter } from "next/navigation";
+import { useCategories } from "@/context/CategoriesContext";
 
 export interface FilterSidebarProps {
   category: string | undefined;
   date: string;
   handleFilterChange: (params: string, value: string) => void;
-  categories: string[];
 }
 
 export default function FilterSidebar({
   category,
-  categories,
   date,
   handleFilterChange,
 }: FilterSidebarProps) {
   const router = useRouter();
+  const categories = useCategories();
 
   function handleCategoryChange(category: string) {
-    router.push(
-      category === "None" ? `/events` : `/events/category/${category}`
-    );
+    router.push(`/events/category/${category}`);
   }
 
   if (!categories) {
@@ -55,12 +53,12 @@ export default function FilterSidebar({
 
         <RadioGroup
           color="secondary"
-          defaultValue="None"
-          value={category || "None"}
+          defaultValue="all"
+          value={category}
           label="Select a category"
           onValueChange={handleCategoryChange}
         >
-          <Radio value="None">None</Radio>
+          <Radio value="all">None</Radio>
           {categories.map((category) => (
             <Radio key={category} value={category}>
               {category}

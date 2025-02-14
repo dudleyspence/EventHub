@@ -2,7 +2,7 @@
  * The unprotected routes
  * @type {regex[]}
  */
-export const publicRoutes = [/^\/$/, /^\/events$/, /^\/events.*$/];
+export const publicRoutes = [/^\/$/, /^\/events\/category\/.*$/];
 
 const privateRoutes = [/^\/dashboard$/];
 

@@ -26,7 +26,7 @@ export default function UserNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuItems = [
     { name: "Home", path: "/" },
-    { name: "Events", path: "/events" },
+    { name: "Events", path: "/events/category/all" },
     { name: "Dashboard", path: "/dashboard" },
   ];
 

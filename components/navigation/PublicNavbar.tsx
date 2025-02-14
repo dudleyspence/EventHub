@@ -28,7 +28,7 @@ export default function PublicNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuItems: MenuItem[] = [
     { name: "Home", path: "/" },
-    { name: "Events", path: "/events" },
+    { name: "Events", path: "/events/category/all" },
   ];
 
   return (

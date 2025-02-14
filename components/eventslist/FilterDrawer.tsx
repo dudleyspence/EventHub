@@ -7,7 +7,6 @@ export default function FilterDrawer({
   category,
   date,
   handleFilterChange,
-  categories,
 }: FilterSidebarProps) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 

@@ -9,13 +9,9 @@ import { useEventListFilters } from "@/hooks/useEventListFilters";
 
 interface searchParamProps {
   category?: string | undefined;
-  categories: string[];
 }
 
-export default function EventsListContainer({
-  category,
-  categories,
-}: searchParamProps) {
+export default function EventsListContainer({ category }: searchParamProps) {
   const {
     isLoading,
     error,
@@ -42,7 +38,6 @@ export default function EventsListContainer({
           <FilterSidebar
             category={category}
             date={date}
-            categories={categories}
             handleFilterChange={handleFilterChange}
           />
         </div>
@@ -51,7 +46,6 @@ export default function EventsListContainer({
             <FilterDrawer
               category={category}
               date={date}
-              categories={categories}
               handleFilterChange={handleFilterChange}
             />
           </div>
