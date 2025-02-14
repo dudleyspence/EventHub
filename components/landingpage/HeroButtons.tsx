@@ -13,7 +13,7 @@ export default function HeroButtons() {
         variant="solid"
         className="text-xl text-white font-bold bg-pink-800"
         as="a"
-        href="/events"
+        href="/events/category/all"
       >
         Browse Events
       </Button>
