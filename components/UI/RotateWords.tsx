@@ -1,13 +1,14 @@
 "use client";
 import * as React from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { Category } from "@prisma/client";
 
 export function RotateWords({
-  text = "Rotate",
-  words = ["Word 1", "Word 2", "Word 3"],
+  text,
+  words,
 }: {
   text: string;
-  words: string[];
+  words: Category[];
 }) {
   const [index, setIndex] = React.useState(0);
 
@@ -23,13 +24,13 @@ export function RotateWords({
       <p className="text-[30px] lg:text-[50px]">{text}</p>
       <AnimatePresence mode="wait">
         <motion.p
-          key={words[index]}
+          key={words[index].name}
           initial={{ opacity: 0, y: -40 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 40 }}
           transition={{ duration: 0.3 }}
         >
-          {words[index]}
+          {words[index].name}
         </motion.p>
       </AnimatePresence>
     </div>

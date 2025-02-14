@@ -4,9 +4,5 @@ import { cache } from "react";
 const db = new PrismaClient();
 
 export const getCategories = cache(async () => {
-  return await db.category.findMany({
-    select: {
-      name: true,
-    },
-  });
+  return await db.category.findMany();
 });

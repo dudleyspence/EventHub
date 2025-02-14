@@ -65,6 +65,7 @@ export default function useAttendEvent(
       if (response) {
         setAttending(false);
         // optimistically render the update
+        setShowSuccessAlert(false);
         setAttendanceValue((prevAttendance) => prevAttendance - 1);
       }
     } catch (error) {

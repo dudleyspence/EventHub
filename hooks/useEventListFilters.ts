@@ -38,7 +38,7 @@ export function useEventListFilters(category: string | undefined) {
     const monthFromNow = new Date();
     monthFromNow.setMonth(today.getMonth() + 1);
 
-    if (category) {
+    if (category !== "all") {
       filters.category = category;
     }
     if (date === "week") {
@@ -74,14 +74,9 @@ export function useEventListFilters(category: string | undefined) {
     if (param !== "page") {
       params.delete("page");
     }
-    if (param === "date" && value === "any") {
-      params.delete("date");
-    }
 
-    let newUrl = `/events?${params.toString()}`;
-    if (category) {
-      newUrl = `/events/category/${category}?${params.toString()}`;
-    }
+    const newUrl = `/events/category/${category}?${params.toString()}`;
+
     router.push(newUrl);
   }
 

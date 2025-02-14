@@ -12,6 +12,7 @@ interface EventCardProps {
   totalAttendees: number | null;
   image: string;
   category: string | null;
+  isPriority?: boolean;
 }
 
 export default function EventCard({
@@ -21,6 +22,7 @@ export default function EventCard({
   totalAttendees,
   image,
   category,
+  isPriority = false,
 }: EventCardProps) {
   return (
     <Card className="w-full max-w-[500px] h-[400px] p-4">
@@ -43,6 +45,7 @@ export default function EventCard({
             className="object-cover rounded-xl"
             src={image}
             fill
+            priority={isPriority}
           />
         </CardBody>
       </Link>

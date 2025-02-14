@@ -16,7 +16,11 @@ describe("fetchCategories", () => {
   it("each category has the correct format", async () => {
     const categories = await fetchCategories();
     categories.forEach((category) => {
-      expect(category).toBeTypeOf("string");
+      expect(category).toMatchObject({
+        name: expect.any(String),
+        image: expect.any(String),
+        description: expect.any(String),
+      });
     });
   });
 });

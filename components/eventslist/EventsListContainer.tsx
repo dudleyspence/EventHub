@@ -2,29 +2,18 @@
 import React from "react";
 import EventList from "./EventsList";
 import { Pagination } from "@nextui-org/react";
-import LoadingList from "../loading/LoadingList";
-import FilterSidebar from "./FilterSidebar";
-import FilterDrawer from "./FilterDrawer";
-import { useEventListFilters } from "@/hooks/useEventListFilters";
 
-interface searchParamProps {
+import { useEventListFilters } from "@/hooks/useEventListFilters";
+import Image from "next/image";
+import LoadingList from "../loading/LoadingList";
+
+interface EventListProps {
   category?: string | undefined;
-  categories: string[];
 }
 
-export default function EventsListContainer({
-  category,
-  categories,
-}: searchParamProps) {
-  const {
-    isLoading,
-    error,
-    events,
-    totalPages,
-    date,
-    page,
-    handleFilterChange,
-  } = useEventListFilters(category);
+export default function EventsListContainer({ category }: EventListProps) {
+  const { isLoading, error, events, totalPages, page, handleFilterChange } =
+    useEventListFilters(category);
 
   if (error) {
     return (
@@ -36,41 +25,39 @@ export default function EventsListContainer({
   }
 
   return (
-    <div className="w-full flex flex-col items-center gap-16">
-      <div className="w-full flex flex-row gap-5">
-        <div id="filters" className="hidden lg:block lg:w-1/4">
-          <FilterSidebar
-            category={category}
-            date={date}
-            categories={categories}
-            handleFilterChange={handleFilterChange}
-          />
-        </div>
-        <div id="event-list" className="flex flex-col w-full lg:w-3/4">
-          <div className="w-full flex flex-row justify-end gap-10 px-10">
-            <FilterDrawer
-              category={category}
-              date={date}
-              categories={categories}
-              handleFilterChange={handleFilterChange}
-            />
-          </div>
-          {isLoading ? (
-            <LoadingList eventsPerPage={10} />
-          ) : (
-            <EventList events={events} />
-          )}
-        </div>
-      </div>
+    <div className="flex flex-col items-center gap-20">
+      {isLoading ? (
+        <LoadingList eventsPerPage={10} />
+      ) : events.length === 0 ? (
+        <NoEventsFound />
+      ) : (
+        <EventList events={events} />
+      )}
 
-      <Pagination
-        onChange={(value) => {
-          handleFilterChange("page", value.toString());
-        }}
-        total={totalPages}
-        color="warning"
-        page={page}
-      />
+      {events.length > 0 && (
+        <Pagination
+          onChange={(value) => {
+            handleFilterChange("page", value.toString());
+          }}
+          total={totalPages}
+          color="warning"
+          page={page}
+        />
+      )}
+    </div>
+  );
+}
+
+function NoEventsFound() {
+  return (
+    <div className="w-full pt-[150px] flex justify-center items-center">
+      <div className="relative h-[300px] w-[300px]">
+        <Image
+          fill
+          src="https://res.cloudinary.com/dvb1ktpjd/image/upload/v1739050220/NoEventsFound_xy95mm.png"
+          alt="no events found graphic"
+        />
+      </div>
     </div>
   );
 }

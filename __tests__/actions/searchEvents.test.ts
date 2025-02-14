@@ -11,7 +11,8 @@ describe("searchEvents", () => {
     expect(Array.isArray(searchResults)).toBe(true);
   });
   it("should return an array with matching events", async () => {
-    const searchResults = await searchEvents("Bil");
+    const searchResults = await searchEvents("Billie");
+    console.log(searchResults, "<<< results");
     expect(searchResults[0].title).toBe("Billie Eilish Live");
   });
   it("should return an array with matching events", async () => {

@@ -1,7 +1,8 @@
 "use client";
 
-import { Button } from "@nextui-org/react";
-import React from "react";
+import React, { useRef } from "react";
+import confetti from "canvas-confetti";
+import { Button } from "@heroui/react";
 
 interface AttendEventButtonProps {
   handleAttendEvent: () => void;
@@ -16,6 +17,25 @@ export default function AttendEventButton({
   handleAttendEvent,
   handleRemoveAttendance,
 }: AttendEventButtonProps) {
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  const handleConfetti = () => {
+    if (!buttonRef.current) return;
+
+    const rect = buttonRef.current.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: {
+        x: x / window.innerWidth,
+        y: y / window.innerHeight,
+      },
+    });
+  };
+
   return (
     <div>
       {attending ? (
@@ -30,9 +50,13 @@ export default function AttendEventButton({
         </Button>
       ) : (
         <Button
+          ref={buttonRef}
           isLoading={loading}
           disabled={loading}
-          onPress={handleAttendEvent}
+          onPress={() => {
+            handleAttendEvent();
+            handleConfetti();
+          }}
           className="w-[140px]"
         >
           Attend Event

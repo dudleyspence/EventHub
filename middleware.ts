@@ -3,13 +3,9 @@ import NextAuth from "next-auth";
 
 import {
   DEFAULT_SIGNIN_REDIRECT,
-  apiAuthPrefix,
   publicRoutes,
   authRoutes,
-  adminRoutePrefix,
   adminLandingPage,
-  adminOnlyRoutes,
-  adminVersionRoutes,
 } from "@/routes";
 import { currentRole } from "./lib/auth";
 
@@ -26,18 +22,12 @@ export default auth(async (req) => {
   const userIsAdmin = userRole === "ADMIN";
 
   // ROUTE STATUS CHECKS:
-  const isAPIAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
+  const isAPIAuthRoute = nextUrl.pathname.startsWith("/api/auth");
   const isAuthRoute = authRoutes.includes(pathway);
   const isPublicRoute = publicRoutes.some((routeRegex) => {
     return routeRegex.test(pathway);
   });
-  const isAdminVersionRoute = adminVersionRoutes.some((routeRegex) => {
-    return routeRegex.test(pathway);
-  });
-
-  const isAdminOnlyRoute = adminOnlyRoutes.some((routeRegex) => {
-    return routeRegex.test(pathway);
-  });
+  const isAdminRoute = pathway.startsWith("/admin");
 
   // ROUTE REDIRECTS:
   if (isAPIAuthRoute) {
@@ -63,14 +53,14 @@ export default auth(async (req) => {
   }
 
   // protects admin routes that dont exist for non-admins
-  if (isAdminOnlyRoute && !userIsAdmin) {
-    return Response.redirect(new URL(DEFAULT_SIGNIN_REDIRECT, nextUrl));
+  if (isAdminRoute && !userIsAdmin) {
+    return Response.redirect(new URL("/unauthorised", nextUrl));
   }
 
   // if user is admin but going to a non-admin route, redirect to the admin version of the page
-  if (userIsAdmin && isAdminVersionRoute) {
+  if (userIsAdmin && isPublicRoute) {
     // IMPORTANT: nextUrl.pathname doesnt include the queries
-    return Response.redirect(new URL(adminRoutePrefix + pathway, nextUrl));
+    return Response.redirect(new URL("/admin" + pathway, nextUrl));
   }
 
   return undefined;

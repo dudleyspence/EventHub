@@ -1,28 +1,77 @@
 "use client";
-import { Radio, RadioGroup } from "@heroui/react";
-import React from "react";
+import {
+  Button,
+  Drawer,
+  DrawerContent,
+  Radio,
+  RadioGroup,
+  useDisclosure,
+} from "@heroui/react";
+import React, { useState } from "react";
 import FiltersSkeleton from "../loading/FiltersSkeleton";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { CiFilter } from "react-icons/ci";
+import { Category } from "@prisma/client";
+import { useCategories } from "@/context/CategoriesContext";
 
-export interface FilterSidebarProps {
-  category: string | undefined;
-  date: string;
-  handleFilterChange: (params: string, value: string) => void;
-  categories: string[];
+export function FilterSidebar() {
+  return <FilterSidebarLogic />;
 }
 
-export default function FilterSidebar({
-  category,
-  categories,
-  date,
-  handleFilterChange,
-}: FilterSidebarProps) {
-  const router = useRouter();
+export function MobileFilterSidebar() {
+  const { onOpen, isOpen, onOpenChange } = useDisclosure();
 
-  function handleCategoryChange(category: string) {
-    router.push(
-      category === "None" ? `/events` : `/events/category/${category}`
-    );
+  return (
+    <div>
+      <Button size="lg" onPress={onOpen} className="text-md font-bold">
+        Filters <CiFilter size={20} className="font-bold" />
+      </Button>
+      <Drawer
+        isOpen={isOpen}
+        placement="left"
+        onOpenChange={onOpenChange}
+        className="w-[350px]"
+      >
+        <DrawerContent>
+          {() => (
+            <div className="pb-10">
+              <FilterSidebarLogic />;
+            </div>
+          )}
+        </DrawerContent>
+      </Drawer>
+    </div>
+  );
+}
+
+export function FilterSidebarLogic() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const categories: Category[] = useCategories();
+
+  const [date, setDate] = useState("any");
+  const [category, setCategory] = useState("all");
+
+  function handleDateChange(value: string) {
+    setDate(value);
+    const params = new URLSearchParams(searchParams);
+    params.set("date", value);
+    //reset page to 1
+    params.delete("page");
+
+    if (value === "any") {
+      params.delete("date");
+    }
+
+    const newUrl = `/events/category/${category}?${params.toString()}`;
+    router.push(newUrl);
+  }
+
+  function handleCategoryChange(value: string) {
+    setCategory(value);
+    setDate("any");
+
+    router.push(`/events/category/${value}`);
   }
 
   if (!categories) {
@@ -39,10 +88,7 @@ export default function FilterSidebar({
           defaultValue="any"
           label="Select a date"
           value={date}
-          onValueChange={(value) => {
-            console.log(value);
-            handleFilterChange("date", value);
-          }}
+          onValueChange={handleDateChange}
         >
           <Radio value="any">Any</Radio>
           <Radio value="week">This week</Radio>
@@ -55,15 +101,15 @@ export default function FilterSidebar({
 
         <RadioGroup
           color="secondary"
-          defaultValue="None"
-          value={category || "None"}
+          defaultValue="all"
+          value={category}
           label="Select a category"
           onValueChange={handleCategoryChange}
         >
-          <Radio value="None">None</Radio>
-          {categories.map((category) => (
-            <Radio key={category} value={category}>
-              {category}
+          <Radio value="all">None</Radio>
+          {categories.map((singleCategory) => (
+            <Radio key={singleCategory.name} value={singleCategory.name}>
+              {singleCategory.name}
             </Radio>
           ))}
         </RadioGroup>

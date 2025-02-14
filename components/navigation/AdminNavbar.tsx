@@ -23,7 +23,7 @@ import Searchbar from "./Searchbar";
 export default function AdminNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuItems = [
-    { name: "Events", path: "/admin/events" },
+    { name: "Events", path: "/admin/events/category/all" },
     { name: "Dashboard", path: "/admin/dashboard" },
     { name: "Create Event", path: "/admin/events/create" },
   ];
