@@ -14,8 +14,13 @@ export default function AttendanceControls({
   setShowSuccessAlert: React.Dispatch<React.SetStateAction<boolean>>;
   setAttendanceValue: React.Dispatch<React.SetStateAction<number>>;
 }) {
-  const { handleAttendEvent, handleRemoveAttendance, loading, attending } =
-    useAttendEvent(event.id, setAttendanceValue, setShowSuccessAlert);
+  const {
+    handleAttendEvent,
+    handleRemoveAttendance,
+    loading,
+    attending,
+    success,
+  } = useAttendEvent(event.id, setAttendanceValue, setShowSuccessAlert);
 
   return (
     <div className="flex flex-row xs:flex-col gap-3 justify-end items-end ">
@@ -23,6 +28,7 @@ export default function AttendanceControls({
         handleAttendEvent={handleAttendEvent}
         loading={loading}
         attending={attending}
+        success={success}
         handleRemoveAttendance={handleRemoveAttendance}
       />
       <Button className="min-w-[140px]">Add to Calendar</Button>

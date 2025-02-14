@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import confetti from "canvas-confetti";
 import { Button } from "@heroui/react";
 
@@ -9,6 +9,7 @@ interface AttendEventButtonProps {
   handleRemoveAttendance: () => void;
   attending: boolean;
   loading: boolean;
+  success: boolean;
 }
 
 export default function AttendEventButton({
@@ -16,6 +17,7 @@ export default function AttendEventButton({
   attending,
   handleAttendEvent,
   handleRemoveAttendance,
+  success,
 }: AttendEventButtonProps) {
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -36,10 +38,17 @@ export default function AttendEventButton({
     });
   };
 
+  useEffect(() => {
+    if (success) {
+      handleConfetti();
+    }
+  }, [success]);
+
   return (
     <div>
       {attending ? (
         <Button
+          ref={buttonRef}
           isLoading={loading}
           disabled={loading}
           onPress={handleRemoveAttendance}
@@ -53,10 +62,7 @@ export default function AttendEventButton({
           ref={buttonRef}
           isLoading={loading}
           disabled={loading}
-          onPress={() => {
-            handleAttendEvent();
-            handleConfetti();
-          }}
+          onPress={handleAttendEvent}
           className="w-[140px]"
         >
           Attend Event

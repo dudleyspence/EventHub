@@ -13,7 +13,7 @@ export default function useAttendEvent(
 ) {
   const user = useCurrentUser();
   const { openLoginModal } = useLoginModal();
-
+  const [success, setSuccess] = useState(false);
   const [attending, setAttending] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -44,6 +44,7 @@ export default function useAttendEvent(
         setShowSuccessAlert(true);
         // optimistically render the update
         setAttendanceValue((prevAttendance) => prevAttendance + 1);
+        setSuccess(true);
       }
     } catch (error) {
       console.error(error);
@@ -66,6 +67,7 @@ export default function useAttendEvent(
         setAttending(false);
         // optimistically render the update
         setShowSuccessAlert(false);
+        setSuccess(false);
         setAttendanceValue((prevAttendance) => prevAttendance - 1);
       }
     } catch (error) {
@@ -76,5 +78,11 @@ export default function useAttendEvent(
     }
   }
 
-  return { attending, loading, handleAttendEvent, handleRemoveAttendance };
+  return {
+    attending,
+    loading,
+    handleAttendEvent,
+    handleRemoveAttendance,
+    success,
+  };
 }
