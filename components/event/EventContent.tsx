@@ -6,6 +6,7 @@ import AttendanceControls from "./AttendanceControls";
 import { Alert } from "@heroui/react";
 import Capacity from "./CapacityChart";
 import ServerImage from "../UI/ServerImage";
+import { faker } from "@faker-js/faker";
 
 export default function EventContent({ event }: { event: Event }) {
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
@@ -13,6 +14,7 @@ export default function EventContent({ event }: { event: Event }) {
     event.totalAttendees
   );
 
+  console.log(faker.lorem.paragraphs(8));
   return (
     <div className="w-full">
       <Alert

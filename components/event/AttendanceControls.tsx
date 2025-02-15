@@ -23,7 +23,7 @@ export default function AttendanceControls({
   } = useAttendEvent(event.id, setAttendanceValue, setShowSuccessAlert);
 
   return (
-    <div className="flex flex-row xs:flex-col gap-3 justify-end items-end ">
+    <div className="flex flex-row xs:flex-col gap-3 justify-start xs:justify-end items-end ">
       <AttendEventButton
         handleAttendEvent={handleAttendEvent}
         loading={loading}

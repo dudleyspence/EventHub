@@ -71,10 +71,10 @@ model Category {
 model Event {
   id                String          @id @default(cuid())
   title             String
-  description       String
+  description       String          @db.Text
   maxCapacity       Int?
   totalAttendees    Int             @default(0)
-  categoryRel       Category       @relation("EventCategory", fields: [category], references: [name])
+  categoryRel       Category        @relation("EventCategory", fields: [category], references: [name])
   category          String
   image             String
   date              DateTime
