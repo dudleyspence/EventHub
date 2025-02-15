@@ -90,7 +90,7 @@ export default function generateLandingPageEvents(admin_id: string) {
   const popularEvents = popular_events.map((event) => ({
     id: event.id,
     title: event.title,
-    description: faker.lorem.sentences(15),
+    description: faker.lorem.paragraphs(8),
     maxCapacity: 800,
     totalAttendees: 0,
     image: event.image,
@@ -101,7 +101,7 @@ export default function generateLandingPageEvents(admin_id: string) {
 
   const comingSoon = coming_soon.map((event) => ({
     title: event.title,
-    description: faker.lorem.sentences(15),
+    description: faker.lorem.paragraphs(8),
     maxCapacity: 800,
     totalAttendees: 0,
     image: event.image,
