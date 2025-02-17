@@ -5,7 +5,6 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  Link,
   Button,
   Dropdown,
   DropdownMenu,
@@ -21,6 +20,7 @@ import logo from "@/public/brand/Logo.png";
 import { signOut } from "next-auth/react";
 import { FaSignOutAlt } from "react-icons/fa";
 import Searchbar from "./Searchbar";
+import Link from "next/link";
 
 export default function UserNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -45,10 +45,10 @@ export default function UserNavbar() {
           {menuItems.map((item) => (
             <NavbarItem key={item.name}>
               <Link
-                size="lg"
                 color="foreground"
                 className="text-lg text-black font-bold"
                 href={item.path}
+                prefetch={true}
               >
                 {item.name}
               </Link>
@@ -83,7 +83,7 @@ export default function UserNavbar() {
             <>
               {menuItems.map((item, index) => (
                 <DropdownItem key={`${item.name}-${index}`}>
-                  <Link color="foreground" href={item.path}>
+                  <Link prefetch={true} color="foreground" href={item.path}>
                     {item.name}
                   </Link>
                 </DropdownItem>

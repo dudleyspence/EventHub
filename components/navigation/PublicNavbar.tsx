@@ -10,7 +10,6 @@ import {
   DropdownMenu,
   DropdownItem,
   DropdownTrigger,
-  Link,
 } from "@nextui-org/react";
 import Image from "next/image";
 import logo from "@/public/brand/Logo.png";
@@ -18,6 +17,7 @@ import Searchbar from "./Searchbar";
 
 import { IoIosMenu } from "react-icons/io";
 import { RxCross1 } from "react-icons/rx";
+import Link from "next/link";
 
 type MenuItem = {
   name: string;
@@ -36,7 +36,7 @@ export default function PublicNavbar() {
       <Navbar maxWidth="xl" className="pt-5">
         <NavbarContent>
           <NavbarBrand>
-            <Link href="/">
+            <Link prefetch={true} href="/">
               <Image alt="website logo" src={logo} height={45} />
             </Link>
           </NavbarBrand>
@@ -46,8 +46,8 @@ export default function PublicNavbar() {
           {menuItems.map((item) => (
             <NavbarItem key={item.name}>
               <Link
+                prefetch={true}
                 href={item.path}
-                size="lg"
                 className="text-lg text-black font-bold"
               >
                 {item.name}

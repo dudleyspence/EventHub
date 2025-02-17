@@ -4,7 +4,6 @@ import AttendEventButton from "./AttendEventButton";
 import { Event } from "@prisma/client";
 import useAttendEvent from "@/hooks/useAttendEvent";
 import AddToCalender from "./AddToCalender";
-import { useAlert } from "@/context/AlertContext";
 
 export default function AttendanceControls({
   event,

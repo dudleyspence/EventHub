@@ -7,7 +7,6 @@ import { Alert } from "@heroui/react";
 import Capacity from "./CapacityChart";
 import ServerImage from "../UI/ServerImage";
 import { useAlert } from "@/context/AlertContext";
-import { GoogleCalendarIcon } from "./AddToCalender";
 
 export default function EventContent({ event }: { event: Event }) {
   const [attendanceValue, setAttendanceValue] = useState<number>(
