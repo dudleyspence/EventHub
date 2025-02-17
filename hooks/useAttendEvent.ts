@@ -5,17 +5,32 @@ import { checkAttendance } from "@/lib/actions/checkAttendance";
 import { useLoginModal } from "@/context/LoginModelProvider";
 import { attendEventAction } from "@/lib/actions/attendEvent";
 import { removeEventAttendance } from "@/lib/actions/removeEventAttendance";
+import { useAlert } from "@/context/AlertContext";
 
 export default function useAttendEvent(
   event_id: string,
   setAttendanceValue: React.Dispatch<React.SetStateAction<number>>,
-  setShowSuccessAlert: React.Dispatch<React.SetStateAction<boolean>>
+  title: string
 ) {
   const user = useCurrentUser();
   const { openLoginModal } = useLoginModal();
   const [success, setSuccess] = useState(false);
   const [attending, setAttending] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const { setMessage, setColor, setShowAlert } = useAlert();
+
+  function updateAlertSuccess() {
+    setMessage(`You have successfully signed up to ${title}`);
+    setColor("success");
+    setShowAlert(true);
+  }
+
+  function updateAlertDanger() {
+    setMessage(`You are no longer attending this event`);
+    setColor("danger");
+    setShowAlert(true);
+  }
 
   useEffect(() => {
     async function isAttending() {
@@ -25,6 +40,7 @@ export default function useAttendEvent(
       }
       const attendance = await checkAttendance(user.id, event_id);
       setAttending(attendance);
+
       setLoading(false);
     }
     isAttending();
@@ -41,7 +57,7 @@ export default function useAttendEvent(
       const response = await attendEventAction(user.id, event_id);
       if (response.success) {
         setAttending(true);
-        setShowSuccessAlert(true);
+        updateAlertSuccess();
         // optimistically render the update
         setAttendanceValue((prevAttendance) => prevAttendance + 1);
         setSuccess(true);
@@ -66,8 +82,8 @@ export default function useAttendEvent(
       if (response) {
         setAttending(false);
         // optimistically render the update
-        setShowSuccessAlert(false);
         setSuccess(false);
+        updateAlertDanger();
         setAttendanceValue((prevAttendance) => prevAttendance - 1);
       }
     } catch (error) {

@@ -3,8 +3,11 @@ import { RotateWords } from "../UI/RotateWords";
 import { Category } from "@prisma/client";
 import HeroButtons from "./HeroButtons";
 import Image from "next/image";
+import { currentUser } from "@/lib/auth";
 
-export default function Hero({ categories }: { categories: Category[] }) {
+export default async function Hero({ categories }: { categories: Category[] }) {
+  const userLoggedIn = !!(await currentUser());
+
   return (
     <div className="w-full h-[600px] flex flex-col items-end py-10 ">
       <div className="relative w-full h-full overflow-hidden lg:rounded-xl shadow-2xl">
@@ -12,7 +15,7 @@ export default function Hero({ categories }: { categories: Category[] }) {
           <RotateWords text="Events you love..." words={categories} />
         </div>
         <div className="absolute bottom-10 z-10 inset-0">
-          <HeroButtons />
+          <HeroButtons session={userLoggedIn} />
         </div>
         <Image
           className={`object-cover overflow-hidden transition-opacity duration-700 ease-in-out`}
