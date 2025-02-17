@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import confetti from "canvas-confetti";
 import { Button } from "@heroui/react";
 
@@ -45,7 +45,7 @@ export default function AttendEventButton({
   }, [success]);
 
   return (
-    <div>
+    <div className="w-full">
       {attending ? (
         <Button
           ref={buttonRef}
@@ -53,7 +53,7 @@ export default function AttendEventButton({
           disabled={loading}
           onPress={handleRemoveAttendance}
           color="warning"
-          className="w-[140px]"
+          className="w-[175px]"
         >
           Attending
         </Button>
@@ -63,7 +63,7 @@ export default function AttendEventButton({
           isLoading={loading}
           disabled={loading}
           onPress={handleAttendEvent}
-          className="w-[140px]"
+          className="w-[175px]"
         >
           Attend Event
         </Button>

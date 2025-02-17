@@ -57,7 +57,7 @@ export function generateCategories() {
     {
       name: "Health and Wellness",
       image:
-        "https://degroote.mcmaster.ca/wp-content/uploads/sites/97/2018/01/Article-Hero-Image-1920-x-1080-Networking-with-DeGroote-Students.png",
+        "https://images.pexels.com/photos/8436587/pexels-photo-8436587.jpeg?cs=srgb&dl=pexels-yankrukov-8436587.jpg&fm=jpg",
       description:
         "Boost your well-being with events focused on fitness, mindfulness, and holistic health.",
     },

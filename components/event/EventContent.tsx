@@ -6,25 +6,27 @@ import AttendanceControls from "./AttendanceControls";
 import { Alert } from "@heroui/react";
 import Capacity from "./CapacityChart";
 import ServerImage from "../UI/ServerImage";
-import { faker } from "@faker-js/faker";
+import { useAlert } from "@/context/AlertContext";
 
 export default function EventContent({ event }: { event: Event }) {
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [attendanceValue, setAttendanceValue] = useState<number>(
     event.totalAttendees
   );
 
-  console.log(faker.lorem.paragraphs(8));
+  const { showAlert, setShowAlert, message, color, title, icon } = useAlert();
+
+  console.log(color);
   return (
     <div className="w-full">
       <Alert
-        color="success"
-        className="z-50 fixed bottom-20 left-1/2 transform -translate-x-1/2 max-w-[500px] !text-success-800 !bg-success-50/95"
-        description={`You have successfully signed up to ${event.title}`}
-        isVisible={showSuccessAlert}
-        title="Sign up Success"
+        className={`z-50 fixed bottom-20 left-1/2 transform -translate-x-1/2 max-w-[500px] !text-${color}-800 !bg-${color}-50/95`}
+        description={message}
+        color={color}
+        isVisible={showAlert}
+        title={title}
         variant="faded"
-        onClose={() => setShowSuccessAlert(false)}
+        onClose={() => setShowAlert(false)}
+        icon={icon}
       />
       <div className="mt-5 relative w-full rounded-xl h-[400px]">
         <ServerImage
@@ -52,7 +54,6 @@ export default function EventContent({ event }: { event: Event }) {
           <AttendanceControls
             event={event}
             setAttendanceValue={setAttendanceValue}
-            setShowSuccessAlert={setShowSuccessAlert}
           />
         </div>
         <p className="mt-10">{event.description}</p>

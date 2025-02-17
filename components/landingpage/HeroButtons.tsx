@@ -1,10 +1,9 @@
 "use client";
 import { Button } from "@heroui/react";
-import { useSession } from "next-auth/react";
 import React from "react";
 
-export default function HeroButtons() {
-  const { data: session } = useSession();
+export default function HeroButtons({ session }: { session: boolean }) {
+  // passing session as props for security of the tokens
   return (
     <div className="w-full h-full flex flex-row items-end justify-center gap-5">
       <Button
