@@ -18,18 +18,22 @@ export default function useAttendEvent(
   const [attending, setAttending] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const { setMessage, setColor, setShowAlert } = useAlert();
+  const { setMessage, setColor, setShowAlert, setTitle, setIcon } = useAlert();
 
   function updateAlertSuccess() {
     setMessage(`You have successfully signed up to ${title}`);
+    setTitle("Sign up Success");
     setColor("success");
     setShowAlert(true);
+    setIcon(undefined);
   }
 
   function updateAlertDanger() {
     setMessage(`You are no longer attending this event`);
+    setTitle("Attendance Removed!");
     setColor("danger");
     setShowAlert(true);
+    setIcon(undefined);
   }
 
   useEffect(() => {

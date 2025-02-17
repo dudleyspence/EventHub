@@ -1,4 +1,5 @@
 "use client";
+import { useAlert } from "@/context/AlertContext";
 /*
 
 Expected Behaviour of the many tokens: 
@@ -26,9 +27,10 @@ Scenario 2: User logged in with Github/Credentials
 import { addToCalendarAction } from "@/lib/actions/addToCalendar";
 import { Button } from "@heroui/react";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useState, useTransition } from "react";
 
-function GoogleCalendarIcon() {
+export function GoogleCalendarIcon() {
   return (
     <Image
       alt="google calendar icon"
@@ -43,12 +45,34 @@ export default function AddToCalender({ event_id }: { event_id: string }) {
   const [isPending, startTransition] = useTransition();
   const [success, setSuccess] = useState(false);
 
+  const { setMessage, setColor, setShowAlert, setTitle, setIcon } = useAlert();
+
+  function AddedToCalendarMessage({ link }: { link: string }) {
+    return (
+      <div className="flex flex-col gap-3 mt-1">
+        <p>You have successfully added the event to your calendar</p>
+        <Link className="hover:underline font-bold" href={link}>
+          Click here to view the calendar!
+        </Link>
+      </div>
+    );
+  }
+
   function handleAddToCalender() {
     startTransition(async () => {
       const response = await addToCalendarAction(event_id);
       console.log(response);
       if (response.success) {
         setSuccess(true);
+        if (response.link) {
+          setMessage(<AddedToCalendarMessage link={response.link} />);
+        } else {
+          setMessage("Event added to your calendar");
+        }
+        setTitle("Added to Google Calendar!");
+        setColor("success");
+        setShowAlert(true);
+        setIcon(<GoogleCalendarIcon />);
       }
     });
   }

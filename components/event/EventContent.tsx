@@ -7,24 +7,27 @@ import { Alert } from "@heroui/react";
 import Capacity from "./CapacityChart";
 import ServerImage from "../UI/ServerImage";
 import { useAlert } from "@/context/AlertContext";
+import { GoogleCalendarIcon } from "./AddToCalender";
 
 export default function EventContent({ event }: { event: Event }) {
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [attendanceValue, setAttendanceValue] = useState<number>(
     event.totalAttendees
   );
 
-  const { showAlert, message, color } = useAlert();
+  const { showAlert, setShowAlert, message, color, title, icon } = useAlert();
 
+  console.log(color);
   return (
     <div className="w-full">
       <Alert
-        className={`z-50 fixed bottom-20 left-1/2 transform -translate-x-1/2 max-w-[500px]"} !text-${color}-800 !bg-${color}-50/95`}
+        className={`z-50 fixed bottom-20 left-1/2 transform -translate-x-1/2 max-w-[500px] !text-${color}-800 !bg-${color}-50/95`}
         description={message}
+        color={color}
         isVisible={showAlert}
-        title="Sign up Success"
+        title={title}
         variant="faded"
-        onClose={() => setShowSuccessAlert(false)}
+        onClose={() => setShowAlert(false)}
+        icon={icon}
       />
       <div className="mt-5 relative w-full rounded-xl h-[400px]">
         <ServerImage
