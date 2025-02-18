@@ -31,7 +31,7 @@ export default function DeleteEventButtton({
       alert("Event deleted successfully");
       onClose();
 
-      router.push("/admin/events");
+      router.push("/admin/events/category/all");
     } catch (error) {
       console.error(error);
       alert("Failed to delete event");

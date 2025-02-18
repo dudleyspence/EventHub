@@ -5,6 +5,7 @@ import { FormatDateToReadable } from "@/utils/FormatUTCDateReadable";
 import Capacity from "@/components/event/CapacityChart";
 import DeleteEventButtton from "@/components/admin/DeleteEventButton";
 import { currentUser } from "@/lib/auth";
+import EditEventButton from "@/components/admin/dashboard/EditEventButton";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -39,13 +40,11 @@ export default async function page({ params }: PageProps) {
             <p>{FormatDateToReadable(event.date)}</p>
             <h1 className="my-5 text-3xl font-bold">{event.title}</h1>
           </div>
-          <div className="flex flex-row gap-5">
-            <div>
-              {/* <Button>Update Event</Button> */}
-              {user && user.id && (
-                <DeleteEventButtton event_id={event.id} user_id={user.id} />
-              )}
-            </div>
+          <div className="flex flex-col gap-5">
+            <EditEventButton event_id={event.id} />
+            {user && user.id && (
+              <DeleteEventButtton event_id={event.id} user_id={user.id} />
+            )}
           </div>
         </div>
         <p className="mt-10">{event.description}</p>

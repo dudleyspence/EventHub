@@ -13,8 +13,9 @@ export default function AdminDashboardTabs() {
   return (
     <Tabs
       aria-label="Options"
-      color="primary"
+      color="warning"
       variant="bordered"
+      className="mr-10"
       size="lg"
       isVertical={isVertical}
     >

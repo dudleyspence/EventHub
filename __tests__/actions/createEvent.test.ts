@@ -36,7 +36,7 @@ describe("createEvent invalid params", () => {
     ["Event description too short", { ...validEvent, description: "o" }],
     [
       "Event description too long",
-      { ...validEvent, description: new String(1001) },
+      { ...validEvent, description: new String(5001) },
     ],
     [
       "Event description not provided",
