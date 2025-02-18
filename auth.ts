@@ -38,6 +38,10 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       /*
       Docs for refresh token rotation here
        https://authjs.dev/guides/refresh-token-rotation?framework=
+
+
+       IMPORTANT: user has a one-to-many relationship with Account meaning they can be a Github user
+       but also have a google account linked!
       */
 
       if (!token.sub) return token;
@@ -53,7 +57,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         where: { userId: token.sub, provider: "google" },
       });
 
-      // if userr a google account adds the access tokens etc to the jwt token so they can be added to the session token
+      // if user a google account adds the access tokens etc to the jwt token so they can be added to the session token
       if (googleAccount) {
         token.googleAccessToken = googleAccount.access_token;
         token.googleRefreshToken = googleAccount.refresh_token;

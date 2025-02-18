@@ -24,7 +24,8 @@ export default function Capacity({
 
   return (
     <Card className="w-[130px] h-full border-none bg-white/95 rounded-xl">
-      <CardBody className="justify-center items-center pb-0">
+      <CardBody className="justify-center items-center pb-2">
+        <h1 className="font-bold">Capacity</h1>
         <CircularProgress
           classNames={{
             svg: "w-20 h-20 drop-shadow-md",
