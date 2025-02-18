@@ -24,9 +24,17 @@ export default async function page({ params }: PageProps) {
           alt={event.title}
           src={event.image}
         />
+        <div className="absolute bottom-2 right-2">
+          {event.maxCapacity && (
+            <Capacity
+              totalAttendees={event.totalAttendees}
+              maxCapacity={event.maxCapacity}
+            />
+          )}
+        </div>
       </div>
-      <div className="p-5 px-7  w-full">
-        <div className=" flex flex-row justify-between">
+      <div className="p-5 px-4 xl:px-0 w-full">
+        <div className=" flex flex-col xs:flex-row justify-between gap-5">
           <div>
             <p>{FormatDateToReadable(event.date)}</p>
             <h1 className="my-5 text-3xl font-bold">{event.title}</h1>
@@ -38,12 +46,6 @@ export default async function page({ params }: PageProps) {
                 <DeleteEventButtton event_id={event.id} user_id={user.id} />
               )}
             </div>
-            {event.maxCapacity && (
-              <Capacity
-                totalAttendees={event.totalAttendees}
-                maxCapacity={event.maxCapacity}
-              />
-            )}
           </div>
         </div>
         <p className="mt-10">{event.description}</p>

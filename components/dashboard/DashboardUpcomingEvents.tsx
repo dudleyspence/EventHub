@@ -28,7 +28,7 @@ export default async function DashboardUpcomingEvents({
         <EventsReel events={events} centeredSlides={false} />
       ) : (
         <div className="w-screen max-w-[1280px] mt-8 p-4 py-6">
-          <Link href="/events">
+          <Link href="/events/category/all">
             <div className="w-[350px] h-[400px] rounded-lg bg-gray-200 flex flex-col gap-5 p-10 text-center justify-center items-center cursor-pointer shadow-lg hover:scale-[1.02]">
               <p className="text-lg">You do not have any upcoming events</p>
               <FaPlus size={100} color="gray" />

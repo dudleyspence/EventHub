@@ -4,7 +4,12 @@ import { auth } from "@/auth";
 export async function currentUser() {
   const session = await auth();
 
-  return session?.user;
+  const user = { ...session?.user };
+  delete user.googleRefreshToken;
+  delete user.googleToken;
+  delete user.googleTokenExpiresAt;
+
+  return user;
 }
 
 export async function currentRole() {
