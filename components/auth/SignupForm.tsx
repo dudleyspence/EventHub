@@ -9,6 +9,7 @@ import { Icon } from "@iconify/react";
 
 import { Form, Input, Checkbox, Button } from "@nextui-org/react";
 import { signup } from "@/lib/actions/signup";
+import { useRouter } from "next/navigation";
 
 export default function SignupForm() {
   const [isPending, startTransition] = useTransition();
@@ -18,6 +19,7 @@ export default function SignupForm() {
   const [isConfirmVisible, setIsConfirmVisible] = React.useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
   const toggleConfirmVisibility = () => setIsConfirmVisible(!isConfirmVisible);
+  const router = useRouter();
 
   const { handleSubmit, control } = useForm<z.infer<typeof SignupSchema>>({
     resolver: zodResolver(SignupSchema),
@@ -37,6 +39,9 @@ export default function SignupForm() {
       signup(data).then((data) => {
         setError(data.error);
         setSuccess(data.success);
+        if (data.success) {
+          router.push("/signin");
+        }
       });
     });
   };
