@@ -22,7 +22,7 @@ export default async function page({ params }: PageProps) {
 
   return (
     <div className="pt-10 w-full">
-      <EventsListContainer category={decodedCategory} />;
+      <EventsListContainer category={decodedCategory} />
     </div>
   );
 }
