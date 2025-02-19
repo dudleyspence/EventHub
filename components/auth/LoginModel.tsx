@@ -20,12 +20,12 @@ export default function LoginModal() {
             <ModalBody className="pb-10">
               <p className="text-lg font-semibold">Welcome to EventHub</p>
 
-              <Link href="/signin">
+              <Link href="/signin" onClick={closeLoginModal}>
                 <div className="w-full flex justify-center items-center h-[70px] shadow-xl rounded-xl bg-orange-100 my-5">
                   <h1 className="font-bold text-2xl">Sign In</h1>
                 </div>
               </Link>
-              <Link href="/signup">
+              <Link href="/signup" onClick={closeLoginModal}>
                 <div className="w-full flex justify-center items-center h-[70px] shadow-xl rounded-xl bg-orange-100">
                   <h1 className="font-bold text-2xl">Sign Up</h1>
                 </div>

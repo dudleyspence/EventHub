@@ -1,5 +1,6 @@
+"use client";
 import React from "react";
-import { Card, CardHeader, CardBody, Chip } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, Chip } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -26,7 +27,7 @@ export default function EventCard({
 }: EventCardProps) {
   return (
     <Card className="w-full max-w-[500px] h-[400px] p-4">
-      <Link className="w-full h-full" href={`/events/${id}`}>
+      <Link className="w-full h-full cursor-pointer" href={`/events/${id}`}>
         <CardHeader className="flex-col gap-2 items-start h-1/3">
           <h3 className="font-bold text-large">{name}</h3>
           <p>{FormatDateToReadable(date)}</p>

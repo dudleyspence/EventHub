@@ -22,7 +22,6 @@ export default function EventContent({
 
   const { showAlert, setShowAlert, message, color, title, icon } = useAlert();
 
-  console.log(color);
   return (
     <div className="w-full">
       <Alert
