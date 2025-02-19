@@ -22,7 +22,7 @@ export default function PlannedEvents() {
   }, [user]);
 
   return (
-    <div className="bg-orange-300 xl:rounded-xl mt-6">
+    <div className="bg-orange-300 xl:rounded-xl mt-6 w-screen max-w-[1040px]">
       <div className="relative">
         <Image
           height={100}
@@ -35,7 +35,7 @@ export default function PlannedEvents() {
       {events && events.length > 0 ? (
         <EventsReel events={events} centeredSlides={false} />
       ) : (
-        <div className="w-screen max-w-[1280px] mt-8 p-4 py-6 pt-10">
+        <div className="w-full mt-8 p-4 py-6 pt-10">
           <Link href="/admin/events/create">
             <div className="w-[300px] h-[350px] rounded-lg bg-gray-200 flex flex-col gap-5 p-10 text-center justify-center items-center cursor-pointer shadow-lg hover:scale-[1.02]">
               <p className="text-lg">
