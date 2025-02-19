@@ -37,6 +37,17 @@ export async function seed() {
 
   await db.user.create({ data: seedAdmin });
 
+  const seedUser = {
+    id: "demo_eventhub_user",
+    email: "example@user.com",
+    name: "Joe Bloggs",
+    image: faker.image.avatar(),
+    password: hashedPassword,
+    role: UserRole.USER,
+  };
+
+  await db.user.create({ data: seedUser });
+
   const UserData = await generateUsers(15);
 
   await db.user.createMany({ data: UserData });

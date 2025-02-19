@@ -1,28 +1,3 @@
-"use client";
-/*
-
-Expected Behaviour of the many tokens: 
-
-Scenario 1: User logged in with Google
-
-- google auth scope is set to include calendar access
-- Google signs in and a normal JWT is made by auth.js but also google provides a google access token.
-- this will be stored in the 'access_token' field of the account Prisma table
-- now the user is logged in an while logged in their JWT info is stored in a session token
-- I will change the callback for session so that if the provider is google then the access token will be included in the session. 
-- I will also need to change the JWT callback to refresh the access token if it has expired
-- if they click 'add to calendar' i will check the session for an access token
-- This token will be used for the event adding etc.
-
-
-
-Scenario 2: User logged in with Github/Credentials
-
-- User logged in with Github and so does not have a google access token also the access token field may be filled with a Github access token.
-- When they click 'add to calendar' the account table will be looked at and we can see the provider is 'github' therefore we need to request an access token from google 
-
-*/
-
 import { addToCalendarAction } from "@/lib/actions/addToCalendar";
 import { googleAccessCheck } from "@/lib/actions/authProviderCheck";
 import { useAlert } from "@/context/AlertContext";

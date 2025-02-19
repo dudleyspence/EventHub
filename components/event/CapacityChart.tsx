@@ -1,12 +1,6 @@
 "use client";
 import React from "react";
-import {
-  CircularProgress,
-  Card,
-  CardBody,
-  CardFooter,
-  Chip,
-} from "@heroui/react";
+import { CircularProgress, Card, CardBody, CardFooter } from "@heroui/react";
 
 interface CapacityProps {
   totalAttendees: number;
@@ -18,17 +12,14 @@ export default function Capacity({
   maxCapacity,
 }: CapacityProps) {
   const ticketsSold = Math.round((totalAttendees * 100) / maxCapacity);
-  console.log(ticketsSold);
-
-  //bg-gradient-to-br from-orange-500 to-yellow-500
 
   return (
     <Card className="w-[130px] h-full border-none bg-gradient-to-br from-orange-500 to-yellow-500 rounded-xl">
-      <CardBody className="justify-center items-center pb-2">
+      <CardBody className="justify-center items-center pb-2 overflow-hidden">
         <h1 className="font-bold text-white">Capacity</h1>
         <CircularProgress
           classNames={{
-            svg: "w-24 h-24 drop-shadow-md",
+            svg: "w-[90px] h-[90px] drop-shadow-md",
             indicator: "stroke-white",
             track: "stroke-white/20",
             value: "text-xl font-semibold text-white",
@@ -39,15 +30,9 @@ export default function Capacity({
         />
       </CardBody>
       <CardFooter className="justify-center items-center pt-0">
-        <Chip
-          classNames={{
-            base: "border-1 border-white",
-            content: "text-white text-xs font-semibold",
-          }}
-          variant="bordered"
-        >
+        <p className="text-white text-xs font-semibold">
           {totalAttendees} Attending
-        </Chip>
+        </p>
       </CardFooter>
     </Card>
   );

@@ -8,13 +8,16 @@ import React, { useState, useTransition } from "react";
 import { Button, Input, Checkbox, Link, Form } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { signin } from "@/lib/actions/signin";
+import DemoLogin from "./DemoLogin";
 
 export default function SigninForm({ urlError }: { urlError: string }) {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
 
-  const { handleSubmit, control } = useForm<z.infer<typeof SigninSchema>>({
+  const { handleSubmit, control, setValue } = useForm<
+    z.infer<typeof SigninSchema>
+  >({
     resolver: zodResolver(SigninSchema),
     defaultValues: {
       email: "",
@@ -31,6 +34,18 @@ export default function SigninForm({ urlError }: { urlError: string }) {
         setSuccess(data?.success);
       });
     });
+  };
+
+  const handleDemoAdminClick = () => {
+    setValue("email", "admin@admin.com");
+    setValue("password", "Password1!");
+    handleSubmit(onSubmit)();
+  };
+
+  const handleDemoUserClick = () => {
+    setValue("email", "example@user.com");
+    setValue("password", "Password1!");
+    handleSubmit(onSubmit)();
   };
 
   const [isVisible, setIsVisible] = React.useState(false);
@@ -106,6 +121,11 @@ export default function SigninForm({ urlError }: { urlError: string }) {
       >
         Sign In
       </Button>
+
+      <DemoLogin
+        handleDemoAdminClick={handleDemoAdminClick}
+        handleDemoUserClick={handleDemoUserClick}
+      />
     </Form>
   );
 }
