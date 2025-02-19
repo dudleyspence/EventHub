@@ -82,10 +82,8 @@ export default function UserNavbar() {
           <DropdownMenu aria-label="Mobile Navigation" variant="flat">
             <>
               {menuItems.map((item, index) => (
-                <DropdownItem key={`${item.name}-${index}`}>
-                  <Link prefetch={true} color="foreground" href={item.path}>
-                    {item.name}
-                  </Link>
+                <DropdownItem href={item.path} key={`${item.name}-${index}`}>
+                  {item.name}
                 </DropdownItem>
               ))}
               <DropdownItem className="p-0" key="logout" color="danger">
