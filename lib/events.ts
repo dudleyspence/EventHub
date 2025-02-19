@@ -91,7 +91,7 @@ export async function eventSearch(searchTerm: string) {
   }
 
   const result = await db.$queryRaw<searchEventsOutput[]>`
-  SELECT id, title FROM event
+  SELECT id, title FROM Event
   WHERE MATCH(title, description) AGAINST(${searchTerm} IN BOOLEAN MODE);
 `;
 
