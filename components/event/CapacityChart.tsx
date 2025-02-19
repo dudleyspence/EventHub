@@ -20,29 +20,29 @@ export default function Capacity({
   const ticketsSold = Math.round((totalAttendees * 100) / maxCapacity);
   console.log(ticketsSold);
 
-  //bg-gradient-to-br from-violet-500 to-fuchsia-500
+  //bg-gradient-to-br from-orange-500 to-yellow-500
 
   return (
-    <Card className="w-[130px] h-full border-none bg-white/95 rounded-xl">
+    <Card className="w-[130px] h-full border-none bg-gradient-to-br from-orange-500 to-yellow-500 rounded-xl">
       <CardBody className="justify-center items-center pb-2">
-        <h1 className="font-bold">Capacity</h1>
+        <h1 className="font-bold text-white">Capacity</h1>
         <CircularProgress
           classNames={{
-            svg: "w-20 h-20 drop-shadow-md",
-            indicator: "stroke-warning",
-            track: "stroke-gray-300",
-            value: "text-xl font-semibold text-warning",
+            svg: "w-24 h-24 drop-shadow-md",
+            indicator: "stroke-white",
+            track: "stroke-white/20",
+            value: "text-xl font-semibold text-white",
           }}
           showValueLabel={true}
-          strokeWidth={3}
+          strokeWidth={4}
           value={ticketsSold}
         />
       </CardBody>
       <CardFooter className="justify-center items-center pt-0">
         <Chip
           classNames={{
-            base: "border-1 border-black/30",
-            content: "text-black/90 text-xs font-semibold",
+            base: "border-1 border-white",
+            content: "text-white text-xs font-semibold",
           }}
           variant="bordered"
         >

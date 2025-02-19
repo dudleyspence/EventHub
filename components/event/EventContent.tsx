@@ -19,7 +19,7 @@ export default function EventContent({ event }: { event: Event }) {
   return (
     <div className="w-full">
       <Alert
-        className={`z-50 fixed bottom-20 left-1/2 transform -translate-x-1/2 max-w-[500px] ${color === "success" ? "!text-success-800 !bg-success-50" : "!text-danger-800 !bg-danger-50"}`}
+        className={`z-50 w-[95vw] fixed bottom-20 left-1/2 transform -translate-x-1/2 max-w-[500px] ${color === "success" ? "!text-success-800 !bg-success-50" : "!text-danger-800 !bg-danger-50"}`}
         description={message}
         color={color}
         isVisible={showAlert}

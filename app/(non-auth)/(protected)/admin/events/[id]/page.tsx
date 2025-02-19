@@ -5,6 +5,7 @@ import { FormatDateToReadable } from "@/utils/FormatUTCDateReadable";
 import Capacity from "@/components/event/CapacityChart";
 import DeleteEventButtton from "@/components/admin/DeleteEventButton";
 import { currentUser } from "@/lib/auth";
+import EditEventButton from "@/components/admin/dashboard/EditEventButton";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -24,25 +25,25 @@ export default async function page({ params }: PageProps) {
           alt={event.title}
           src={event.image}
         />
+        <div className="absolute bottom-2 right-2">
+          {event.maxCapacity && (
+            <Capacity
+              totalAttendees={event.totalAttendees}
+              maxCapacity={event.maxCapacity}
+            />
+          )}
+        </div>
       </div>
-      <div className="p-5 px-7  w-full">
-        <div className=" flex flex-row justify-between">
+      <div className="p-5 px-4 xl:px-0 w-full">
+        <div className=" flex flex-col xs:flex-row justify-between gap-5">
           <div>
             <p>{FormatDateToReadable(event.date)}</p>
             <h1 className="my-5 text-3xl font-bold">{event.title}</h1>
           </div>
-          <div className="flex flex-row gap-5">
-            <div>
-              {/* <Button>Update Event</Button> */}
-              {user && user.id && (
-                <DeleteEventButtton event_id={event.id} user_id={user.id} />
-              )}
-            </div>
-            {event.maxCapacity && (
-              <Capacity
-                totalAttendees={event.totalAttendees}
-                maxCapacity={event.maxCapacity}
-              />
+          <div className="flex flex-col gap-5">
+            <EditEventButton event_id={event.id} />
+            {user && user.id && (
+              <DeleteEventButtton event_id={event.id} user_id={user.id} />
             )}
           </div>
         </div>

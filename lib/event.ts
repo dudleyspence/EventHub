@@ -28,3 +28,13 @@ export async function postEvent(event: CreateEventInput, user_id: string) {
   });
   return newEvent;
 }
+
+export async function updateEvent(event: CreateEventInput, event_id: string) {
+  const newEvent = await db.event.update({
+    where: {
+      id: event_id,
+    },
+    data: event,
+  });
+  return newEvent;
+}

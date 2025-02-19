@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useTransition } from "react";
+import { useState } from "react";
 
 export function useUploadImage(selectedImage: File | null) {
   const [isUploading, setIsUpLoading] = useState<boolean>(false);
@@ -34,5 +34,5 @@ export function useUploadImage(selectedImage: File | null) {
     }
   };
 
-  return { handleImageUpload, isUploading };
+  return { handleImageUpload, isUploading, setIsUpLoading };
 }

@@ -9,7 +9,7 @@ export const CreateEventSchema = z.object({
   description: z
     .string()
     .min(10, "description must be at least 10 characters")
-    .max(1000, "description must not exceed 1000 characters")
+    .max(5000, "description must not exceed 1000 characters")
     .nonempty("Please provide a description for this event"),
   maxCapacity: z
     .number()
