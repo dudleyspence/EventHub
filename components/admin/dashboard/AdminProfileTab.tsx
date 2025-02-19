@@ -8,15 +8,15 @@ export default function AdminProfileTab() {
   const user = useCurrentUser();
 
   return (
-    <div className="pl-6 p-4 rounded-xl w-screen max-w-[500px] bg-orange-400 flex flex-row gap-10 items-center">
+    <div className="pl-6 p-4 rounded-xl md:w-screen max-w-[400px] bg-orange-400 flex flex-row gap-6 items-center">
       <Image
         src={
           user?.image
             ? user.image
             : "https://www.freeiconspng.com/uploads/am-a-19-year-old-multimedia-artist-student-from-manila--21.png"
         }
-        width={80}
-        height={80}
+        width={70}
+        height={70}
         className="rounded-2xl"
         alt="profile image"
       />

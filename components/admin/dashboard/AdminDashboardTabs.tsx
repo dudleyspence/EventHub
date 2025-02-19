@@ -6,18 +6,19 @@ import { MdEvent, MdAdminPanelSettings } from "react-icons/md";
 import AdminProfileTab from "./AdminProfileTab";
 import AdminYourEventsTab from "./AdminYourEventsTab";
 import AdminSettingsTab from "./AdminSettingsTab";
+import useWindowDimensions from "@/hooks/useWindowDimentions";
 
 export default function AdminDashboardTabs() {
-  const [isVertical, setIsVertical] = useState(true);
+  const { width } = useWindowDimensions();
 
   return (
     <Tabs
       aria-label="Options"
       color="warning"
       variant="bordered"
-      className="mr-10"
+      className="mb-10 md:mr-10"
       size="lg"
-      isVertical={isVertical}
+      isVertical={width > 800}
     >
       <Tab
         key="Profile"
@@ -31,11 +32,11 @@ export default function AdminDashboardTabs() {
         <AdminProfileTab />
       </Tab>
       <Tab
-        key="Your Events"
+        key="Events"
         title={
           <div className="flex items-center space-x-2">
             <MdEvent size={22} />
-            <span>Your Events</span>
+            <span>Events</span>
           </div>
         }
       >
@@ -46,7 +47,7 @@ export default function AdminDashboardTabs() {
         title={
           <div className="flex items-center space-x-2">
             <IoMdSettings size={22} />
-            <span>Admin Settings</span>
+            <span>Settings</span>
           </div>
         }
       >

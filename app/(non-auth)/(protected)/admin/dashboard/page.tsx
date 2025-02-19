@@ -6,7 +6,7 @@ export default async function page() {
   const user = await currentUser();
 
   return (
-    <div className="flex w-full min-h-[70vh] gap-10 flex-col pt-10">
+    <div className="flex w-full min-h-[70vh] gap-10 flex-col pt-10 px-6">
       <div className="mt-10 ml-6 mb-5">
         <h1 className="font-bold text-4xl w-full text-left mb-3">
           Admin Dashboard

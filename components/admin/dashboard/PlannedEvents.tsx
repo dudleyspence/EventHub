@@ -5,21 +5,21 @@ import { fetchUserEvents } from "@/lib/actions/fetchUserEvents";
 import { FaPlus } from "react-icons/fa";
 import Link from "next/link";
 import EventsReel from "@/components/EventsReel";
-import { currentUser } from "@/lib/auth";
 import { EventListEvent } from "@/types/events";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 export default function PlannedEvents() {
   const [events, setEvents] = useState<EventListEvent[]>([]);
+  const user = useCurrentUser();
 
   useEffect(() => {
     async function getEvents() {
-      const user = await currentUser();
       if (!user || !user.id) return null;
       const events = await fetchUserEvents(user.id, false);
       setEvents(events);
     }
     getEvents();
-  }, []);
+  }, [user]);
 
   return (
     <div className="bg-orange-300 xl:rounded-xl mt-6">
