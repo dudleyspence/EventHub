@@ -1,18 +1,18 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useCurrentUser } from "./useCurrentUser";
 import { checkAttendance } from "@/lib/actions/checkAttendance";
 import { useLoginModal } from "@/context/LoginModelProvider";
 import { attendEventAction } from "@/lib/actions/attendEvent";
 import { removeEventAttendance } from "@/lib/actions/removeEventAttendance";
 import { useAlert } from "@/context/AlertContext";
+import { currentUser } from "@/lib/auth";
 
 export default function useAttendEvent(
   event_id: string,
   setAttendanceValue: React.Dispatch<React.SetStateAction<number>>,
-  title: string
+  title: string,
+  user: currentUser | undefined
 ) {
-  const user = useCurrentUser();
   const { openLoginModal } = useLoginModal();
   const [success, setSuccess] = useState(false);
   const [attending, setAttending] = useState(false);
@@ -52,6 +52,7 @@ export default function useAttendEvent(
 
   async function handleAttendEvent() {
     setLoading(true);
+    console.log(user);
     if (!user || !user.id) {
       setLoading(false);
       openLoginModal();

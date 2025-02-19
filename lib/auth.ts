@@ -1,15 +1,26 @@
 import { auth } from "@/auth";
 // this can be used to get the current user and use in server components
 
+export interface currentUser {
+  id: string | undefined | null;
+  name: string | undefined | null;
+  email: string | undefined | null;
+  role: string | undefined | null;
+}
+
 export async function currentUser() {
   const session = await auth();
 
-  const user = { ...session?.user };
-  delete user.googleRefreshToken;
-  delete user.googleToken;
-  delete user.googleTokenExpiresAt;
+  if (!session) {
+    return undefined;
+  }
 
-  return user;
+  return {
+    id: session.user.id,
+    name: session.user.name,
+    email: session.user.email,
+    role: session.user.role,
+  };
 }
 
 export async function currentRole() {

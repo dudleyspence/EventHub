@@ -1,14 +1,21 @@
 "use client";
 import { FormatDateToReadable } from "@/utils/FormatUTCDateReadable";
-import { Event } from "@prisma/client";
+import { Event, User } from "@prisma/client";
 import React, { useState } from "react";
 import AttendanceControls from "./AttendanceControls";
 import { Alert } from "@heroui/react";
 import Capacity from "./CapacityChart";
 import ServerImage from "../UI/ServerImage";
 import { useAlert } from "@/context/AlertContext";
+import { currentUser } from "@/lib/auth";
 
-export default function EventContent({ event }: { event: Event }) {
+export default function EventContent({
+  event,
+  user,
+}: {
+  event: Event;
+  user: currentUser | undefined;
+}) {
   const [attendanceValue, setAttendanceValue] = useState<number>(
     event.totalAttendees
   );
@@ -54,6 +61,7 @@ export default function EventContent({ event }: { event: Event }) {
           <AttendanceControls
             event={event}
             setAttendanceValue={setAttendanceValue}
+            user={user}
           />
         </div>
         <p className="mt-10">{event.description}</p>

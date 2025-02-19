@@ -1,3 +1,4 @@
+"use client";
 // get the user on the client side
 import { useSession } from "next-auth/react";
 

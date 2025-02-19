@@ -12,7 +12,7 @@ export default async function page() {
           Admin Dashboard
         </h1>
         <h2 className="text-xl font-bold w-full text-left">
-          Welcome back, {user.name}!
+          Welcome back, {user?.name}!
         </h2>
       </div>
       <AdminDashboardTabs />
