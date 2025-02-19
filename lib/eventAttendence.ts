@@ -1,6 +1,5 @@
-import { PrismaClient } from "@prisma/client";
+import { db } from "./db";
 
-const db = new PrismaClient();
 export async function findEventAttendance(user_id: string, event_id: string) {
   const attendance = await db.eventAttendee.findFirst({
     where: {

@@ -1,7 +1,5 @@
-import { PrismaClient } from "@prisma/client";
 import { cache } from "react";
-
-const db = new PrismaClient();
+import { db } from "./db";
 
 export const getCategories = cache(async () => {
   return await db.category.findMany();

@@ -1,7 +1,5 @@
 import { CreateEventInput } from "@/types/event";
-import { PrismaClient } from "@prisma/client";
-
-const db = new PrismaClient();
+import { db } from "./db";
 
 export async function getEvent(event_id: string) {
   const event = await db.event.findUnique({

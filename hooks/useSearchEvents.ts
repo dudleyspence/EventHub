@@ -10,7 +10,7 @@ export default function useSearchEvents(searchTerm: string) {
   useEffect(() => {
     async function search() {
       const events = await searchEvents(searchTerm);
-      console.log(events);
+      console.log(events, "<<<< EVENTS");
       setEvents(events);
     }
     search();

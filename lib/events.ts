@@ -1,9 +1,7 @@
 import { FetchEventsSchema } from "@/schemas/events";
 import { searchEventsOutput } from "@/types/events";
-import { PrismaClient } from "@prisma/client";
 import { z } from "zod";
-
-const db = new PrismaClient();
+import { db } from "./db";
 
 export async function getEvents({
   orderBy,
