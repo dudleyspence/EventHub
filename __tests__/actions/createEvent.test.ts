@@ -1,6 +1,5 @@
 import { createEventAction } from "@/lib/actions/createEvent";
-import { getCategories } from "@/lib/categories";
-import { db } from "@/lib/db";
+
 import { describe, expect, it } from "vitest";
 
 describe("createEvent", () => {

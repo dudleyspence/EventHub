@@ -1,7 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { UserRole } from "@prisma/client";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { PrismaClient } from "@prisma/client";
 import { checkAttendance } from "@/lib/actions/checkAttendance";
 import { removeEvent } from "@/lib/actions/removeEvent";
 import { attendEventAction } from "@/lib/actions/attendEvent";

@@ -4,6 +4,7 @@ import { Category } from "@prisma/client";
 import HeroButtons from "./HeroButtons";
 import Image from "next/image";
 import { currentUser } from "@/lib/auth";
+import HeroImage from "@/public/brand/HeroImage.jpg";
 
 export default async function Hero({ categories }: { categories: Category[] }) {
   const userLoggedIn = !!(await currentUser());
@@ -18,8 +19,9 @@ export default async function Hero({ categories }: { categories: Category[] }) {
           <HeroButtons session={userLoggedIn} />
         </div>
         <Image
+          id="LANDINGPAGEIMAGE"
           className={`object-cover overflow-hidden transition-opacity duration-700 ease-in-out`}
-          src="https://res.cloudinary.com/dvb1ktpjd/image/upload/v1739023224/EventHubHeroImage_ot7umq.jpg"
+          src={HeroImage}
           priority
           fill
           alt="hero image"

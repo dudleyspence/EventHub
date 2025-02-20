@@ -2,6 +2,7 @@
 import React from "react";
 import EventList from "./EventsList";
 import { Pagination } from "@nextui-org/react";
+import noEventsFound from "@/public/graphics/NoEventsFound.png";
 
 import { useEventListFilters } from "@/hooks/useEventListFilters";
 import Image from "next/image";
@@ -52,11 +53,7 @@ function NoEventsFound() {
   return (
     <div className="w-full pt-[150px] flex justify-center items-center">
       <div className="relative h-[300px] w-[300px]">
-        <Image
-          fill
-          src="https://res.cloudinary.com/dvb1ktpjd/image/upload/v1739050220/NoEventsFound_xy95mm.png"
-          alt="no events found graphic"
-        />
+        <Image fill src={noEventsFound} alt="no events found graphic" />
       </div>
     </div>
   );

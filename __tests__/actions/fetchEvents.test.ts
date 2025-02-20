@@ -1,15 +1,6 @@
 import { fetchEventsAction } from "@/lib/actions/fetchEvents";
 import { describe, expect, it } from "vitest";
 
-// describe("", () => {
-//   it("returns an empty array if there isnt upcomming events", async () => {
-//     await clearDatabase();
-//     onTestFinished(async () => await seed());
-//     const events = await fetchEventsAction({});
-//     expect(events).toEqual([]);
-//   }, 5000);
-// });
-
 describe("fetchEvents Invalid Params", () => {
   const invalidParams: Array<[string, any]> = [
     ["invalid orderBy value", { orderBy: "speed" }],

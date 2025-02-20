@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
-    "setup:prod": "npm run migrate:prod && npm run seed:prod",
+    "setup:prod": "npm run migrate:prod",
     "migrate:prod": "dotenv -e .env.production -- npx prisma db push",
     "seed:prod": "dotenv -e .env.production tsx seed/run-seed.ts",
     "reset:prod": "dotenv -e .env.production -- npx prisma migrate reset --force npx prisma generate",
