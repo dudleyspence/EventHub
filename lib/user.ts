@@ -43,6 +43,7 @@ export async function createUser(
     });
     return user;
   } catch (err) {
+    console.error(err);
     throw new Error("Error while creating user");
   }
 }

@@ -26,6 +26,7 @@ export async function signup(values: SignupInput) {
     await createUser(email, hashedPassword, name);
     return { success: "Signup Complete" };
   } catch (err) {
+    console.error(err);
     return { error: "Something went wrong while trying to signup" };
   }
 }

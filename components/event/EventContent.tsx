@@ -1,6 +1,6 @@
 "use client";
 import { FormatDateToReadable } from "@/utils/FormatUTCDateReadable";
-import { Event, User } from "@prisma/client";
+import { Event } from "@prisma/client";
 import React, { useState } from "react";
 import AttendanceControls from "./AttendanceControls";
 import { Alert } from "@heroui/react";

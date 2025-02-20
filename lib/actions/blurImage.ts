@@ -12,7 +12,7 @@ export async function imageToBlurBase64(originalUrl: string) {
 
     return base64;
   } catch (err) {
-    console.error("there seems to have been a problem with the URL");
+    console.error("there seems to have been a problem with the URL", err);
     return undefined;
   }
 }
