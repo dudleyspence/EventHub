@@ -146,6 +146,7 @@ EventHub relies on **Cloudinary** for image hosting. If you plan to run this pro
 1. Create MySQL databases for development and testing environments
 
 - I recommend local hosting for test and dev databases as this is much faster.
+- It is preferable to have access to have access to the database config (only some hosts allow this) as it will give extra control over factors like the minimum characters required for SQL full-text-search. 
 - Create a production database using a hosting provider of your choice (i used railway)
   **Environment Variables**
 
@@ -153,6 +154,7 @@ EventHub relies on **Cloudinary** for image hosting. If you plan to run this pro
     ```bash
     DATABASE_URL=
     ```
+
 
 2. Run the following commands to set up and seed the databases:
 
