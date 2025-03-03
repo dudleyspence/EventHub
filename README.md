@@ -26,6 +26,9 @@ A web application for attending, managing and organizing events. Built using Nex
 
 This is a freelance project developed for Tech Returners. The project scope was to create an MVP (Minimum Viable Product) Events platform.
 
+A project demo video can be found on my linkedin:
+[Project Demo Video](https://www.linkedin.com/posts/dudleyspence_mvp-freelanceproject-webdevelopment-activity-7298123580750389248-XQAv?utm_source=share&utm_medium=member_desktop&rcm=ACoAAClz_LABG93kkPgl48933adyiTrZi7Fw5nw)
+
 ### Core MVP Requirements
 
 The MVP requirements provided by Tech Returners were:
@@ -196,6 +199,14 @@ npm run seed:prod
    - Google callback: `http://localhost:3000/api/auth/callback/google` (development)
    - GitHub callback: `http://localhost:3000/api/auth/callback/github` (development)
    - Update callback URLs for production domain when deploying
+
+### Google Calendar Setup
+
+1. Once again login to the google cloud console and this time head to the APIs section for this project and activate the google calendar API.
+2. You will also potentially need to edit the OAuth consent screen.
+3. Google requires a verification for production apps which you will need to obtain to allow users to use the google calender features.
+4. alternatively in a demo environement you can find the 'audience' tab in the google cloud console project and add one or more 'test users' who will be able to go through the google auth process to use the API features.
+
 
 ### Graphics and Images
 
