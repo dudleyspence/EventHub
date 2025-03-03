@@ -37,6 +37,10 @@ The MVP requirements provided by Tech Returners were:
 
 ### EventHub Features Summary
 
+**Demo Features:**
+
+- For demonstration purposes the site features demo login buttons, admin and user. In a production environment these should be removed. This can be done by simply deleting the demo buttons from the code.
+
 **Technical Features:**
 
 - Role based access control (RBAC)
